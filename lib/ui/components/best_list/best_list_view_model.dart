@@ -25,7 +25,7 @@ class BestListViewModel extends BaseViewModel {
     _bestListController.add(comments);
   }
 
-  Future fetchBestList() async {
+  Future initialise() async {
     setBusy(true);
     comments = await _db.getBestList();
     _bestListController.add(comments);

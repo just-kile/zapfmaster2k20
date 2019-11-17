@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zapfmaster2k20/core/constants/app_contstants.dart';
-import 'package:zapfmaster2k20/ui/components/best_list/BestList.dart';
+import 'package:zapfmaster2k20/ui/components/best_list/best_list.dart';
 import 'package:zapfmaster2k20/ui/shared/ui_helpers.dart';
 
 class Overview extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:zapfmaster2k20/core/constants/app_contstants.dart';
-import 'package:zapfmaster2k20/ui/screens/Details.dart';
+import 'package:zapfmaster2k20/ui/screens/details.dart';
 
-import 'screens/Overview.dart';
+import 'screens/overview.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
