@@ -13,23 +13,36 @@ class BestList extends StatelessWidget {
     return BaseWidget<BestListModel>(
         onModelReady: (model) => model.fetchBestList(),
         model: BestListModel(db: Provider.of(context)),
-        builder: (context, model, child) => model.busy
+        builder: (context, model, child) =>
+        model.busy
             ? Center(
           child: CircularProgressIndicator(),
         )
-            : Expanded(
-          child: ListView.builder(
-            itemCount: model.comments.length,
-            itemBuilder: (context, index) =>
-                BestListItem(model.comments[index]),
-          ),
-        ));
+            : StreamProvider<List<User>>.value(
+            initialData: [],
+            value: model.bestList,
+            child: BestListView()));
+  }
+}
+
+class BestListView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final _userList = Provider.of<List<User>>(context);
+    return Expanded(
+      child: ListView.builder(
+        itemCount: _userList.length,
+        itemBuilder: (context, index) =>
+            BestListItem(_userList[index]),
+      ),
+    );
   }
 }
 
 /// Renders a single comment given a comment model
 class BestListItem extends StatelessWidget {
   final User user;
+
   const BestListItem(this.user);
 
   @override
@@ -38,7 +51,8 @@ class BestListItem extends StatelessWidget {
       padding: EdgeInsets.all(10.0),
       margin: EdgeInsets.symmetric(vertical: 10.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0), color: Color.fromARGB(255, 255, 246, 196)),
+          borderRadius: BorderRadius.circular(10.0),
+          color: Color.fromARGB(255, 255, 246, 196)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
