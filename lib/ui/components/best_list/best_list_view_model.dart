@@ -5,10 +5,10 @@ import 'package:zapfmaster2k20/core/domain/user.dart';
 import 'package:zapfmaster2k20/core/services/db.dart';
 import 'package:zapfmaster2k20/ui/shared/base_view_model.dart';
 
-class BestListModel extends BaseViewModel {
+class BestListViewModel extends BaseViewModel {
   Db _db;
 
-  BestListModel({
+  BestListViewModel({
     @required Db db,
   }) : _db = db;
 

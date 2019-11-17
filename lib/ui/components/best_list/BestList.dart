@@ -10,9 +10,9 @@ class BestList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<BestListModel>(
+    return BaseWidget<BestListViewModel>(
         onModelReady: (model) => model.fetchBestList(),
-        model: BestListModel(db: Provider.of(context)),
+        model: BestListViewModel(db: Provider.of(context)),
         builder: (context, model, child) =>
         model.busy
             ? Center(
