@@ -13,27 +13,25 @@ class BestList extends StatelessWidget {
     return BaseWidget<BestListViewModel>(
         onModelReady: (model) => model.initialise(),
         model: BestListViewModel(db: Provider.of(context)),
-        builder: (context, model, child) =>
-        model.busy
+        builder: (context, model, child) => model.busy
             ? Center(
-          child: CircularProgressIndicator(),
-        )
-            : StreamProvider<List<User>>.value(
-            initialData: [],
-            value: model.bestList,
-            child: BestListView()));
+                child: CircularProgressIndicator(),
+              )
+            : BestListView(model.bestlist));
   }
 }
 
 class BestListView extends StatelessWidget {
+  final List<User> _userList;
+
+  const BestListView(this._userList);
+
   @override
   Widget build(BuildContext context) {
-    final _userList = Provider.of<List<User>>(context);
     return Expanded(
       child: ListView.builder(
         itemCount: _userList.length,
-        itemBuilder: (context, index) =>
-            BestListItem(_userList[index]),
+        itemBuilder: (context, index) => BestListItem(_userList[index]),
       ),
     );
   }
