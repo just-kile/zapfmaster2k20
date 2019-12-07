@@ -1,15 +1,19 @@
 import 'dart:async';
 
+import 'package:zapfmaster2k20/core/constants/app_contstants.dart';
 import 'package:zapfmaster2k20/core/domain/user.dart';
 
 import '../../locator.dart';
 import 'db.dart';
+import 'navigation_service.dart';
 
 class UserService {
   final Db _db = locator<Db>();
 
+
   UserService() {
-    new Timer(const Duration(seconds: 4), openDraftView);
+    new Timer(const Duration(seconds: 10), openDraftView);
+    new Timer(const Duration(seconds: 20), closeDraftView);
     new Timer.periodic(const Duration(seconds: 4), timerCb);
   }
 
@@ -23,7 +27,9 @@ class UserService {
   }
 
   void openDraftView() async {
-    print('openDraftView called');
-//    Navigator.pop(context);
+    locator<NavigationService>().navigateTo(RoutePaths.Details);
+  }
+  void closeDraftView() async {
+    locator<NavigationService>().pop();
   }
 }
