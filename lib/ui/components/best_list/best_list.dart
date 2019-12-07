@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zapfmaster2k20/core/domain/user.dart';
+import 'package:zapfmaster2k20/locator.dart';
 import 'package:zapfmaster2k20/ui/components/best_list/best_list_view_model.dart';
 import 'package:zapfmaster2k20/ui/shared/base_widget.dart';
 import 'package:zapfmaster2k20/ui/shared/ui_helpers.dart';
@@ -12,7 +12,7 @@ class BestList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseWidget<BestListViewModel>(
         onModelReady: (model) => model.initialise(),
-        model: BestListViewModel(db: Provider.of(context)),
+        model: locator<BestListViewModel>(),
         builder: (context, model, child) => model.busy
             ? Center(
                 child: CircularProgressIndicator(),

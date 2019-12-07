@@ -1,36 +1,30 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
 import 'package:zapfmaster2k20/core/domain/user.dart';
-import 'package:zapfmaster2k20/core/services/db.dart';
+import 'package:zapfmaster2k20/core/services/user_service.dart';
 import 'package:zapfmaster2k20/ui/shared/base_view_model.dart';
 
+import '../../../locator.dart';
+
 class BestListViewModel extends BaseViewModel {
-  Db _db;
-
-  BestListViewModel({
-    @required Db db,
-  }) : _db = db;
-
+  UserService _userService = locator<UserService>();
+  StreamSubscription<List<User>> _streamSubscription;
   List<User> bestlist = [];
 
-  void timerCb(Timer timer) async {
-    print('Timer called');
-    bestlist = await _db.getBestList();
+  void onData(List<User> users) async {
+    this.bestlist = users;
     notifyListeners();
   }
 
   Future initialise() async {
     setBusy(true);
-    bestlist = await _db.getBestList();
-
-    new Timer.periodic(const Duration(seconds: 4), timerCb);
+    this._streamSubscription = _userService.users.listen(onData);
     setBusy(false);
   }
 
   @override
   void dispose() {
-    print('I have been disposed!!');
+    this._streamSubscription.cancel();
     super.dispose();
   }
 }
