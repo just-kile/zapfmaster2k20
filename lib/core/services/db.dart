@@ -15,7 +15,11 @@ class Db {
           "hardware token", 0.0));
     }
 
-    // Convert and return
     return list;
+  }
+
+  Future<User> getUserWithToken(String token) async {
+    return User(
+        "1", "Usr" + random.nextInt(1000).toString(), "image path", token, 0.0);
   }
 }
