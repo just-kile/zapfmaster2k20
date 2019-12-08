@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:zapfmaster2k20/core/draft_measuring/model.dart';
+import 'package:zapfmaster2k20/core/draft_measuring/events.dart';
 import 'package:zapfmaster2k20/core/draft_measuring/user_event_bus.dart';
 import 'package:zapfmaster2k20/core/services/db.dart';
 

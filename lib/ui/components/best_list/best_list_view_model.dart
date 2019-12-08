@@ -1,13 +1,13 @@
 import 'dart:async';
 
+import 'package:zapfmaster2k20/core/bestlist/best_list_service.dart';
 import 'package:zapfmaster2k20/core/domain/user.dart';
-import 'package:zapfmaster2k20/core/services/user_service.dart';
 import 'package:zapfmaster2k20/ui/shared/base_view_model.dart';
 
 import '../../../locator.dart';
 
 class BestListViewModel extends BaseViewModel {
-  UserService _userService = locator<UserService>();
+  BestListService _bestListService = locator<BestListService>();
   StreamSubscription<List<User>> _streamSubscription;
   List<User> bestlist = [];
 
@@ -18,7 +18,7 @@ class BestListViewModel extends BaseViewModel {
 
   Future initialise() async {
     setBusy(true);
-    this._streamSubscription = _userService.users.listen(onData);
+    this._streamSubscription = _bestListService.bestList.listen(onData);
     setBusy(false);
   }
 
