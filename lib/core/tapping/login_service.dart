@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:zapfmaster2k20/core/services/db.dart';
-import 'package:zapfmaster2k20/core/tapping_measurement/tapping_event_bus.dart';
+import 'package:zapfmaster2k20/core/tapping/tapping_event_bus.dart';
 
 import '../../locator.dart';
 import 'events.dart';
