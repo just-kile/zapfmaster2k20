@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:zapfmaster2k20/core/constants/app_contstants.dart';
 import 'package:zapfmaster2k20/core/domain/user.dart';
-import 'package:zapfmaster2k20/core/draft_measuring/events.dart';
-import 'package:zapfmaster2k20/core/draft_measuring/user_event_bus.dart';
 import 'package:zapfmaster2k20/core/services/navigation_service.dart';
 
 import '../../locator.dart';
+import 'events.dart';
+import 'tapping_event_bus.dart';
 
 class TapService {
-  final UserEventBus _bus = locator<UserEventBus>();
+  final TappingEventBus _bus = locator<TappingEventBus>();
 
   User loggedInUser;
 

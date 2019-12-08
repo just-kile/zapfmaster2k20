@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:zapfmaster2k20/core/draft_measuring/events.dart';
-import 'package:zapfmaster2k20/core/draft_measuring/user_event_bus.dart';
 import 'package:zapfmaster2k20/core/services/db.dart';
+import 'package:zapfmaster2k20/core/tapping_measurement/tapping_event_bus.dart';
 
 import '../../locator.dart';
+import 'events.dart';
 
 class LoginService {
-  final UserEventBus _bus = locator<UserEventBus>();
+  final TappingEventBus _bus = locator<TappingEventBus>();
   final Db _db = locator<Db>();
 
   LoginService() {
