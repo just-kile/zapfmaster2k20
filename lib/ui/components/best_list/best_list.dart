@@ -50,7 +50,7 @@ class BestListItem extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: Color.fromARGB(255, 255, 246, 196)),
+          color: Color.fromARGB(255, 30, 30, 30)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
