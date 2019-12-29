@@ -6,26 +6,31 @@ class Overview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/drops.png"),
-//            fit: BoxFit.fitWidth,
-            repeat: ImageRepeat.repeat,
-          ),
+      appBar: AppBar(),
+      body: withBackgroundImage(Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            UIHelper.verticalSpaceLarge,
+            UIHelper.verticalSpaceMedium,
+            BestList()
+          ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              UIHelper.verticalSpaceLarge,
-              UIHelper.verticalSpaceMedium,
-              BestList()
-            ],
-          ),
-        ) ,
+      )),
+    );
+  }
+
+  Container withBackgroundImage(Widget child) {
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/drops.png"),
+//            fit: BoxFit.fitWidth,
+          repeat: ImageRepeat.repeat,
+        ),
       ),
+      child: child,
     );
   }
 }
