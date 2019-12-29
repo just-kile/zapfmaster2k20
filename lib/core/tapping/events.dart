@@ -29,10 +29,3 @@ class TapFinished extends Event{
 
   TapFinished(this.user, this.amount);
 }
-
-class BestlistUpdated extends Event{
-  List<User> bestlist;
-
-  BestlistUpdated(this.bestlist);
-}
-

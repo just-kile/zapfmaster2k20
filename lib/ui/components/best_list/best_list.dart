@@ -45,22 +45,19 @@ class BestListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10.0),
-      margin: EdgeInsets.symmetric(vertical: 10.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: Color.fromARGB(255, 30, 30, 30)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            user.name,
-            style: TextStyle(fontWeight: FontWeight.bold),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: InkWell(
+          child: Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(user.name),
+              ),
+            ],
           ),
-          UIHelper.verticalSpaceSmall,
-          Text(user.name),
-        ],
+        ),
       ),
     );
   }

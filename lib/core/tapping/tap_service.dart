@@ -16,18 +16,18 @@ class TapService {
   TapService() {
     _bus.on<UserLoggedIn>().listen(startTapping);
     _bus.on<UserLoggedOut>().listen(finishTapping);
-
-    new Timer(const Duration(seconds: 11), () => tapAmount(0.1));
-    new Timer(const Duration(seconds: 12), () => tapAmount(0.2));
-    new Timer(const Duration(seconds: 13), () => tapAmount(0.3));
-    new Timer(const Duration(seconds: 14), () => tapAmount(0.4));
-    new Timer(const Duration(seconds: 15), () => tapAmount(0.5));
-    new Timer(const Duration(seconds: 16), () => tapAmount(0.6));
   }
 
   void startTapping(e) {
     this.loggedInUser = e.user;
     openDraftView();
+
+    new Timer(const Duration(seconds: 1), () => tapAmount(0.1));
+    new Timer(const Duration(seconds: 2), () => tapAmount(0.2));
+    new Timer(const Duration(seconds: 3), () => tapAmount(0.3));
+    new Timer(const Duration(seconds: 4), () => tapAmount(0.4));
+    new Timer(const Duration(seconds: 5), () => tapAmount(0.5));
+    new Timer(const Duration(seconds: 6), () => tapAmount(0.6));
   }
 
   void tapAmount(double amount) async {
@@ -37,9 +37,17 @@ class TapService {
     _bus.fire(new TapAmountUpdated(this.loggedInUser, amount));
   }
 
-  void finishTapping(UserLoggedOut user) async {
-    _bus.fire(new TapFinished(this.loggedInUser, 0.6));
+  void finishTapping(UserLoggedOut event) async {
+    emitFinishedEvent();
     closeDraftView();
+    resetUser();
+  }
+
+  void emitFinishedEvent() {
+    _bus.fire(new TapFinished(this.loggedInUser, 0.6));
+  }
+
+  void resetUser() {
     this.loggedInUser = null;
   }
 

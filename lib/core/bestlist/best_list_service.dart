@@ -21,7 +21,7 @@ class BestListService {
   }
 
   void updateBestList(TapFinished event) async {
-    //save event to derived db
+    //save event to derived db table
     //maybe fire BestListUpdated event
     _bestListController.add(await _db.getBestList());
   }
