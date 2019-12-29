@@ -24,7 +24,7 @@ class Overview extends StatelessWidget {
               BestList()
             ],
           ),
-        ) /* add child content here */,
+        ) ,
       ),
     );
   }
