@@ -30,7 +30,7 @@ class BestListView extends StatelessWidget {
     return Expanded(
       child: ListView.builder(
         itemCount: _userList.length,
-        itemBuilder: (context, index) => BestListItem(_userList[index]),
+        itemBuilder: (context, index) => BestListItem(_userList[index], index),
       ),
     );
   }
@@ -40,22 +40,29 @@ class BestListView extends StatelessWidget {
 class BestListItem extends StatelessWidget {
   final User user;
 
-  const BestListItem(this.user);
+  final int index;
+
+  const BestListItem(this.user, this.index);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return Center(
       child: Card(
-        child: InkWell(
-          child: Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(user.name),
-              ),
-            ],
-          ),
+        color: Colors.transparent,
+        shape: new RoundedRectangleBorder(
+            side: new BorderSide(color: Colors.orange, width: 2.0),
+            borderRadius: BorderRadius.circular(4.0)),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            ListTile(
+              leading: CircleAvatar(
+                  backgroundImage: AssetImage("assets/testUser.jpg")),
+              title: Text(this.user.name),
+              subtitle: Text('Achievements:'),
+              trailing: Text("${user.tappedAmount} L"),
+            ),
+          ],
         ),
       ),
     );
