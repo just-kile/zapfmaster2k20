@@ -5,7 +5,7 @@ class NavigationService {
       new GlobalKey<NavigatorState>();
 
   Future<dynamic> navigateTo(String routeName) {
-    return navigatorKey.currentState.pushReplacementNamed(routeName);
+    return navigatorKey.currentState.pushNamed(routeName);
   }
 
   bool pop() {

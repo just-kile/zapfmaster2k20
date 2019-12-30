@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:zapfmaster2k20/core/constants/app_contstants.dart';
-import 'package:zapfmaster2k20/ui/screens/news_feed_screen.dart';
 import 'package:zapfmaster2k20/ui/screens/tapping.dart';
 
 import 'screens/overview.dart';
@@ -11,8 +10,6 @@ class Router {
     switch (settings.name) {
       case RoutePaths.Overview:
         return MaterialPageRoute(builder: (_) => Overview());
-      case RoutePaths.NewsFeed:
-        return MaterialPageRoute(builder: (_) => NewsFeedScreen());
       case RoutePaths.Tapping:
         return MaterialPageRoute(builder: (_) => Tapping());
       default:
