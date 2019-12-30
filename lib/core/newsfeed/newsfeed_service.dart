@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:zapfmaster2k20/core/domain/user.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:zapfmaster2k20/core/newsfeed/news_item.dart';
 import 'package:zapfmaster2k20/core/services/db.dart';
 import 'package:zapfmaster2k20/core/tapping/events.dart';
@@ -12,7 +12,7 @@ class NewsFeedService {
   final Db _db = locator<Db>();
   final TappingEventBus _bus = locator<TappingEventBus>();
 
-  StreamController<List<NewsItem>> _controller = StreamController<List<NewsItem>>();
+  StreamController<List<NewsItem>> _controller = BehaviorSubject();
 
   Stream<List<NewsItem>> get news => _controller.stream;
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:rxdart/rxdart.dart';
 import 'package:zapfmaster2k20/core/domain/user.dart';
 import 'package:zapfmaster2k20/core/services/db.dart';
 import 'package:zapfmaster2k20/core/tapping/events.dart';
@@ -11,8 +12,7 @@ class BestListService {
   final Db _db = locator<Db>();
   final TappingEventBus _bus = locator<TappingEventBus>();
 
-  StreamController<List<User>> _bestListController = StreamController<List<User>>();
-
+  StreamController<List<User>> _bestListController = BehaviorSubject();
   Stream<List<User>> get bestList => _bestListController.stream;
 
   BestListService() {

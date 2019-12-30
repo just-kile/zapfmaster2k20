@@ -18,21 +18,16 @@ class BestListViewModel extends BaseViewModel {
 
   Future initialise() async {
     setBusy(true);
-    resetStreamSubscription();
     this._streamSubscription = _bestListService.bestList.listen(onData);
     setBusy(false);
   }
 
   void resetStreamSubscription() {
-    if(this._streamSubscription != null){
-      this._streamSubscription.cancel();
-    }
-
+    this._streamSubscription.cancel();
   }
 
   @override
   void dispose() {
-    print("Reset stream subscription");
     resetStreamSubscription();
     super.dispose();
   }
