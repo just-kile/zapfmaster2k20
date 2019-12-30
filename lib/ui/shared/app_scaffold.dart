@@ -5,12 +5,11 @@ import 'package:zapfmaster2k20/ui/shared/zm_custom_icons_icons.dart';
 
 import '../../locator.dart';
 
-
 BottomNavigationBar buildBottomNavigationBar(int currentIndex) {
   return BottomNavigationBar(
     currentIndex: currentIndex,
     onTap: (int index) {
-      if(index == currentIndex){
+      if (index == currentIndex) {
         return;
       }
       var route = [RoutePaths.Overview, RoutePaths.NewsFeed][index];
@@ -39,10 +38,10 @@ Container withBackgroundImage(Widget child) {
   );
 }
 
-
 Scaffold withAppScaffold(Widget child, int index) {
   return Scaffold(
-    appBar: AppBar(),
+    appBar:
+        new AppBar(centerTitle: true, title: Image.asset("assets/logo.png")),
     bottomNavigationBar: buildBottomNavigationBar(index),
     body: withBackgroundImage(
       Column(
