@@ -1,7 +1,9 @@
 import 'package:get_it/get_it.dart';
 import 'package:zapfmaster2k20/core/bestlist/best_list_service.dart';
+import 'package:zapfmaster2k20/core/newsfeed/newsfeed_service.dart';
 import 'package:zapfmaster2k20/core/services/db.dart';
 import 'package:zapfmaster2k20/ui/components/best_list/best_list_view_model.dart';
+import 'package:zapfmaster2k20/ui/components/newsfeed/news_feed_view_model.dart';
 
 import 'core/services/navigation_service.dart';
 import 'core/tapping/login_service.dart';
@@ -21,4 +23,7 @@ void setupLocator() {
 
   locator.registerLazySingleton(() => BestListService());
   locator.registerFactory(() => BestListViewModel());
+
+  locator.registerFactory(() => NewsFeedService());
+  locator.registerFactory(() => NewsFeedViewModel());
 }

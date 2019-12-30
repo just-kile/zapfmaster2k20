@@ -52,7 +52,7 @@ class TapService {
   }
 
   void openDraftView() async {
-    locator<NavigationService>().navigateTo(RoutePaths.Details);
+    locator<NavigationService>().navigateTo(RoutePaths.Tapping);
   }
 
   void closeDraftView() async {

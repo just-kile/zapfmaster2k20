@@ -12,8 +12,8 @@ class LoginService {
 
   LoginService() {
     print("Login service initialized");
-    new Timer(const Duration(seconds: 5), userLoggedIn);
-    new Timer(const Duration(seconds: 7), userLoggedOut);
+//    new Timer(const Duration(seconds: 5), userLoggedIn);
+//    new Timer(const Duration(seconds: 7), userLoggedOut);
   }
 
   void userLoggedIn() async {
