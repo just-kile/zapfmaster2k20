@@ -6,8 +6,8 @@ import 'package:zapfmaster2k20/ui/components/newsfeed/news_feed_view_model.dart'
 import 'package:zapfmaster2k20/ui/shared/base_widget.dart';
 import 'package:zapfmaster2k20/ui/shared/ui_helpers.dart';
 
-class NewsFeed extends StatelessWidget {
-  NewsFeed();
+class Settings extends StatelessWidget {
+  Settings();
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,6 @@ class NewsFeed extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Expanded(child: Text("Fooo")));
+            : Expanded(child: Text("Settings")));
   }
 }

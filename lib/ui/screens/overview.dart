@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zapfmaster2k20/ui/components/best_list/best_list.dart';
 import 'package:zapfmaster2k20/ui/components/newsfeed/news_feed.dart';
+import 'package:zapfmaster2k20/ui/components/settings/settings.dart';
 import 'package:zapfmaster2k20/ui/shared/app_scaffold.dart';
 import 'package:zapfmaster2k20/ui/shared/zm_custom_icons_icons.dart';
 
@@ -24,7 +25,8 @@ class _OverviewState extends State<Overview>
           index: _currentIndex,
           children: [
             withBackgroundImage(BestList()),
-            withBackgroundImage(NewsFeed())
+            withBackgroundImage(NewsFeed()),
+            withBackgroundImage(Settings())
           ],
         ),
       ),
@@ -41,7 +43,9 @@ class _OverviewState extends State<Overview>
             title: new Text('Ranking'),
           ),
           BottomNavigationBarItem(
-              icon: Icon(ZmCustomIcons.ic_menu_news_1), title: Text('News'))
+              icon: Icon(ZmCustomIcons.ic_menu_news_1), title: Text('News')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), title: Text('Einstellungen'))
         ],
       ),
     );
