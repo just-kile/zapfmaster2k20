@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 ThemeData appTheme() {
   return ThemeData(
+
 //    primaryColor: Colors.black54,
 //    accentColor: Colors.orange,
 //    textTheme: new Typography().white,
@@ -11,5 +12,6 @@ ThemeData appTheme() {
 //    scaffoldBackgroundColor: Colors.black,
 //    canvasColor: Colors.black,
       brightness: Brightness.dark,
+      fontFamily: "Raleway"
   );
 }
