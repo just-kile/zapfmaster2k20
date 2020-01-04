@@ -12,8 +12,12 @@ class Db {
 
     List list = List<User>();
     for (var i = 0; i < nextInt; i++) {
-      list.add(User("1", "Usr" + random.nextInt(1000).toString(), "image path",
-          "hardware token", 0.0));
+      list.add(User(
+          "1",
+          "Usr" + random.nextInt(1000).toString(),
+          "assets/testUser.jpg",
+          "hardware token",
+          double.parse((10 * random.nextDouble()).toStringAsFixed(2))));
     }
 
     return list;
@@ -32,7 +36,7 @@ class Db {
   }
 
   Future<User> getUserWithToken(String token) async {
-    return User(
-        "1", "Usr" + random.nextInt(1000).toString(), "image path", token, 0.0);
+    return User("1", "Usr" + random.nextInt(1000).toString(),
+        "assets/testUser.jpg", token, 0.0);
   }
 }

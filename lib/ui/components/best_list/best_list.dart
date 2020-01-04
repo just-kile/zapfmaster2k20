@@ -57,7 +57,7 @@ class BestListItem extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: CircleAvatar(
-                  backgroundImage: AssetImage("assets/testUser.jpg")),
+                  backgroundImage: AssetImage(user.imagePath)),
               title: Text(this.user.name),
               subtitle: Text('Achievements:'),
               trailing: Text("${user.tappedAmount} L"),

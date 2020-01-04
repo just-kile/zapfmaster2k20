@@ -18,6 +18,27 @@ class NewsFeed extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Expanded(child: Text("Fooo")));
+            : Expanded(
+                child: ListView.builder(
+                itemCount: 3,
+                itemBuilder: (context, index) => Card(
+                  color: Colors.transparent,
+                  shape: new RoundedRectangleBorder(
+                      side: new BorderSide(color: Colors.orange, width: 2.0),
+                      borderRadius: BorderRadius.circular(4.0)),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      ListTile(
+                        leading: CircleAvatar(
+                            backgroundImage: AssetImage("assets/testUser.jpg")),
+                        title: Text("Test"),
+                        subtitle: Text('Achievements:'),
+                        trailing: Text("L"),
+                      ),
+                    ],
+                  ),
+                ),
+              )));
   }
 }
