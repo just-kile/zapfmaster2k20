@@ -8,7 +8,8 @@ class Db {
 
   Future<List<User>> getBestList() async {
     // Get user profile for id
-    var nextInt = random.nextInt(10) + 1;
+//    var nextInt = random.nextInt(10) + 1;
+    var nextInt = 40;
 
     List list = List<User>();
     for (var i = 0; i < nextInt; i++) {

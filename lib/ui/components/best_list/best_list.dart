@@ -27,44 +27,39 @@ class BestListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var counter = 0;
     return Expanded(
-      child: ListView.builder(
-        itemCount: _userList.length,
-        itemBuilder: (context, index) => BestListItem(_userList[index], index),
+        child: SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: DataTable(
+        columns: <DataColumn>[
+          DataColumn(
+            label: Text('#'),
+            tooltip: 'Position',
+          ),
+          DataColumn(
+            label: Text('Bild'),
+            tooltip: 'Bild',
+          ),
+          DataColumn(
+            label: Text('Name'),
+            tooltip: 'Name',
+          ),
+          DataColumn(
+            label: Text('Zapfmenge'),
+            tooltip: 'Zapfmenge',
+          )
+        ],
+        rows: _userList.map((user) {
+          counter = counter + 1;
+          return DataRow(cells: [
+            DataCell(Text('$counter.')),
+            DataCell(CircleAvatar(backgroundImage: AssetImage(user.imagePath))),
+            DataCell(Text(user.name)),
+            DataCell(Text("${user.tappedAmount} L")),
+          ]);
+        }).toList(),
       ),
-    );
-  }
-}
-
-/// Renders a single comment given a comment model
-class BestListItem extends StatelessWidget {
-  final User user;
-
-  final int index;
-
-  const BestListItem(this.user, this.index);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        color: Colors.transparent,
-        shape: new RoundedRectangleBorder(
-            side: new BorderSide(color: Colors.orange, width: 2.0),
-            borderRadius: BorderRadius.circular(4.0)),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            ListTile(
-              leading: CircleAvatar(
-                  backgroundImage: AssetImage(user.imagePath)),
-              title: Text(this.user.name),
-              subtitle: Text('Achievements:'),
-              trailing: Text("${user.tappedAmount} L"),
-            ),
-          ],
-        ),
-      ),
-    );
+    ));
   }
 }
