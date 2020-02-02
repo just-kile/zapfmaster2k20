@@ -18,7 +18,7 @@ class _OverviewState extends State<Overview>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-          new AppBar(centerTitle: true, title: Image.asset("assets/logo.png")),
+          new AppBar(centerTitle: true, title: Image.asset("assets/logo.png", fit: BoxFit.fitHeight, height: 60)),
       body: SafeArea(
         top: false,
         child: IndexedStack(
