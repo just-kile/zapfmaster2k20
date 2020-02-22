@@ -17,8 +17,6 @@ class Tapping extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : RaisedButton(onPressed: () {
-                Navigator.pop(context);
-              }));
+            : Text("User ${model.state?.userDto?.name} ${model.state?.amount}"));
   }
 }
