@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:logger/logger.dart';
 import 'package:zapfmaster2k20/core/tapping/tapping_event_bus.dart';
 import 'package:zapfmaster2k20/core/user/user_repository.dart';
 
 import '../../locator.dart';
+import '../../logger.dart';
 import 'events.dart';
 
 class LoginService {
@@ -11,9 +13,8 @@ class LoginService {
   final UserRepository _userRepository = locator<UserRepository>();
 
   LoginService() {
-    print("Login service initialized");
     new Timer(const Duration(seconds: 5), userLoggedIn);
-    new Timer(const Duration(seconds: 7), userLoggedOut);
+    new Timer(const Duration(seconds: 15), userLoggedOut);
   }
 
   void userLoggedIn() async {
@@ -21,21 +22,21 @@ class LoginService {
 
     final user = await _userRepository.getUserByHardwareToken(hardwareToken);
     if (user == null) {
-      print("Cannot find user with hardware token $hardwareToken");
+      logger.i("Cannot find user with hardware token $hardwareToken");
       return;
     }
+    logger.i("${user.name} logged in");
     _bus.fire(new UserLoggedIn(user));
   }
 
   void userLoggedOut() async {
     var hardwareToken = "1";
-
     final user = await _userRepository.getUserByHardwareToken(hardwareToken);
     if (user == null) {
-      print("Cannot find user with hardware token $hardwareToken");
+      logger.w("Cannot find user with hardware token $hardwareToken");
       return;
     }
-
+    logger.i("${user.name} logged out");
     _bus.fire(new UserLoggedOut(user));
   }
 }

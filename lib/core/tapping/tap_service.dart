@@ -1,16 +1,18 @@
 import 'dart:async';
 
+import 'package:logger/logger.dart';
 import 'package:zapfmaster2k20/core/constants/app_contstants.dart';
 import 'package:zapfmaster2k20/core/domain/user.dart';
 import 'package:zapfmaster2k20/core/services/navigation_service.dart';
 
 import '../../locator.dart';
+import '../../logger.dart';
 import 'events.dart';
 import 'tapping_event_bus.dart';
 
 class TapService {
-  final TappingEventBus _bus = locator<TappingEventBus>();
 
+  final TappingEventBus _bus = locator<TappingEventBus>();
   UserDto loggedInUser;
 
   TapService() {
@@ -34,6 +36,7 @@ class TapService {
     if (this.loggedInUser == null) {
       return;
     }
+    logger.i("User ${this.loggedInUser.name} tapped amount $amount");
     _bus.fire(new TapAmountUpdated(this.loggedInUser, amount));
   }
 
@@ -44,6 +47,7 @@ class TapService {
   }
 
   void emitFinishedEvent() {
+    logger.i("User ${this.loggedInUser.name} finished tapping");
     _bus.fire(new TapFinished(this.loggedInUser, 0.6, DateTime.now()));
   }
 

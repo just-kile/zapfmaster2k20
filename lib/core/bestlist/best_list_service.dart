@@ -26,9 +26,9 @@ class BestListService {
     if(event == null){
       return;
     }
-    await _bestListRepository.save(DrawingDto.fromTapFinished(event));
-//    _bestListRepository.s
     //save event to derived db table
+    await _bestListRepository.save(DrawingDto.fromTapFinished(event));
+
     //maybe fire BestListUpdated event
     _bestListController.add(await _bestListRepository.getBestList());
   }

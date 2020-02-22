@@ -32,6 +32,7 @@ dependencies:
   moor: 2.3.0
   moor_ffi: 0.4.0
   path_provider: 1.6.0
+  logger: ^0.8.3
 
 dev_dependencies:
   flutter_test:

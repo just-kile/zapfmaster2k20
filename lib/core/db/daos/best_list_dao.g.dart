@@ -8,4 +8,5 @@ part of 'best_list_dao.dart';
 
 mixin _$BestListDaoMixin on DatabaseAccessor<Zm2KDb> {
   $DrawingTable get drawing => db.drawing;
+  $UserTable get user => db.user;
 }
