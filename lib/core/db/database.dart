@@ -34,20 +34,19 @@ class Zm2KDb extends _$Zm2KDb {
         return m.createAll();
       },
       beforeOpen: (details) async {
-        print("Bootstrap users");
         if (details.wasCreated) {
-          print("Bootstrap users was created");
           [
             UserCompanion(name: Value("Pete"), hardwareToken: Value("1")),
             UserCompanion(name: Value("Karl"), hardwareToken: Value("2")),
             UserCompanion(name: Value("Zoghurt"), hardwareToken: Value("3")),
             UserCompanion(name: Value("Brain"), hardwareToken: Value("4"))
-          ].map((userCompanion) async => into(user).insert(userCompanion));
+          ].forEach((userCompanion) async {
+            await into(user).insert(userCompanion);
+            print("User ${userCompanion.name.value} created");
+          });
         }
       },
     );
-    // you should bump this number whenever you change or add a table definition. Migrations
-    // are covered later in this readme.
   }
 
   @override

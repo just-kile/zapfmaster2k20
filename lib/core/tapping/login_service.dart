@@ -17,20 +17,22 @@ class LoginService {
   }
 
   void userLoggedIn() async {
-    print("Log in user");
-    final user = await _userRepository.getUserByHardwareToken("1");
-    if(user == null){
-      print("User is null!");
+    var hardwareToken = "1";
+
+    final user = await _userRepository.getUserByHardwareToken(hardwareToken);
+    if (user == null) {
+      print("Cannot find user with hardware token $hardwareToken");
       return;
     }
     _bus.fire(new UserLoggedIn(user));
   }
 
   void userLoggedOut() async {
-    print("Log out user");
-    final user = await _userRepository.getUserByHardwareToken("1");
-    if(user == null){
-      print("User is null!");
+    var hardwareToken = "1";
+
+    final user = await _userRepository.getUserByHardwareToken(hardwareToken);
+    if (user == null) {
+      print("Cannot find user with hardware token $hardwareToken");
       return;
     }
 
