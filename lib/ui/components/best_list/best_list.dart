@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zapfmaster2k20/core/domain/user.dart';
+import 'package:zapfmaster2k20/core/bestlist/best_list_item_dto.dart';
 import 'package:zapfmaster2k20/locator.dart';
 import 'package:zapfmaster2k20/ui/components/best_list/best_list_view_model.dart';
 import 'package:zapfmaster2k20/ui/shared/base_widget.dart';
@@ -21,9 +21,9 @@ class BestList extends StatelessWidget {
 }
 
 class BestListView extends StatelessWidget {
-  final List<UserDto> _userList;
+  final List<BestListItemDto> _bestList;
 
-  const BestListView(this._userList);
+  const BestListView(this._bestList);
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +50,17 @@ class BestListView extends StatelessWidget {
             tooltip: 'Zapfmenge',
           )
         ],
-        rows: _userList.map((user) {
+        rows: _bestList.map((bestListItem) {
           counter = counter + 1;
           return DataRow(cells: [
             DataCell(Text('$counter.')),
-            DataCell(CircleAvatar(backgroundImage: AssetImage(user.imagePath))),
-            DataCell(Text(user.name)),
-            DataCell(Text("${4} L")),
+            DataCell(bestListItem.user.imagePath != null
+                ? CircleAvatar(
+                    backgroundImage: AssetImage(bestListItem.user.imagePath))
+                : CircleAvatar(
+                    backgroundImage: AssetImage("assets/testUser.jpg"))),
+            DataCell(Text(bestListItem.user.name)),
+            DataCell(Text("${bestListItem.amount} L")),
           ]);
         }).toList(),
       ),

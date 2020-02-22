@@ -29,7 +29,7 @@ dependencies:
   rxdart: ^0.22.0
   sqflite: 1.1.8
   path: 1.6.4
-  moor: 2.3.0
+  moor: 2.4.0
   moor_ffi: 0.4.0
   path_provider: 1.6.0
   logger: ^0.8.3

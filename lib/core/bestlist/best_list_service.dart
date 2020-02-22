@@ -7,15 +7,17 @@ import 'package:zapfmaster2k20/core/tapping/events.dart';
 import 'package:zapfmaster2k20/core/tapping/tapping_event_bus.dart';
 
 import '../../locator.dart';
+import 'best_list_item_dto.dart';
 import 'best_list_repository.dart';
 
 class BestListService {
   final BestListRepository _bestListRepository = locator<BestListRepository>();
   final TappingEventBus _bus = locator<TappingEventBus>();
 
-  StreamController<List<UserDto>> _bestListController = BehaviorSubject();
+  StreamController<List<BestListItemDto>> _bestListController =
+      BehaviorSubject();
 
-  Stream<List<UserDto>> get bestList => _bestListController.stream;
+  Stream<List<BestListItemDto>> get bestList => _bestListController.stream;
 
   BestListService() {
     updateBestList(null);
@@ -23,7 +25,7 @@ class BestListService {
   }
 
   void updateBestList(TapFinished event) async {
-    if(event == null){
+    if (event == null) {
       return;
     }
     //save event to derived db table
@@ -33,4 +35,7 @@ class BestListService {
     _bestListController.add(await _bestListRepository.getBestList());
   }
 
+  Future<List<BestListItemDto>> getBestList() async {
+    return _bestListRepository.getBestList();
+  }
 }

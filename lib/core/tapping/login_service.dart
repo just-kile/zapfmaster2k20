@@ -18,7 +18,7 @@ class LoginService {
   }
 
   void userLoggedIn() async {
-    var hardwareToken = "1";
+    var hardwareToken = "2";
 
     final user = await _userRepository.getUserByHardwareToken(hardwareToken);
     if (user == null) {
@@ -30,7 +30,7 @@ class LoginService {
   }
 
   void userLoggedOut() async {
-    var hardwareToken = "1";
+    var hardwareToken = "2";
     final user = await _userRepository.getUserByHardwareToken(hardwareToken);
     if (user == null) {
       logger.w("Cannot find user with hardware token $hardwareToken");

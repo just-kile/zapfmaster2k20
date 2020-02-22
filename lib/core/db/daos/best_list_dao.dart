@@ -7,24 +7,29 @@ import '../database.dart';
 part 'best_list_dao.g.dart';
 
 class BestListEntry {
-  BestListEntry(this.user, this.drawing);
+  BestListEntry(this.user, this.amount);
 
   final UserData user;
-  final DrawingData drawing;
+  final double amount;
 }
 
 @UseDao(tables: [Drawing, User])
 class BestListDao extends DatabaseAccessor<Zm2KDb> with _$BestListDaoMixin {
   BestListDao(Zm2KDb db) : super(db);
 
-  Future<List<BestListEntry>> getBestlistEntries() {
-    final query = select(drawing)
-        .join([leftOuterJoin(user, drawing.userId.equalsExp(user.id))]);
-    return query.watch().map((rows) {
-      return rows.map((row) {
-        return BestListEntry(row.readTable(user), row.readTable(drawing));
-      }).toList();
-    }).single;
+  Future<List<BestListEntry>> getBestlistEntries() async {
+    final drawingSum = drawing.amount.sum();
+    final query = select(drawing).join([
+      innerJoin(user, drawing.userId.equalsExp(user.id))
+    ]);
+    query
+      ..addColumns([drawingSum])
+      ..groupBy([drawing.userId]);
+
+    final List<TypedResult> result = await query.get();
+    return result
+        .map((row) => BestListEntry(row.readTable(user), row.read(drawingSum)))
+        .toList();
   }
 
   Future<int> saveDrawing(DrawingCompanion drawingData) {

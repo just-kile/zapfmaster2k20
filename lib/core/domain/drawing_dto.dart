@@ -15,7 +15,6 @@ class DrawingDto {
   }
 
   static DrawingDto fromTapFinished(TapFinished event) {
-//    return null;
-    return DrawingDto(null, event?.user?.id, event.amount, event.createdAt);
+    return DrawingDto(null, event.user.id, event.amount, event.createdAt);
   }
 }

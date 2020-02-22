@@ -332,7 +332,7 @@ packages:
       name: moor
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.0"
+    version: "2.4.0"
   moor_ffi:
     dependency: "direct main"
     description:
