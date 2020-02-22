@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zapfmaster2k20/core/constants/app_contstants.dart';
-import 'package:zapfmaster2k20/core/services/navigation_service.dart';
-import 'package:zapfmaster2k20/ui/shared/zm_custom_icons_icons.dart';
-
-import '../../locator.dart';
+import 'package:zapfmaster2k20/core/navigation/navigation_service.dart';
 
 Container withBackgroundImage(Widget child) {
   return Container(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zapfmaster2k20/ui/themes/style.dart';
 
 import 'core/constants/app_contstants.dart';
-import 'core/services/navigation_service.dart';
+import 'core/navigation/navigation_service.dart';
 import 'locator.dart';
 import 'ui/router.dart';
 

@@ -7,7 +7,7 @@ import 'package:zapfmaster2k20/ui/components/newsfeed/news_feed_view_model.dart'
 import 'core/bestlist/best_list_repository.dart';
 import 'core/db/database.dart';
 import 'core/newsfeed/newsfeed_repository.dart';
-import 'core/services/navigation_service.dart';
+import 'core/navigation/navigation_service.dart';
 import 'core/tapping/login_service.dart';
 import 'core/tapping/tap_service.dart';
 import 'core/tapping/tapping_event_bus.dart';

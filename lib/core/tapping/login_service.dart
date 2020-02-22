@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:logger/logger.dart';
 import 'package:zapfmaster2k20/core/tapping/tapping_event_bus.dart';
 import 'package:zapfmaster2k20/core/user/user_repository.dart';
 

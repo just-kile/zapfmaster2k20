@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:logger/logger.dart';
 import 'package:zapfmaster2k20/core/constants/app_contstants.dart';
-import 'package:zapfmaster2k20/core/domain/user.dart';
-import 'package:zapfmaster2k20/core/services/navigation_service.dart';
+import 'package:zapfmaster2k20/core/navigation/navigation_service.dart';
+import 'package:zapfmaster2k20/core/user/user_dto.dart';
 
 import '../../locator.dart';
 import '../../logger.dart';

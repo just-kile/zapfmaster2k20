@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:rxdart/rxdart.dart';
-import 'package:zapfmaster2k20/core/domain/drawing_dto.dart';
-import 'package:zapfmaster2k20/core/domain/user.dart';
+import 'package:zapfmaster2k20/core/bestlist/drawing_dto.dart';
 import 'package:zapfmaster2k20/core/tapping/events.dart';
 import 'package:zapfmaster2k20/core/tapping/tapping_event_bus.dart';
 
@@ -28,10 +27,9 @@ class BestListService {
     if (event == null) {
       return;
     }
-    //save event to derived db table
+
     await _bestListRepository.save(DrawingDto.fromTapFinished(event));
 
-    //maybe fire BestListUpdated event
     _bestListController.add(await _bestListRepository.getBestList());
   }
 

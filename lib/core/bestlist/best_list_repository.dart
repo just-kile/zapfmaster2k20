@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:moor/moor.dart';
 import 'package:zapfmaster2k20/core/db/daos/best_list_dao.dart';
 import 'package:zapfmaster2k20/core/db/database.dart';
-import 'package:zapfmaster2k20/core/domain/drawing_dto.dart';
+import 'package:zapfmaster2k20/core/bestlist/drawing_dto.dart';
 import 'package:zapfmaster2k20/locator.dart';
 
 import 'best_list_item_dto.dart';

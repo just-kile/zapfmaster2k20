@@ -1,13 +1,10 @@
 import 'package:zapfmaster2k20/core/db/database.dart';
-import 'package:zapfmaster2k20/core/domain/user.dart';
+import 'package:zapfmaster2k20/core/user/user_dto.dart';
 import 'package:zapfmaster2k20/locator.dart';
 
 class UserRepository {
   final Zm2KDb _db = locator<Zm2KDb>();
 
-  Future<List<UserDto>> getBestList() async {
-    return []; //_db.bestListDao.getDrawings();
-  }
   Future<UserDto> getUserByHardwareToken(String hardwareToken) async {
     final userData = await _db.userDao.getUserByHardwareToken(hardwareToken);
     if(userData == null){
