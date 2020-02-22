@@ -8,10 +8,10 @@ import '../../../locator.dart';
 
 class BestListViewModel extends BaseViewModel {
   BestListService _bestListService = locator<BestListService>();
-  StreamSubscription<List<User>> _streamSubscription;
-  List<User> bestlist = [];
+  StreamSubscription<List<UserDto>> _streamSubscription;
+  List<UserDto> bestlist = [];
 
-  void onData(List<User> users) async {
+  void onData(List<UserDto> users) async {
     this.bestlist = users;
     notifyListeners();
   }

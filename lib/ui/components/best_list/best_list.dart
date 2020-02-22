@@ -21,7 +21,7 @@ class BestList extends StatelessWidget {
 }
 
 class BestListView extends StatelessWidget {
-  final List<User> _userList;
+  final List<UserDto> _userList;
 
   const BestListView(this._userList);
 
@@ -56,7 +56,7 @@ class BestListView extends StatelessWidget {
             DataCell(Text('$counter.')),
             DataCell(CircleAvatar(backgroundImage: AssetImage(user.imagePath))),
             DataCell(Text(user.name)),
-            DataCell(Text("${user.tappedAmount} L")),
+            DataCell(Text("${4} L")),
           ]);
         }).toList(),
       ),

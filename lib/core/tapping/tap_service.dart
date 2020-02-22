@@ -11,14 +11,14 @@ import 'tapping_event_bus.dart';
 class TapService {
   final TappingEventBus _bus = locator<TappingEventBus>();
 
-  User loggedInUser;
+  UserDto loggedInUser;
 
   TapService() {
     _bus.on<UserLoggedIn>().listen(startTapping);
     _bus.on<UserLoggedOut>().listen(finishTapping);
   }
 
-  void startTapping(e) {
+  void startTapping(UserLoggedIn e) {
     this.loggedInUser = e.user;
     openDraftView();
 
@@ -44,7 +44,7 @@ class TapService {
   }
 
   void emitFinishedEvent() {
-    _bus.fire(new TapFinished(this.loggedInUser, 0.6));
+    _bus.fire(new TapFinished(this.loggedInUser, 0.6, DateTime.now()));
   }
 
   void resetUser() {

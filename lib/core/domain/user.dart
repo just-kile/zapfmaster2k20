@@ -1,10 +1,18 @@
-class User {
-  final String id;
+import 'package:zapfmaster2k20/core/db/database.dart';
+
+class UserDto {
+  final int id;
   final String name;
   final String imagePath;
   final String hardwareToken;
-  final double tappedAmount;
 
-  User(this.id, this.name, this.imagePath, this.hardwareToken,
-      this.tappedAmount);
+  UserDto(this.id, this.name, this.imagePath, this.hardwareToken);
+
+  static UserDto fromUserData(UserData userData) {
+    if (userData == null) {
+      return null;
+    }
+    return UserDto(
+        userData.id, userData.name, userData.imagePath, userData.hardwareToken);
+  }
 }

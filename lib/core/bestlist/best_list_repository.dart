@@ -1,25 +1,23 @@
 import 'dart:math';
 
-import 'package:zapfmaster2k20/core/domain/user.dart';
+import 'package:moor/moor.dart';
+import 'package:zapfmaster2k20/core/db/database.dart';
+import 'package:zapfmaster2k20/core/domain/drawing_dto.dart';
+import 'package:zapfmaster2k20/core/domain/user.dart' as UserDto;
+import 'package:zapfmaster2k20/locator.dart';
 
 class BestListRepository {
   final random = Random();
+  final Zm2KDb _db = locator<Zm2KDb>();
 
-  Future<List<User>> getBestList() async {
-    // Get user profile for id
-//    var nextInt = random.nextInt(10) + 1;
-    var nextInt = 40;
+  Future<List<UserDto.UserDto>> getBestList() async {
+    return []; //_db.bestListDao.getDrawings();
+  }
 
-    List list = List<User>();
-    for (var i = 0; i < nextInt; i++) {
-      list.add(User(
-          "1",
-          "Usr" + random.nextInt(1000).toString(),
-          "assets/testUser.jpg",
-          "hardware token",
-          double.parse((10 * random.nextDouble()).toStringAsFixed(2))));
-    }
-
-    return list;
+  Future<int> save(DrawingDto drawing) async {
+    return _db.bestListDao.saveDrawing(DrawingCompanion(
+        userId: Value(drawing.userId),
+        amount: Value(drawing.amount),
+        createdAt: Value(DateTime.now())));
   }
 }

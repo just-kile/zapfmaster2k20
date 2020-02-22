@@ -3,19 +3,19 @@ import 'package:zapfmaster2k20/core/domain/user.dart';
 abstract class Event{}
 
 class UserLoggedIn extends Event{
-  User user;
+  UserDto user;
 
   UserLoggedIn(this.user);
 }
 
 class UserLoggedOut extends Event{
-  User user;
+  UserDto user;
 
   UserLoggedOut(this.user);
 }
 
 class TapAmountUpdated extends Event{
-  User user;
+  UserDto user;
 
   double amount;
 
@@ -23,9 +23,11 @@ class TapAmountUpdated extends Event{
 }
 
 class TapFinished extends Event{
-  User user;
+  final UserDto user;
 
-  double amount;
+  final double amount;
 
-  TapFinished(this.user, this.amount);
+  final DateTime createdAt;
+
+  TapFinished(this.user, this.amount, this.createdAt);
 }
