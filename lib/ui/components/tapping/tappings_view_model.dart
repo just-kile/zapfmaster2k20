@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:zapfmaster2k20/core/db/domain/user_dto.dart';
 import 'package:zapfmaster2k20/core/tapping/events.dart';
 import 'package:zapfmaster2k20/core/tapping/tapping_event_bus.dart';
-import 'package:zapfmaster2k20/core/user/user_dto.dart';
 import 'package:zapfmaster2k20/locator.dart';
 import 'package:zapfmaster2k20/ui/shared/base_view_model.dart';
 

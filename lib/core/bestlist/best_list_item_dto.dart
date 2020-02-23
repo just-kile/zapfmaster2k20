@@ -1,5 +1,5 @@
-import 'package:zapfmaster2k20/core/db/daos/drawing_dao.dart';
-import 'package:zapfmaster2k20/core/user/user_dto.dart';
+import 'package:zapfmaster2k20/core/db/domain/best_list_entry.dart';
+import 'package:zapfmaster2k20/core/db/domain/user_dto.dart';
 
 class BestListItemDto {
   final UserDto user;
@@ -8,7 +8,6 @@ class BestListItemDto {
   BestListItemDto(this.user, this.amount);
 
   static BestListItemDto fromBestListEntry(BestListEntry entry) {
-    return BestListItemDto(
-        UserDto.fromUserData(entry.user), entry.amount);
+    return BestListItemDto(entry.user, entry.amount);
   }
 }

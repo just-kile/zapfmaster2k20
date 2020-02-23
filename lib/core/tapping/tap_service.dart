@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:zapfmaster2k20/core/constants/app_contstants.dart';
-import 'package:zapfmaster2k20/core/db/daos/drawing_dao.dart';
 import 'package:zapfmaster2k20/core/db/database.dart';
+import 'package:zapfmaster2k20/core/db/domain/drawing_dto.dart';
+import 'package:zapfmaster2k20/core/db/domain/user_dto.dart';
 import 'package:zapfmaster2k20/core/navigation/navigation_service.dart';
-import 'package:zapfmaster2k20/core/user/user_dto.dart';
 
 import '../../locator.dart';
 import '../../logger.dart';

@@ -1,27 +1,14 @@
 import 'package:moor/moor.dart';
+import 'package:zapfmaster2k20/core/db/domain/best_list_entry.dart';
+import 'package:zapfmaster2k20/core/db/domain/drawing_dto.dart';
+import 'package:zapfmaster2k20/core/db/domain/user_dto.dart';
 import 'package:zapfmaster2k20/core/db/tables/drawing.dart';
 import 'package:zapfmaster2k20/core/db/tables/user.dart';
-import 'package:zapfmaster2k20/core/tapping/events.dart';
 
 import '../database.dart';
 
 part 'drawing_dao.g.dart';
 
-class BestListEntry {
-  BestListEntry(this.user, this.amount);
-
-  final UserData user;
-  final double amount;
-}
-
-class DrawingDto {
-  final int id;
-  final int userId;
-  final double amount;
-  final DateTime createdAt;
-
-  DrawingDto(this.id, this.userId, this.amount, this.createdAt);
-}
 
 @UseDao(tables: [Drawing, User])
 class DrawingDao extends DatabaseAccessor<Zm2KDb> with _$DrawingDaoMixin {
@@ -33,11 +20,13 @@ class DrawingDao extends DatabaseAccessor<Zm2KDb> with _$DrawingDaoMixin {
         .join([innerJoin(user, drawing.userId.equalsExp(user.id))]);
     query
       ..addColumns([drawingSum])
-      ..groupBy([drawing.userId]);
+      ..groupBy([drawing.userId])
+      ..orderBy([OrderingTerm(expression: drawingSum)]);
 
     final List<TypedResult> result = await query.get();
     return result
-        .map((row) => BestListEntry(row.readTable(user), row.read(drawingSum)))
+        .map((row) => BestListEntry(
+            UserDto.fromUserData(row.readTable(user)), row.read(drawingSum)))
         .toList();
   }
 

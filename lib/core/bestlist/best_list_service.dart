@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:rxdart/rxdart.dart';
-import 'package:zapfmaster2k20/core/db/daos/drawing_dao.dart';
 import 'package:zapfmaster2k20/core/db/database.dart';
+import 'package:zapfmaster2k20/core/db/domain/best_list_entry.dart';
 import 'package:zapfmaster2k20/core/tapping/events.dart';
 import 'package:zapfmaster2k20/core/tapping/tapping_event_bus.dart';
 
@@ -30,6 +30,7 @@ class BestListService {
   Future<List<BestListItemDto>> getBestList() async {
     final List<BestListEntry> bestlistEntries =
         await _db.drawingDao.getBestlistEntries();
+    //Getting achievements here and merge them
     return bestlistEntries
         .map((dbEntry) => BestListItemDto.fromBestListEntry(dbEntry))
         .toList();
