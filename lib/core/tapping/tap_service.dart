@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:zapfmaster2k20/core/constants/app_contstants.dart';
+import 'package:zapfmaster2k20/core/db/daos/drawing_dao.dart';
+import 'package:zapfmaster2k20/core/db/database.dart';
 import 'package:zapfmaster2k20/core/navigation/navigation_service.dart';
 import 'package:zapfmaster2k20/core/user/user_dto.dart';
 
@@ -10,10 +12,11 @@ import 'events.dart';
 import 'tapping_event_bus.dart';
 
 class TapService {
-
   final TappingEventBus _bus = locator<TappingEventBus>();
-  UserDto loggedInUser;
+  final Zm2KDb _db = locator<Zm2KDb>();
 
+  UserDto loggedInUser;
+  double amount = 0;
   TapService() {
     _bus.on<UserLoggedIn>().listen(startTapping);
     _bus.on<UserLoggedOut>().listen(finishTapping);
@@ -21,7 +24,8 @@ class TapService {
 
   void startTapping(UserLoggedIn e) {
     this.loggedInUser = e.user;
-    openDraftView();
+    amount = 0;
+    _openDraftView();
 
     new Timer(const Duration(seconds: 1), () => tapAmount(0.1));
     new Timer(const Duration(seconds: 2), () => tapAmount(0.2));
@@ -35,30 +39,37 @@ class TapService {
     if (this.loggedInUser == null) {
       return;
     }
+    this.amount = amount;
     logger.i("User ${this.loggedInUser.name} tapped amount $amount");
     _bus.fire(new TapAmountUpdated(this.loggedInUser, amount));
   }
 
   void finishTapping(UserLoggedOut event) async {
-    emitFinishedEvent();
-    closeDraftView();
-    resetUser();
+    await _persistDrawing();
+    _emitFinishedEvent();
+    _closeDraftView();
+    _resetUser();
   }
 
-  void emitFinishedEvent() {
+  void _emitFinishedEvent() {
     logger.i("User ${this.loggedInUser.name} finished tapping");
     _bus.fire(new TapFinished(this.loggedInUser, 0.6, DateTime.now()));
   }
 
-  void resetUser() {
+  void _resetUser() {
     this.loggedInUser = null;
   }
 
-  void openDraftView() async {
+  void _openDraftView() async {
     locator<NavigationService>().navigateTo(RoutePaths.Tapping);
   }
 
-  void closeDraftView() async {
+  void _closeDraftView() async {
     locator<NavigationService>().pop();
+  }
+
+  Future<int> _persistDrawing() {
+    return _db.drawingDao.saveDrawing(
+        DrawingDto(null, this.loggedInUser.id, this.amount, DateTime.now()));
   }
 }

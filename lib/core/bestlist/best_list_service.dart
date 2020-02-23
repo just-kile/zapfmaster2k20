@@ -1,16 +1,17 @@
 import 'dart:async';
 
 import 'package:rxdart/rxdart.dart';
-import 'package:zapfmaster2k20/core/bestlist/drawing_dto.dart';
+import 'package:zapfmaster2k20/core/db/daos/drawing_dao.dart';
+import 'package:zapfmaster2k20/core/db/database.dart';
 import 'package:zapfmaster2k20/core/tapping/events.dart';
 import 'package:zapfmaster2k20/core/tapping/tapping_event_bus.dart';
 
 import '../../locator.dart';
 import 'best_list_item_dto.dart';
-import 'best_list_repository.dart';
 
 class BestListService {
-  final BestListRepository _bestListRepository = locator<BestListRepository>();
+  final Zm2KDb _db = locator<Zm2KDb>();
+
   final TappingEventBus _bus = locator<TappingEventBus>();
 
   StreamController<List<BestListItemDto>> _bestListController =
@@ -19,21 +20,18 @@ class BestListService {
   Stream<List<BestListItemDto>> get bestList => _bestListController.stream;
 
   BestListService() {
-    updateBestList(null);
     _bus.on<TapFinished>().listen(updateBestList);
   }
 
   void updateBestList(TapFinished event) async {
-    if (event == null) {
-      return;
-    }
-
-    await _bestListRepository.save(DrawingDto.fromTapFinished(event));
-
-    _bestListController.add(await _bestListRepository.getBestList());
+    _bestListController.add(await getBestList());
   }
 
   Future<List<BestListItemDto>> getBestList() async {
-    return _bestListRepository.getBestList();
+    final List<BestListEntry> bestlistEntries =
+        await _db.drawingDao.getBestlistEntries();
+    return bestlistEntries
+        .map((dbEntry) => BestListItemDto.fromBestListEntry(dbEntry))
+        .toList();
   }
 }

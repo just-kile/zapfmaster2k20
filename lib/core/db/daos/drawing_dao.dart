@@ -1,6 +1,7 @@
 import 'package:moor/moor.dart';
 import 'package:zapfmaster2k20/core/db/tables/drawing.dart';
 import 'package:zapfmaster2k20/core/db/tables/user.dart';
+import 'package:zapfmaster2k20/core/tapping/events.dart';
 
 import '../database.dart';
 
@@ -11,6 +12,15 @@ class BestListEntry {
 
   final UserData user;
   final double amount;
+}
+
+class DrawingDto {
+  final int id;
+  final int userId;
+  final double amount;
+  final DateTime createdAt;
+
+  DrawingDto(this.id, this.userId, this.amount, this.createdAt);
 }
 
 @UseDao(tables: [Drawing, User])
@@ -31,7 +41,10 @@ class DrawingDao extends DatabaseAccessor<Zm2KDb> with _$DrawingDaoMixin {
         .toList();
   }
 
-  Future<int> saveDrawing(DrawingCompanion drawingData) {
-    return into(drawing).insert(drawingData);
+  Future<int> saveDrawing(DrawingDto drawingData) {
+    return into(drawing).insert(DrawingCompanion(
+        userId: Value(drawingData.userId),
+        amount: Value(drawingData.amount),
+        createdAt: Value(DateTime.now())));
   }
 }
