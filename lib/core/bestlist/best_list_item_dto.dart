@@ -1,4 +1,4 @@
-import 'package:zapfmaster2k20/core/db/daos/best_list_dao.dart';
+import 'package:zapfmaster2k20/core/db/daos/drawing_dao.dart';
 import 'package:zapfmaster2k20/core/user/user_dto.dart';
 
 class BestListItemDto {

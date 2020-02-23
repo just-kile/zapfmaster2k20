@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:moor/moor.dart';
-import 'package:zapfmaster2k20/core/db/daos/best_list_dao.dart';
+import 'package:zapfmaster2k20/core/db/daos/drawing_dao.dart';
 import 'package:zapfmaster2k20/core/db/database.dart';
 import 'package:zapfmaster2k20/core/bestlist/drawing_dto.dart';
 import 'package:zapfmaster2k20/locator.dart';
@@ -14,14 +14,14 @@ class BestListRepository {
 
   Future<List<BestListItemDto>> getBestList() async {
     final List<BestListEntry> bestlistEntries =
-        await _db.bestListDao.getBestlistEntries();
+        await _db.drawingDao.getBestlistEntries();
     return bestlistEntries
         .map((dbEntry) => BestListItemDto.fromBestListEntry(dbEntry))
         .toList();
   }
 
   Future<int> save(DrawingDto drawing) async {
-    return _db.bestListDao.saveDrawing(DrawingCompanion(
+    return _db.drawingDao.saveDrawing(DrawingCompanion(
         userId: Value(drawing.userId),
         amount: Value(drawing.amount),
         createdAt: Value(DateTime.now())));

@@ -496,8 +496,8 @@ abstract class _$Zm2KDb extends GeneratedDatabase {
   $DrawingTable get drawing => _drawing ??= $DrawingTable(this);
   $UserTable _user;
   $UserTable get user => _user ??= $UserTable(this);
-  BestListDao _bestListDao;
-  BestListDao get bestListDao => _bestListDao ??= BestListDao(this as Zm2KDb);
+  DrawingDao _drawingDao;
+  DrawingDao get drawingDao => _drawingDao ??= DrawingDao(this as Zm2KDb);
   UserDao _userDao;
   UserDao get userDao => _userDao ??= UserDao(this as Zm2KDb);
   @override
