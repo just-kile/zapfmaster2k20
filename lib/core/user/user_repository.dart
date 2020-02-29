@@ -9,10 +9,4 @@ class UserRepository {
     return _db.userDao.getUserByHardwareToken(hardwareToken);
   }
 
-//  Future<int> save(UserDto drawing) async {
-//    return _db.userDao.saveDrawing(DrawingCompanion(
-//        userId: Value(drawing.userId),
-//        amount: Value(drawing.amount),
-//        createdAt: Value(DateTime.now())));
-//  }
 }

@@ -9,7 +9,6 @@ import '../database.dart';
 
 part 'drawing_dao.g.dart';
 
-
 @UseDao(tables: [Drawing, User])
 class DrawingDao extends DatabaseAccessor<Zm2KDb> with _$DrawingDaoMixin {
   DrawingDao(Zm2KDb db) : super(db);
@@ -21,7 +20,8 @@ class DrawingDao extends DatabaseAccessor<Zm2KDb> with _$DrawingDaoMixin {
     query
       ..addColumns([drawingSum])
       ..groupBy([drawing.userId])
-      ..orderBy([OrderingTerm(expression: drawingSum)]);
+      ..orderBy(
+          [OrderingTerm(expression: drawingSum, mode: OrderingMode.desc)]);
 
     final List<TypedResult> result = await query.get();
     return result

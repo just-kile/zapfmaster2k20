@@ -6,4 +6,12 @@ class Drawing extends Table {
   RealColumn get amount => real()();
 
   DateTimeColumn get createdAt=> dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => [
+    'FOREIGN KEY(user_id) REFERENCES users(id)',
+  ];
 }

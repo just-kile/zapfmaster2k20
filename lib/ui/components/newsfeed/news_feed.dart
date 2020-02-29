@@ -17,7 +17,7 @@ class NewsFeed extends StatelessWidget {
               )
             : Expanded(
                 child: ListView.builder(
-                itemCount: 3,
+                itemCount: model.news.length,
                 itemBuilder: (context, index) => Card(
                   color: Colors.transparent,
                   shape: new RoundedRectangleBorder(
@@ -29,7 +29,7 @@ class NewsFeed extends StatelessWidget {
                       ListTile(
                         leading: CircleAvatar(
                             backgroundImage: AssetImage("assets/testUser.jpg")),
-                        title: Text("Test"),
+                        title: Text(model.news[index].toString()),
                         subtitle: Text('Achievements:'),
                         trailing: Text("L"),
                       ),

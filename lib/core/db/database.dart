@@ -8,8 +8,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:zapfmaster2k20/core/db/tables/drawing.dart';
 import 'package:zapfmaster2k20/core/db/tables/user.dart';
 
+import '../../logger.dart';
 import 'daos/drawing_dao.dart';
+import 'daos/news_dao.dart';
 import 'daos/user_dao.dart';
+import 'tables/news.dart';
 
 part 'database.g.dart';
 
@@ -21,7 +24,7 @@ LazyDatabase _openConnection() {
   });
 }
 
-@UseMoor(tables: [Drawing, User], daos: [DrawingDao, UserDao])
+@UseMoor(tables: [Drawing, User, News], daos: [DrawingDao, UserDao, NewsDao])
 class Zm2KDb extends _$Zm2KDb {
   // we tell the database where to store the data with this constructor
   Zm2KDb() : super(_openConnection());
@@ -42,7 +45,7 @@ class Zm2KDb extends _$Zm2KDb {
             UserCompanion(name: Value("Brain"), hardwareToken: Value("4"))
           ].forEach((userCompanion) async {
             await into(user).insert(userCompanion);
-            print("User ${userCompanion.name.value} created");
+            logger.i("User ${userCompanion.name.value} created");
           });
         }
       },
