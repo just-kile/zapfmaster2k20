@@ -12,6 +12,7 @@ import '../../logger.dart';
 import 'daos/drawing_dao.dart';
 import 'daos/news_dao.dart';
 import 'daos/user_dao.dart';
+import 'domain/news_item.dart';
 import 'tables/news.dart';
 
 part 'database.g.dart';
@@ -33,10 +34,11 @@ class Zm2KDb extends _$Zm2KDb {
   MigrationStrategy get migration {
     return MigrationStrategy(
       onCreate: (Migrator m) {
-        print("DB created");
+        logger.i("Create DB");
         return m.createAll();
       },
       beforeOpen: (details) async {
+        initNewsDetailsJsonMapper();
         if (details.wasCreated) {
           [
             UserCompanion(name: Value("Pete"), hardwareToken: Value("1")),

@@ -4,9 +4,12 @@ import 'package:zapfmaster2k20/ui/themes/style.dart';
 import 'core/constants/app_contstants.dart';
 import 'core/navigation/navigation_service.dart';
 import 'locator.dart';
+import 'main.reflectable.dart';
 import 'ui/router.dart';
 
 void main() {
+  initializeReflectable();
+
   setupLocator();
   runApp(Zm2kApp());
 }

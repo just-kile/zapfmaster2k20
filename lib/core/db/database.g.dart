@@ -492,26 +492,28 @@ class $UserTable extends User with TableInfo<$UserTable, UserData> {
 
 class New extends DataClass implements Insertable<New> {
   final int id;
-  final String name;
-  final String imagePath;
-  final String hardwareToken;
+  final int userId;
+  final DateTime createdAt;
+  final NewsDetails newsDetails;
   New(
       {@required this.id,
-      @required this.name,
-      this.imagePath,
-      this.hardwareToken});
+      this.userId,
+      @required this.createdAt,
+      this.newsDetails});
   factory New.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
     final stringType = db.typeSystem.forDartType<String>();
     return New(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
-      imagePath: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}image_path']),
-      hardwareToken: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}hardware_token']),
+      userId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}user_id']),
+      createdAt: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}created_at']),
+      newsDetails: $NewsTable.$converter0.mapToDart(stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}news_details'])),
     );
   }
   factory New.fromJson(Map<String, dynamic> json,
@@ -519,9 +521,9 @@ class New extends DataClass implements Insertable<New> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return New(
       id: serializer.fromJson<int>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
-      imagePath: serializer.fromJson<String>(json['imagePath']),
-      hardwareToken: serializer.fromJson<String>(json['hardwareToken']),
+      userId: serializer.fromJson<int>(json['userId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      newsDetails: serializer.fromJson<NewsDetails>(json['newsDetails']),
     );
   }
   @override
@@ -529,9 +531,9 @@ class New extends DataClass implements Insertable<New> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'name': serializer.toJson<String>(name),
-      'imagePath': serializer.toJson<String>(imagePath),
-      'hardwareToken': serializer.toJson<String>(hardwareToken),
+      'userId': serializer.toJson<int>(userId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'newsDetails': serializer.toJson<NewsDetails>(newsDetails),
     };
   }
 
@@ -539,74 +541,76 @@ class New extends DataClass implements Insertable<New> {
   NewsCompanion createCompanion(bool nullToAbsent) {
     return NewsCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
-      imagePath: imagePath == null && nullToAbsent
+      userId:
+          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+      createdAt: createdAt == null && nullToAbsent
           ? const Value.absent()
-          : Value(imagePath),
-      hardwareToken: hardwareToken == null && nullToAbsent
+          : Value(createdAt),
+      newsDetails: newsDetails == null && nullToAbsent
           ? const Value.absent()
-          : Value(hardwareToken),
+          : Value(newsDetails),
     );
   }
 
-  New copyWith({int id, String name, String imagePath, String hardwareToken}) =>
+  New copyWith(
+          {int id, int userId, DateTime createdAt, NewsDetails newsDetails}) =>
       New(
         id: id ?? this.id,
-        name: name ?? this.name,
-        imagePath: imagePath ?? this.imagePath,
-        hardwareToken: hardwareToken ?? this.hardwareToken,
+        userId: userId ?? this.userId,
+        createdAt: createdAt ?? this.createdAt,
+        newsDetails: newsDetails ?? this.newsDetails,
       );
   @override
   String toString() {
     return (StringBuffer('New(')
           ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('imagePath: $imagePath, ')
-          ..write('hardwareToken: $hardwareToken')
+          ..write('userId: $userId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('newsDetails: $newsDetails')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => $mrjf($mrjc(id.hashCode,
-      $mrjc(name.hashCode, $mrjc(imagePath.hashCode, hardwareToken.hashCode))));
+      $mrjc(userId.hashCode, $mrjc(createdAt.hashCode, newsDetails.hashCode))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is New &&
           other.id == this.id &&
-          other.name == this.name &&
-          other.imagePath == this.imagePath &&
-          other.hardwareToken == this.hardwareToken);
+          other.userId == this.userId &&
+          other.createdAt == this.createdAt &&
+          other.newsDetails == this.newsDetails);
 }
 
 class NewsCompanion extends UpdateCompanion<New> {
   final Value<int> id;
-  final Value<String> name;
-  final Value<String> imagePath;
-  final Value<String> hardwareToken;
+  final Value<int> userId;
+  final Value<DateTime> createdAt;
+  final Value<NewsDetails> newsDetails;
   const NewsCompanion({
     this.id = const Value.absent(),
-    this.name = const Value.absent(),
-    this.imagePath = const Value.absent(),
-    this.hardwareToken = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.newsDetails = const Value.absent(),
   });
   NewsCompanion.insert({
     this.id = const Value.absent(),
-    @required String name,
-    this.imagePath = const Value.absent(),
-    this.hardwareToken = const Value.absent(),
-  }) : name = Value(name);
+    this.userId = const Value.absent(),
+    @required DateTime createdAt,
+    this.newsDetails = const Value.absent(),
+  }) : createdAt = Value(createdAt);
   NewsCompanion copyWith(
       {Value<int> id,
-      Value<String> name,
-      Value<String> imagePath,
-      Value<String> hardwareToken}) {
+      Value<int> userId,
+      Value<DateTime> createdAt,
+      Value<NewsDetails> newsDetails}) {
     return NewsCompanion(
       id: id ?? this.id,
-      name: name ?? this.name,
-      imagePath: imagePath ?? this.imagePath,
-      hardwareToken: hardwareToken ?? this.hardwareToken,
+      userId: userId ?? this.userId,
+      createdAt: createdAt ?? this.createdAt,
+      newsDetails: newsDetails ?? this.newsDetails,
     );
   }
 }
@@ -624,46 +628,46 @@ class $NewsTable extends News with TableInfo<$NewsTable, New> {
         hasAutoIncrement: true, declaredAsPrimaryKey: true);
   }
 
-  final VerificationMeta _nameMeta = const VerificationMeta('name');
-  GeneratedTextColumn _name;
+  final VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  GeneratedIntColumn _userId;
   @override
-  GeneratedTextColumn get name => _name ??= _constructName();
-  GeneratedTextColumn _constructName() {
-    return GeneratedTextColumn(
-      'name',
+  GeneratedIntColumn get userId => _userId ??= _constructUserId();
+  GeneratedIntColumn _constructUserId() {
+    return GeneratedIntColumn(
+      'user_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
+  GeneratedDateTimeColumn _createdAt;
+  @override
+  GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
+  GeneratedDateTimeColumn _constructCreatedAt() {
+    return GeneratedDateTimeColumn(
+      'created_at',
       $tableName,
       false,
     );
   }
 
-  final VerificationMeta _imagePathMeta = const VerificationMeta('imagePath');
-  GeneratedTextColumn _imagePath;
+  final VerificationMeta _newsDetailsMeta =
+      const VerificationMeta('newsDetails');
+  GeneratedTextColumn _newsDetails;
   @override
-  GeneratedTextColumn get imagePath => _imagePath ??= _constructImagePath();
-  GeneratedTextColumn _constructImagePath() {
+  GeneratedTextColumn get newsDetails =>
+      _newsDetails ??= _constructNewsDetails();
+  GeneratedTextColumn _constructNewsDetails() {
     return GeneratedTextColumn(
-      'image_path',
-      $tableName,
-      true,
-    );
-  }
-
-  final VerificationMeta _hardwareTokenMeta =
-      const VerificationMeta('hardwareToken');
-  GeneratedTextColumn _hardwareToken;
-  @override
-  GeneratedTextColumn get hardwareToken =>
-      _hardwareToken ??= _constructHardwareToken();
-  GeneratedTextColumn _constructHardwareToken() {
-    return GeneratedTextColumn(
-      'hardware_token',
+      'news_details',
       $tableName,
       true,
     );
   }
 
   @override
-  List<GeneratedColumn> get $columns => [id, name, imagePath, hardwareToken];
+  List<GeneratedColumn> get $columns => [id, userId, createdAt, newsDetails];
   @override
   $NewsTable get asDslTable => this;
   @override
@@ -677,22 +681,17 @@ class $NewsTable extends News with TableInfo<$NewsTable, New> {
     if (d.id.present) {
       context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
     }
-    if (d.name.present) {
+    if (d.userId.present) {
       context.handle(
-          _nameMeta, name.isAcceptableValue(d.name.value, _nameMeta));
+          _userIdMeta, userId.isAcceptableValue(d.userId.value, _userIdMeta));
+    }
+    if (d.createdAt.present) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableValue(d.createdAt.value, _createdAtMeta));
     } else if (isInserting) {
-      context.missing(_nameMeta);
+      context.missing(_createdAtMeta);
     }
-    if (d.imagePath.present) {
-      context.handle(_imagePathMeta,
-          imagePath.isAcceptableValue(d.imagePath.value, _imagePathMeta));
-    }
-    if (d.hardwareToken.present) {
-      context.handle(
-          _hardwareTokenMeta,
-          hardwareToken.isAcceptableValue(
-              d.hardwareToken.value, _hardwareTokenMeta));
-    }
+    context.handle(_newsDetailsMeta, const VerificationResult.success());
     return context;
   }
 
@@ -710,15 +709,16 @@ class $NewsTable extends News with TableInfo<$NewsTable, New> {
     if (d.id.present) {
       map['id'] = Variable<int, IntType>(d.id.value);
     }
-    if (d.name.present) {
-      map['name'] = Variable<String, StringType>(d.name.value);
+    if (d.userId.present) {
+      map['user_id'] = Variable<int, IntType>(d.userId.value);
     }
-    if (d.imagePath.present) {
-      map['image_path'] = Variable<String, StringType>(d.imagePath.value);
+    if (d.createdAt.present) {
+      map['created_at'] = Variable<DateTime, DateTimeType>(d.createdAt.value);
     }
-    if (d.hardwareToken.present) {
-      map['hardware_token'] =
-          Variable<String, StringType>(d.hardwareToken.value);
+    if (d.newsDetails.present) {
+      final converter = $NewsTable.$converter0;
+      map['news_details'] =
+          Variable<String, StringType>(converter.mapToSql(d.newsDetails.value));
     }
     return map;
   }
@@ -727,6 +727,9 @@ class $NewsTable extends News with TableInfo<$NewsTable, New> {
   $NewsTable createAlias(String alias) {
     return $NewsTable(_db, alias);
   }
+
+  static TypeConverter<NewsDetails, String> $converter0 =
+      const NewsDetailsConverter();
 }
 
 abstract class _$Zm2KDb extends GeneratedDatabase {
