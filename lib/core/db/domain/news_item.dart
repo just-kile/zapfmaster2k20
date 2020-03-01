@@ -21,7 +21,8 @@ abstract class NewsDetails {}
 
 @jsonSerializable
 class UserTappedNewsDetails extends NewsDetails {
-  String amount;
+  double amount;
 
-  UserTappedNewsDetails(String amount);
+  UserTappedNewsDetails(this.amount);
+
 }

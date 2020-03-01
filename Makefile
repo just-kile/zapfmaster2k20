@@ -3,5 +3,5 @@ build_model:
 
 build_json:
 	flutter pub run build_runner build
-clean:
-	flutter pub run build_runner clean
+
+build: build_json build_model

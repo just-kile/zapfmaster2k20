@@ -25,4 +25,11 @@ class NewsDao extends DatabaseAccessor<Zm2KDb> with _$NewsDaoMixin {
             row.readTable(news).newsDetails))
         .toList();
   }
+
+  Future<int> saveNews(NewsItem newsItem) async {
+    return into(news).insert(NewsCompanion(
+        userId: Value(newsItem.user?.id),
+        newsDetails: Value(newsItem.details),
+        createdAt: Value(DateTime.now())));
+  }
 }
