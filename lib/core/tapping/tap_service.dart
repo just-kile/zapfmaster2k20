@@ -45,6 +45,11 @@ class TapService {
   }
 
   void finishTapping(UserLoggedOut event) async {
+    if (this.loggedInUser == null) {
+      logger.w(
+          "Can not logout User ${event.user?.name} because of not being logged in");
+      return;
+    }
     var drawingDto = await _persistDrawing();
     _emitFinishedEvent(drawingDto);
     _closeDraftView();

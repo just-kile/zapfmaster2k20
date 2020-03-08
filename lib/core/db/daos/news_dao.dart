@@ -22,7 +22,8 @@ class NewsDao extends DatabaseAccessor<Zm2KDb> with _$NewsDaoMixin {
 
     query
       ..orderBy(
-          [OrderingTerm(expression: news.createdAt, mode: OrderingMode.desc)]);
+          [OrderingTerm(expression: news.createdAt, mode: OrderingMode.desc)])
+      ..limit(limit, offset: offset);
     final List<TypedResult> result = await query.get();
     return result
         .map((row) => NewsItem(
@@ -35,6 +36,7 @@ class NewsDao extends DatabaseAccessor<Zm2KDb> with _$NewsDaoMixin {
   Future<int> saveNews(NewsItem newsItem) async {
     return into(news).insert(NewsCompanion(
         userId: Value(newsItem.user?.id),
+        drawingId: Value(newsItem.drawing?.id),
         newsDetails: Value(newsItem.details),
         createdAt: Value(DateTime.now())));
   }

@@ -11,15 +11,19 @@ class NewsFeedViewModel extends BaseViewModel {
   StreamSubscription<List<NewsItem>> _streamSubscription;
   List<NewsItem> news = [];
 
-  void onData(List<NewsItem> news) async {
+  void _onData(List<NewsItem> news) async {
     this.news = news;
     notifyListeners();
   }
 
   Future initialise() async {
     setBusy(true);
-    this._streamSubscription = _newsFeedService.news.listen(onData);
+    this._streamSubscription = _newsFeedService.news.listen(_onData);
     setBusy(false);
+  }
+
+  Future loadMoreData() async {
+    await _newsFeedService.loadAdditionalNews();
   }
 
   @override

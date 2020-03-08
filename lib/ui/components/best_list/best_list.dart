@@ -60,7 +60,7 @@ class BestListView extends StatelessWidget {
                 : CircleAvatar(
                     backgroundImage: AssetImage("assets/testUser.jpg"))),
             DataCell(Text(bestListItem.user.name)),
-            DataCell(Text("${bestListItem.amount} L")),
+            DataCell(Text("${bestListItem.amount?.toStringAsFixed(2)} L")),
           ]);
         }).toList(),
       ),
