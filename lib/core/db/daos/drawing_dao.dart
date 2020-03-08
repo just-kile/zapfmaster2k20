@@ -30,10 +30,12 @@ class DrawingDao extends DatabaseAccessor<Zm2KDb> with _$DrawingDaoMixin {
         .toList();
   }
 
-  Future<int> saveDrawing(DrawingDto drawingData) {
-    return into(drawing).insert(DrawingCompanion(
+  Future<DrawingDto> saveDrawing(DrawingDto drawingData) async {
+    var drawingCompanion = DrawingCompanion(
         userId: Value(drawingData.userId),
         amount: Value(drawingData.amount),
-        createdAt: Value(DateTime.now())));
+        createdAt: Value(DateTime.now()));
+    var drawingId = await into(drawing).insert(drawingCompanion);
+    return DrawingDto.from(drawingCompanion.copyWith(id: Value(drawingId)));
   }
 }

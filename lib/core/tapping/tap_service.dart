@@ -45,15 +45,15 @@ class TapService {
   }
 
   void finishTapping(UserLoggedOut event) async {
-    await _persistDrawing();
-    _emitFinishedEvent();
+    var drawingDto = await _persistDrawing();
+    _emitFinishedEvent(drawingDto);
     _closeDraftView();
     _resetUser();
   }
 
-  void _emitFinishedEvent() {
+  void _emitFinishedEvent(DrawingDto drawingDto) {
     logger.i("User ${this.loggedInUser.name} finished tapping");
-    _bus.fire(new TapFinished(this.loggedInUser, 0.6, DateTime.now()));
+    _bus.fire(new TapFinished(this.loggedInUser, drawingDto, DateTime.now()));
   }
 
   void _resetUser() {
@@ -68,7 +68,7 @@ class TapService {
     locator<NavigationService>().pop();
   }
 
-  Future<int> _persistDrawing() {
+  Future<DrawingDto> _persistDrawing() {
     return _db.drawingDao.saveDrawing(
         DrawingDto(null, this.loggedInUser.id, this.amount, DateTime.now()));
   }

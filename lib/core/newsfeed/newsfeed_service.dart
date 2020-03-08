@@ -24,7 +24,7 @@ class NewsFeedService {
   void updateNewsFeed(TapFinished event) async {
     //save event to derived db table
     await _db.newsDao.saveNews(
-        NewsItem(event.user, UserTappedNewsDetails(event.amount)));
+        NewsItem(event.user, event.drawingDto, UserTappedNewsDetails()));
     //maybe fire BestListUpdated event
     await refreshNewsList();
   }

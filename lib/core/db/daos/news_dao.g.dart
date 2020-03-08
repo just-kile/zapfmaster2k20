@@ -9,4 +9,5 @@ part of 'news_dao.dart';
 mixin _$NewsDaoMixin on DatabaseAccessor<Zm2KDb> {
   $NewsTable get news => db.news;
   $UserTable get user => db.user;
+  $DrawingTable get drawing => db.drawing;
 }

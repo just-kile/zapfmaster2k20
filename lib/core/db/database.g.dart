@@ -493,11 +493,13 @@ class $UserTable extends User with TableInfo<$UserTable, UserData> {
 class New extends DataClass implements Insertable<New> {
   final int id;
   final int userId;
+  final int drawingId;
   final DateTime createdAt;
   final NewsDetails newsDetails;
   New(
       {@required this.id,
       this.userId,
+      this.drawingId,
       @required this.createdAt,
       this.newsDetails});
   factory New.fromData(Map<String, dynamic> data, GeneratedDatabase db,
@@ -510,6 +512,8 @@ class New extends DataClass implements Insertable<New> {
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       userId:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}user_id']),
+      drawingId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}drawing_id']),
       createdAt: dateTimeType
           .mapFromDatabaseResponse(data['${effectivePrefix}created_at']),
       newsDetails: $NewsTable.$converter0.mapToDart(stringType
@@ -522,6 +526,7 @@ class New extends DataClass implements Insertable<New> {
     return New(
       id: serializer.fromJson<int>(json['id']),
       userId: serializer.fromJson<int>(json['userId']),
+      drawingId: serializer.fromJson<int>(json['drawingId']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       newsDetails: serializer.fromJson<NewsDetails>(json['newsDetails']),
     );
@@ -532,6 +537,7 @@ class New extends DataClass implements Insertable<New> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'userId': serializer.toJson<int>(userId),
+      'drawingId': serializer.toJson<int>(drawingId),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'newsDetails': serializer.toJson<NewsDetails>(newsDetails),
     };
@@ -543,6 +549,9 @@ class New extends DataClass implements Insertable<New> {
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       userId:
           userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+      drawingId: drawingId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(drawingId),
       createdAt: createdAt == null && nullToAbsent
           ? const Value.absent()
           : Value(createdAt),
@@ -553,10 +562,15 @@ class New extends DataClass implements Insertable<New> {
   }
 
   New copyWith(
-          {int id, int userId, DateTime createdAt, NewsDetails newsDetails}) =>
+          {int id,
+          int userId,
+          int drawingId,
+          DateTime createdAt,
+          NewsDetails newsDetails}) =>
       New(
         id: id ?? this.id,
         userId: userId ?? this.userId,
+        drawingId: drawingId ?? this.drawingId,
         createdAt: createdAt ?? this.createdAt,
         newsDetails: newsDetails ?? this.newsDetails,
       );
@@ -565,6 +579,7 @@ class New extends DataClass implements Insertable<New> {
     return (StringBuffer('New(')
           ..write('id: $id, ')
           ..write('userId: $userId, ')
+          ..write('drawingId: $drawingId, ')
           ..write('createdAt: $createdAt, ')
           ..write('newsDetails: $newsDetails')
           ..write(')'))
@@ -572,14 +587,19 @@ class New extends DataClass implements Insertable<New> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode,
-      $mrjc(userId.hashCode, $mrjc(createdAt.hashCode, newsDetails.hashCode))));
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(
+          userId.hashCode,
+          $mrjc(drawingId.hashCode,
+              $mrjc(createdAt.hashCode, newsDetails.hashCode)))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is New &&
           other.id == this.id &&
           other.userId == this.userId &&
+          other.drawingId == this.drawingId &&
           other.createdAt == this.createdAt &&
           other.newsDetails == this.newsDetails);
 }
@@ -587,28 +607,33 @@ class New extends DataClass implements Insertable<New> {
 class NewsCompanion extends UpdateCompanion<New> {
   final Value<int> id;
   final Value<int> userId;
+  final Value<int> drawingId;
   final Value<DateTime> createdAt;
   final Value<NewsDetails> newsDetails;
   const NewsCompanion({
     this.id = const Value.absent(),
     this.userId = const Value.absent(),
+    this.drawingId = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.newsDetails = const Value.absent(),
   });
   NewsCompanion.insert({
     this.id = const Value.absent(),
     this.userId = const Value.absent(),
+    this.drawingId = const Value.absent(),
     @required DateTime createdAt,
     this.newsDetails = const Value.absent(),
   }) : createdAt = Value(createdAt);
   NewsCompanion copyWith(
       {Value<int> id,
       Value<int> userId,
+      Value<int> drawingId,
       Value<DateTime> createdAt,
       Value<NewsDetails> newsDetails}) {
     return NewsCompanion(
       id: id ?? this.id,
       userId: userId ?? this.userId,
+      drawingId: drawingId ?? this.drawingId,
       createdAt: createdAt ?? this.createdAt,
       newsDetails: newsDetails ?? this.newsDetails,
     );
@@ -635,6 +660,18 @@ class $NewsTable extends News with TableInfo<$NewsTable, New> {
   GeneratedIntColumn _constructUserId() {
     return GeneratedIntColumn(
       'user_id',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _drawingIdMeta = const VerificationMeta('drawingId');
+  GeneratedIntColumn _drawingId;
+  @override
+  GeneratedIntColumn get drawingId => _drawingId ??= _constructDrawingId();
+  GeneratedIntColumn _constructDrawingId() {
+    return GeneratedIntColumn(
+      'drawing_id',
       $tableName,
       true,
     );
@@ -667,7 +704,8 @@ class $NewsTable extends News with TableInfo<$NewsTable, New> {
   }
 
   @override
-  List<GeneratedColumn> get $columns => [id, userId, createdAt, newsDetails];
+  List<GeneratedColumn> get $columns =>
+      [id, userId, drawingId, createdAt, newsDetails];
   @override
   $NewsTable get asDslTable => this;
   @override
@@ -684,6 +722,10 @@ class $NewsTable extends News with TableInfo<$NewsTable, New> {
     if (d.userId.present) {
       context.handle(
           _userIdMeta, userId.isAcceptableValue(d.userId.value, _userIdMeta));
+    }
+    if (d.drawingId.present) {
+      context.handle(_drawingIdMeta,
+          drawingId.isAcceptableValue(d.drawingId.value, _drawingIdMeta));
     }
     if (d.createdAt.present) {
       context.handle(_createdAtMeta,
@@ -711,6 +753,9 @@ class $NewsTable extends News with TableInfo<$NewsTable, New> {
     }
     if (d.userId.present) {
       map['user_id'] = Variable<int, IntType>(d.userId.value);
+    }
+    if (d.drawingId.present) {
+      map['drawing_id'] = Variable<int, IntType>(d.drawingId.value);
     }
     if (d.createdAt.present) {
       map['created_at'] = Variable<DateTime, DateTimeType>(d.createdAt.value);

@@ -1,3 +1,4 @@
+import 'package:zapfmaster2k20/core/db/domain/drawing_dto.dart';
 import 'package:zapfmaster2k20/core/db/domain/user_dto.dart';
 
 abstract class Event{}
@@ -25,9 +26,10 @@ class TapAmountUpdated extends Event{
 class TapFinished extends Event{
   final UserDto user;
 
-  final double amount;
+  final DrawingDto drawingDto;
 
   final DateTime createdAt;
 
-  TapFinished(this.user, this.amount, this.createdAt);
+  TapFinished(this.user, this.drawingDto, this.createdAt);
+
 }

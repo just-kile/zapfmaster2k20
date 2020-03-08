@@ -25,8 +25,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             519,
             0,
             const prefix0.JsonSerializable(),
-            const <int>[1],
-            const <int>[2, 3, 4, 5, 6],
+            const <int>[0],
+            const <int>[1, 2, 3, 4, 5],
             const <int>[],
             -1,
             {},
@@ -46,16 +46,13 @@ final _data = <r.Reflectable, r.ReflectorData>{
             7,
             1,
             const prefix0.JsonSerializable(),
-            const <int>[0, 9],
-            const <int>[2, 3, 4, 5, 6, 7, 8],
+            const <int>[6],
+            const <int>[1, 2, 3, 4, 5],
             const <int>[],
             0,
             {},
             {},
-            {
-              r'': (b) =>
-                  (amount) => b ? prefix1.UserTappedNewsDetails(amount) : null
-            },
+            {r'': (b) => () => b ? prefix1.UserTappedNewsDetails() : null},
             -1,
             1,
             const <int>[],
@@ -63,19 +60,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null)
       ],
       <m.DeclarationMirror>[
-        r.VariableMirrorImpl(
-            r'amount',
-            32773,
-            1,
-            const prefix0.JsonSerializable(),
-            -1,
-            2,
-            2, const <int>[], const []),
         r.MethodMirrorImpl(r'', 64, 0, -1, 0, 0, const <int>[], const <int>[],
             const prefix0.JsonSerializable(), const []),
-        r.MethodMirrorImpl(r'==', 131074, null, -1, 3, 3, const <int>[],
+        r.MethodMirrorImpl(r'==', 131074, null, -1, 2, 2, const <int>[],
             const <int>[0], const prefix0.JsonSerializable(), const []),
-        r.MethodMirrorImpl(r'toString', 131074, null, -1, 2, 2, const <int>[],
+        r.MethodMirrorImpl(r'toString', 131074, null, -1, 3, 3, const <int>[],
             const <int>[], const prefix0.JsonSerializable(), const []),
         r.MethodMirrorImpl(
             r'noSuchMethod',
@@ -101,16 +90,14 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[],
             const prefix0.JsonSerializable(),
             const []),
-        r.ImplicitGetterMirrorImpl(const prefix0.JsonSerializable(), 0, 7),
-        r.ImplicitSetterMirrorImpl(const prefix0.JsonSerializable(), 0, 8),
-        r.MethodMirrorImpl(r'', 0, 1, -1, 1, 1, const <int>[], const <int>[2],
+        r.MethodMirrorImpl(r'', 64, 1, -1, 1, 1, const <int>[], const <int>[],
             const prefix0.JsonSerializable(), const [])
       ],
       <m.ParameterMirror>[
         r.ParameterMirrorImpl(
             r'other',
             16390,
-            2,
+            1,
             const prefix0.JsonSerializable(),
             null,
             null,
@@ -122,35 +109,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'invocation',
             32774,
-            4,
+            3,
             const prefix0.JsonSerializable(),
             -1,
             6,
             6,
-            const <int>[],
-            const [],
-            null,
-            null),
-        r.ParameterMirrorImpl(
-            r'amount',
-            32774,
-            9,
-            const prefix0.JsonSerializable(),
-            -1,
-            2,
-            2,
-            const <int>[],
-            const [],
-            null,
-            null),
-        r.ParameterMirrorImpl(
-            r'_amount',
-            32870,
-            8,
-            const prefix0.JsonSerializable(),
-            -1,
-            2,
-            2,
             const <int>[],
             const [],
             null,
@@ -159,8 +122,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
       <Type>[
         prefix1.NewsDetails,
         prefix1.UserTappedNewsDetails,
-        String,
         bool,
+        String,
         int,
         Type,
         Invocation
@@ -171,10 +134,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'toString': (dynamic instance) => instance.toString,
         r'noSuchMethod': (dynamic instance) => instance.noSuchMethod,
         r'hashCode': (dynamic instance) => instance.hashCode,
-        r'runtimeType': (dynamic instance) => instance.runtimeType,
-        r'amount': (dynamic instance) => instance.amount
+        r'runtimeType': (dynamic instance) => instance.runtimeType
       },
-      {r'amount=': (dynamic instance, value) => instance.amount = value},
+      {},
       null,
       [])
 };
