@@ -4,15 +4,15 @@ class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
 
-  Future<dynamic> navigateTo(String routeName) {
-    return navigatorKey.currentState.pushNamed(routeName);
+  Future<dynamic> navigateTo(String routeName, Object arguments) {
+    return navigatorKey.currentState
+        .pushNamed(routeName, arguments: arguments);
   }
 
   bool pop() {
-    if(navigatorKey.currentState.canPop()){
+    if (navigatorKey.currentState.canPop()) {
       return navigatorKey.currentState.pop();
     }
     return false;
-
   }
 }

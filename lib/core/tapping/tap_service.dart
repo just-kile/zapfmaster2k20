@@ -17,6 +17,7 @@ class TapService {
 
   UserDto loggedInUser;
   double amount = 0;
+
   TapService() {
     _bus.on<UserLoggedIn>().listen(startTapping);
     _bus.on<UserLoggedOut>().listen(finishTapping);
@@ -25,7 +26,7 @@ class TapService {
   void startTapping(UserLoggedIn e) {
     this.loggedInUser = e.user;
     amount = 0;
-    _openDraftView();
+    _openDraftView(this.loggedInUser);
 
     new Timer(const Duration(seconds: 1), () => tapAmount(0.1));
     new Timer(const Duration(seconds: 2), () => tapAmount(0.2));
@@ -65,8 +66,8 @@ class TapService {
     this.loggedInUser = null;
   }
 
-  void _openDraftView() async {
-    locator<NavigationService>().navigateTo(RoutePaths.Tapping);
+  void _openDraftView(UserDto loggedInUser) async {
+    locator<NavigationService>().navigateTo(RoutePaths.Tapping, loggedInUser);
   }
 
   void _closeDraftView() async {

@@ -27,8 +27,9 @@ class TappingViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future initialise() async {
+  Future initialise(UserDto loggedInUser) async {
     setBusy(true);
+    this.state = TappingState(loggedInUser, 0);
     this._streamSubscription = _bus.on<TapAmountUpdated>().listen(onData);
     setBusy(false);
   }
