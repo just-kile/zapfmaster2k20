@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:web_socket_channel/io.dart';
 import 'package:zapfmaster2k20/core/tapping/tap_service.dart';
 
 class LocalTapService extends TapService {
