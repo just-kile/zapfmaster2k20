@@ -11,7 +11,7 @@ import '../../logger.dart';
 import 'events.dart';
 import 'tapping_event_bus.dart';
 
-class TapService {
+abstract class TapService {
   final TappingEventBus _bus = locator<TappingEventBus>();
   final Zm2KDb _db = locator<Zm2KDb>();
 
@@ -19,21 +19,8 @@ class TapService {
   double amount = 0;
 
   TapService() {
-    _bus.on<UserLoggedIn>().listen(startTapping);
-    _bus.on<UserLoggedOut>().listen(finishTapping);
-  }
-
-  void startTapping(UserLoggedIn e) {
-    this.loggedInUser = e.user;
-    amount = 0;
-    _openDraftView(this.loggedInUser);
-
-    new Timer(const Duration(seconds: 1), () => tapAmount(0.1));
-    new Timer(const Duration(seconds: 2), () => tapAmount(0.2));
-    new Timer(const Duration(seconds: 3), () => tapAmount(0.3));
-    new Timer(const Duration(seconds: 4), () => tapAmount(0.4));
-    new Timer(const Duration(seconds: 5), () => tapAmount(0.5));
-    new Timer(const Duration(seconds: 6), () => tapAmount(0.6));
+    _bus.on<UserLoggedIn>().listen(_startTapping);
+    _bus.on<UserLoggedOut>().listen(_finishTapping);
   }
 
   void tapAmount(double amount) async {
@@ -45,7 +32,13 @@ class TapService {
     _bus.fire(new TapAmountUpdated(this.loggedInUser, amount));
   }
 
-  void finishTapping(UserLoggedOut event) async {
+  void _startTapping(UserLoggedIn e) {
+    this.loggedInUser = e.user;
+    amount = 0;
+    _openDraftView(this.loggedInUser);
+  }
+
+  void _finishTapping(UserLoggedOut event) async {
     if (this.loggedInUser == null) {
       logger.w(
           "Can not logout User ${event.user?.name} because of not being logged in");

@@ -7,17 +7,11 @@ import '../../locator.dart';
 import '../../logger.dart';
 import 'events.dart';
 
-class LoginService {
+abstract class LoginService {
   final TappingEventBus _bus = locator<TappingEventBus>();
   final UserRepository _userRepository = locator<UserRepository>();
-  LoginService() {
-    new Timer(const Duration(seconds: 5), userLoggedIn);
-    new Timer(const Duration(seconds: 15), userLoggedOut);
-  }
 
-  void userLoggedIn() async {
-    var hardwareToken = "3";
-
+  void userLoggedIn(String hardwareToken) async {
     final user = await _userRepository.getUserByHardwareToken(hardwareToken);
     if (user == null) {
       logger.i("Cannot find user with hardware token $hardwareToken");
@@ -27,8 +21,7 @@ class LoginService {
     _bus.fire(new UserLoggedIn(user));
   }
 
-  void userLoggedOut() async {
-    var hardwareToken = "3";
+  void userLoggedOut(String hardwareToken) async {
     final user = await _userRepository.getUserByHardwareToken(hardwareToken);
     if (user == null) {
       logger.w("Cannot find user with hardware token $hardwareToken");
