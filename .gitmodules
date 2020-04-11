@@ -1,0 +1,3 @@
+[submodule "mocks/zapfmaster2k20-mockserver"]
+	path = mocks/zapfmaster2k20-mockserver
+	url = git@github.com:just-kile/zapfmaster2k20-mockserver.git
