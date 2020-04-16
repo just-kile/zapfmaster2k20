@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+import 'dart:async';
 
 void main() => runApp(MyApp());
 
@@ -45,6 +47,28 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+
+  @override
+  void initState() {
+    _startDiscovery();
+  }
+
+  void _startDiscovery() {
+    print("Starting discovery now...");
+
+    StreamSubscription<BluetoothDiscoveryResult> _streamSubscription =
+        FlutterBluetoothSerial.instance.startDiscovery().listen((r) {
+          setState(() {
+            print("Got device: " + r.toString());
+          });
+        });
+
+    _streamSubscription.onDone(() {
+      setState(() {
+        print("Done with discovery");
+      });
+    });
+  }
 
   void _incrementCounter() {
     setState(() {
