@@ -3,6 +3,7 @@ import 'package:zapfmaster2k20/core/db/domain/news_item.dart';
 import 'package:zapfmaster2k20/locator.dart';
 import 'package:zapfmaster2k20/ui/components/newsfeed/news_feed_view_model.dart';
 import 'package:zapfmaster2k20/ui/shared/base_widget.dart';
+import 'package:zapfmaster2k20/ui/shared/user_image.dart';
 
 class NewsFeed extends StatelessWidget {
   NewsFeed();
@@ -21,7 +22,6 @@ class NewsFeed extends StatelessWidget {
                 itemCount: model.news.length + 1,
                 itemBuilder: (context, index) {
                   if (index < model.news.length) {
-                    // Show your info
                     return buildCard(model.news[index]);
                   } else {
                     model.loadMoreData();
@@ -49,7 +49,7 @@ class NewsFeed extends StatelessWidget {
         children: <Widget>[
           ListTile(
             leading: CircleAvatar(
-                backgroundImage: AssetImage("assets/testUser.jpg")),
+                backgroundImage: UserImage(newsItem.user)),
             title: RichText(
               text: TextSpan(
                 children: <TextSpan>[

@@ -23,6 +23,7 @@ class NewsFeedViewModel extends BaseViewModel {
   }
 
   Future loadMoreData() async {
+    print("Load more data");
     await _newsFeedService.loadAdditionalNews();
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zapfmaster2k20/core/db/domain/user_dto.dart';
 import 'package:zapfmaster2k20/locator.dart';
 import 'package:zapfmaster2k20/ui/shared/base_widget.dart';
+import 'package:zapfmaster2k20/ui/shared/user_image.dart';
 
 import 'tappings_view_model.dart';
 
@@ -37,7 +38,7 @@ class Tapping extends StatelessWidget {
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 40))),
             ListTile(
                 leading: CircleAvatar(
-                    backgroundImage: AssetImage("assets/testUser.jpg")),
+                    backgroundImage: UserImage(model.state?.userDto)),
                 title: Text("${model.state?.userDto?.name}")),
             ListTile(leading: Text("Achievements")),
           ],

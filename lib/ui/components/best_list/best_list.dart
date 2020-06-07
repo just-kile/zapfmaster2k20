@@ -3,6 +3,7 @@ import 'package:zapfmaster2k20/core/bestlist/best_list_item_dto.dart';
 import 'package:zapfmaster2k20/locator.dart';
 import 'package:zapfmaster2k20/ui/components/best_list/best_list_view_model.dart';
 import 'package:zapfmaster2k20/ui/shared/base_widget.dart';
+import 'package:zapfmaster2k20/ui/shared/user_image.dart';
 
 class BestList extends StatelessWidget {
   BestList();
@@ -54,11 +55,8 @@ class BestListView extends StatelessWidget {
           counter = counter + 1;
           return DataRow(cells: [
             DataCell(Text('$counter.')),
-            DataCell(bestListItem.user.imagePath != null
-                ? CircleAvatar(
-                    backgroundImage: AssetImage(bestListItem.user.imagePath))
-                : CircleAvatar(
-                    backgroundImage: AssetImage("assets/testUser.jpg"))),
+            DataCell(
+                CircleAvatar(backgroundImage: UserImage(bestListItem.user))),
             DataCell(Text(bestListItem.user.name)),
             DataCell(Text("${bestListItem.amount?.toStringAsFixed(2)} L")),
           ]);

@@ -41,10 +41,22 @@ class Zm2KDb extends _$Zm2KDb {
         initNewsDetailsJsonMapper();
         if (details.wasCreated) {
           [
-            UserCompanion(name: Value("Pete"), hardwareToken: Value("1")),
-            UserCompanion(name: Value("Karl"), hardwareToken: Value("2")),
-            UserCompanion(name: Value("Zoghurt"), hardwareToken: Value("3")),
-            UserCompanion(name: Value("Brain"), hardwareToken: Value("4"))
+            UserCompanion(
+                name: Value("Pete"),
+                hardwareToken: Value("1"),
+                imagePath: Value("assets/app_icon.png")),
+            UserCompanion(
+                name: Value("Karl"),
+                hardwareToken: Value("2"),
+                imagePath: Value("assets/app_icon.png")),
+            UserCompanion(
+                name: Value("Zoghurt"),
+                hardwareToken: Value("3"),
+                imagePath: Value("assets/app_icon.png")),
+            UserCompanion(
+                name: Value("Brain"),
+                hardwareToken: Value("4"),
+                imagePath: Value("assets/app_icon.png"))
           ].forEach((userCompanion) async {
             await into(user).insert(userCompanion);
             logger.i("User ${userCompanion.name.value} created");

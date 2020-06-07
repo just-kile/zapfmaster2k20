@@ -37,10 +37,11 @@ class NewsFeedService {
     _controller.add(newsItems);
   }
 
-  Future loadAdditionalNews() async {
+  Future<List<NewsItem>> loadAdditionalNews() async {
     var additionalNewsItems =
         await _db.newsDao.getNewsFeed(this.newsItems.length, PAGE_SIZE);
     this.newsItems.addAll(additionalNewsItems);
     _controller.add(this.newsItems);
+    return additionalNewsItems;
   }
 }
