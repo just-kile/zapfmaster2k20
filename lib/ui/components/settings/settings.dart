@@ -16,6 +16,21 @@ class Settings extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Expanded(child: Text("Settings")));
+            : Expanded(child: buildContent(model)));
   }
+
+  Widget buildContent(SettingsViewModel model) => ListView(children: <Widget>[
+        RaisedButton(
+          onPressed: model.doSth,
+          child: const Text('Rückgänging', style: TextStyle(fontSize: 20)),
+        ),
+        RaisedButton(
+          onPressed: model.doSth,
+          child: const Text('Neues Fass', style: TextStyle(fontSize: 20)),
+        ),
+        RaisedButton(
+          onPressed: model.doSth,
+          child: const Text('Neuer Trinker', style: TextStyle(fontSize: 20)),
+        ),
+      ]);
 }
