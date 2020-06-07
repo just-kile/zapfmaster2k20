@@ -10,7 +10,6 @@ class Tapping extends StatelessWidget {
 
   const Tapping({Key key, this.loggedInUser}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return BaseWidget<TappingViewModel>(
@@ -20,6 +19,30 @@ class Tapping extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Text("User ${model.state?.userDto?.name} ${model.state?.amount}"));
+            : buildUserCard(model));
   }
+
+  buildUserCard(TappingViewModel model) => Center(
+          child: Container(
+        height: 300,
+        width: 150,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Image.asset('assets/app_icon.png', fit: BoxFit.cover),
+            Container(
+                child: Text("${model.state?.amount} L",
+                    textAlign: TextAlign.center,
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 40))),
+            ListTile(
+                leading: CircleAvatar(
+                    backgroundImage: AssetImage("assets/testUser.jpg")),
+                title: Text("${model.state?.userDto?.name}")),
+            ListTile(leading: Text("Achievements")),
+          ],
+        ),
+      ));
 }
+//Image.asset('assets/app_icon.png', fit: BoxFit.cover)
+//Text("User ${model.state?.userDto?.name} ${model.state?.amount}")

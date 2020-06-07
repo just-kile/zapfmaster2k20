@@ -20,7 +20,8 @@ class Router {
                   body: Center(
                     child: Text('No route defined for ${settings.name}'),
                   ),
-                ));
+                )
+        );
     }
   }
 }

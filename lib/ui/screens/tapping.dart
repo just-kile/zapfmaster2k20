@@ -12,7 +12,7 @@ class Tapping extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset('assets/app_icon.png', fit: BoxFit.cover),
+        title: Text("Zapfvorgang"),
       ),
       body: TappingComponent.Tapping(loggedInUser: this.loggedInUser),
     );
