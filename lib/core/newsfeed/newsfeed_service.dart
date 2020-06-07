@@ -19,7 +19,6 @@ class NewsFeedService {
   List<NewsItem> newsItems = [];
 
   NewsFeedService() {
-    refreshNewsList();
     _bus.on<TapFinished>().listen(_updateNewsFeed);
   }
 
@@ -40,6 +39,9 @@ class NewsFeedService {
   Future<List<NewsItem>> loadAdditionalNews() async {
     var additionalNewsItems =
         await _db.newsDao.getNewsFeed(this.newsItems.length, PAGE_SIZE);
+    if (additionalNewsItems.length == 0) {
+      return [];
+    }
     this.newsItems.addAll(additionalNewsItems);
     _controller.add(this.newsItems);
     return additionalNewsItems;

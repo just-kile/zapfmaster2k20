@@ -10,9 +10,12 @@ class NewsFeedViewModel extends BaseViewModel {
   NewsFeedService _newsFeedService = locator<NewsFeedService>();
   StreamSubscription<List<NewsItem>> _streamSubscription;
   List<NewsItem> news = [];
+  bool lastItemLoaded = false;
 
   void _onData(List<NewsItem> news) async {
     this.news = news;
+    print("on data " + news.length.toString());
+    lastItemLoaded = false;
     notifyListeners();
   }
 
@@ -23,8 +26,15 @@ class NewsFeedViewModel extends BaseViewModel {
   }
 
   Future loadMoreData() async {
+    if (lastItemLoaded) {
+      return;
+    }
     print("Load more data");
-    await _newsFeedService.loadAdditionalNews();
+    var additionalNews = await _newsFeedService.loadAdditionalNews();
+    print("Load more data " + additionalNews.length.toString());
+    if (additionalNews.length == 0) {
+      lastItemLoaded = true;
+    }
   }
 
   @override
@@ -32,5 +42,4 @@ class NewsFeedViewModel extends BaseViewModel {
     this._streamSubscription.cancel();
     super.dispose();
   }
-
 }
