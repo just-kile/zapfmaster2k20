@@ -55,5 +55,15 @@ class Settings extends StatelessWidget {
           },
           child: const Text('Neuer Trinker', style: TextStyle(fontSize: 20)),
         ),
+        RaisedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => withBackgroundImage(NewUserPage())),
+            );
+          },
+          child: const Text('Trinker editieren', style: TextStyle(fontSize: 20)),
+        ),
       ]);
 }

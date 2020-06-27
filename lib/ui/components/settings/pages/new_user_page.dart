@@ -17,14 +17,52 @@ class NewUserPage extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Expanded(child: buildContent(model)));
+            : Expanded(child: buildContent(model, context)));
   }
 
-  Widget buildContent(NewUserPageViewModel model) => Scaffold(
-      appBar: AppBar(
-        title: Text("Neuer Trinker"),
-      ),
-      body: ListView(children: <Widget>[
-        Text('Rückgänging', style: TextStyle(fontSize: 20)),
-      ]));
+  Widget buildContent(NewUserPageViewModel model, BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Neuer Trinker"),
+        ),
+        body: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              TextFormField(
+                autofocus: true,
+                controller: model.userNameController,
+                decoration: const InputDecoration(
+                  hintText: 'Name',
+                ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Bitte einen Namen eingeben';
+                  }
+                  if(model.token == null){
+                    return 'Bitte eine unbenutzte Karte scannen';
+                  }
+                  return null;
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: RaisedButton(
+                  onPressed: () async {
+                    // Validate will return true if the form is valid, or false if
+                    // the form is invalid.
+                    if (_formKey.currentState.validate()) {
+                     await model.createUser();
+                     Navigator.of(context).pop();
+                    }
+                  },
+                  child: Text('Submit'),
+                ),
+              ),
+            ],
+          ),
+        ));
+  }
 }
