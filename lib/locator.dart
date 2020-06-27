@@ -1,4 +1,7 @@
 import 'package:get_it/get_it.dart';
+import 'package:zapfmaster2k20/ui/components/settings/pages/new_keg_page_view_model.dart';
+import 'package:zapfmaster2k20/ui/components/settings/pages/new_user_page_view_model.dart';
+import 'package:zapfmaster2k20/ui/components/settings/pages/revert_draft_page_view_model.dart';
 
 import 'core/bestlist/best_list_service.dart';
 import 'core/db/database.dart';
@@ -36,4 +39,7 @@ void setupLocator() {
   locator.registerFactory(() => NewsFeedViewModel());
   locator.registerFactory(() => TappingViewModel());
   locator.registerFactory(() => SettingsViewModel());
+  locator.registerFactory(() => RevertDraftPageViewModel());
+  locator.registerFactory(() => NewKegPageViewModel());
+  locator.registerFactory(() => NewUserPageViewModel());
 }

@@ -14,6 +14,7 @@ abstract class LoginService {
   void userLoggedIn(String hardwareToken) async {
     final user = await _userRepository.getUserByHardwareToken(hardwareToken);
     if (user == null) {
+      _bus.fire(new UnknownCardRecognized(hardwareToken));
       logger.i("Cannot find user with hardware token $hardwareToken");
       return;
     }

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:zapfmaster2k20/locator.dart';
+import 'package:zapfmaster2k20/ui/components/settings/pages/new_keg_page.dart';
+import 'package:zapfmaster2k20/ui/components/settings/pages/new_user_page.dart';
+import 'package:zapfmaster2k20/ui/shared/app_scaffold.dart';
 import 'package:zapfmaster2k20/ui/shared/base_widget.dart';
 
+import 'pages/revert_draft_page.dart';
 import 'settings_view_model.dart';
 
 class Settings extends StatelessWidget {
@@ -16,20 +20,39 @@ class Settings extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Expanded(child: buildContent(model)));
+            : Expanded(child: buildContent(model, context)));
   }
 
-  Widget buildContent(SettingsViewModel model) => ListView(children: <Widget>[
+  Widget buildContent(SettingsViewModel model, BuildContext context) =>
+      ListView(children: <Widget>[
         RaisedButton(
-          onPressed: model.doSth,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => withBackgroundImage(RevertDraftPage())),
+            );
+          },
           child: const Text('Rückgänging', style: TextStyle(fontSize: 20)),
         ),
         RaisedButton(
-          onPressed: model.doSth,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => withBackgroundImage(NewKegPage())),
+            );
+          },
           child: const Text('Neues Fass', style: TextStyle(fontSize: 20)),
         ),
         RaisedButton(
-          onPressed: model.doSth,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => withBackgroundImage(NewUserPage())),
+            );
+          },
           child: const Text('Neuer Trinker', style: TextStyle(fontSize: 20)),
         ),
       ]);

@@ -33,3 +33,9 @@ class TapFinished extends Event{
   TapFinished(this.user, this.drawingDto, this.createdAt);
 
 }
+class UnknownCardRecognized extends Event{
+  final String hardwareToken;
+
+  UnknownCardRecognized(this.hardwareToken);
+
+}
