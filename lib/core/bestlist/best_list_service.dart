@@ -24,6 +24,9 @@ class BestListService {
   }
 
   void updateBestList(TapFinished event) async {
+    refreshBestlist();
+  }
+  void refreshBestlist() async {
     _bestListController.add(await getBestList());
   }
 
