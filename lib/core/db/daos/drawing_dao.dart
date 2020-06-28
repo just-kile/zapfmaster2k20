@@ -62,8 +62,16 @@ class DrawingDao extends DatabaseAccessor<Zm2KDb> with _$DrawingDaoMixin {
         variables: [Variable.withInt(drawingDto.id)],
       );
     });
-//    delete(news).delete()
-//    delete(drawing).delete(DrawingData(drawingDto)
+  }
+  Future<void> updateDrawing(int drawingId, double amount) async {
+    return transaction(() async {
+      await customUpdate(
+        'UPDATE drawing SET amount = ? WHERE id = ?',
+        updates: {drawing},
+        variables: [Variable.withReal(amount), Variable.withInt(drawingId)],
+      );
+
+    });
   }
   Future<DrawingDto> saveDrawing(DrawingDto drawingData) async {
     var drawingCompanion = DrawingCompanion(

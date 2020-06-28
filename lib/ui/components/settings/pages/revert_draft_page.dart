@@ -26,21 +26,20 @@ class RevertDraftPage extends StatelessWidget {
                       itemCount: model.news.length + 1,
                       itemBuilder: (context, index) {
                         if (index < model.news.length) {
-                          return buildCard(model.news[index], model);
+                          return buildUserTappedCard(
+                              model.news[index], model, context);
                         } else {
                           model.loadMoreData();
-                          return Center(child: CircularProgressIndicator());
+                          return model.lastItemLoaded == false
+                              ? Center(child: CircularProgressIndicator())
+                              : Center();
                         }
                       },
                     ))));
   }
 
-  Card buildCard(DrawingWithUserDto newsItem, RevertDraftPageViewModel model) {
-    return buildUserTappedCard(newsItem, model);
-  }
-
-  Card buildUserTappedCard(
-      DrawingWithUserDto newsItem, RevertDraftPageViewModel model) {
+  Card buildUserTappedCard(DrawingWithUserDto newsItem,
+      RevertDraftPageViewModel model, BuildContext context) {
     return Card(
       color: Colors.transparent,
       shape: new RoundedRectangleBorder(
@@ -72,7 +71,9 @@ class RevertDraftPage extends StatelessWidget {
             children: <Widget>[
               FlatButton(
                 child: const Text('Edit'),
-                onPressed: () {},
+                onPressed: () {
+                  _showDialog(context, newsItem, model);
+                },
               ),
               FlatButton(
                 child: const Text('X'),
@@ -85,5 +86,41 @@ class RevertDraftPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _showDialog(BuildContext context, DrawingWithUserDto newsItem,
+      RevertDraftPageViewModel model) async {
+    await showDialog<String>(
+        context: context,
+        builder: (BuildContext subContext) => AlertDialog(
+              contentPadding: const EdgeInsets.all(16.0),
+              content: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TextField(
+                      controller: model.editAmountController,
+                      autofocus: true,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          labelText: 'Menge', hintText: 'z.B. 2.32'),
+                    ),
+                  )
+                ],
+              ),
+              actions: <Widget>[
+                new FlatButton(
+                    child: const Text('Cancel'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+                new FlatButton(
+                    child: const Text('Save'),
+                    onPressed: () async {
+                      await model.changeAmountOf(newsItem,
+                          double.parse(model.editAmountController.text));
+                      Navigator.pop(context);
+                    })
+              ],
+            ));
   }
 }
