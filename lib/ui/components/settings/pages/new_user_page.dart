@@ -56,17 +56,21 @@ class NewUserPage extends StatelessWidget {
                       child: model.imagePath == null
                           ? CameraPreview(model.cameraController)
                           : Image.file(File(model.imagePath)))),
-              RaisedButton(
-                onPressed: () async {
-                  model.takePhoto();
-                },
-                child: const Text('Foto aufnehmen'),
-              ),
-              RaisedButton(
-                onPressed: () async {
-                  model.resetImage();
-                },
-                child: const Text('Reset Foto'),
+              ButtonBar(
+                children: <Widget>[
+                  RaisedButton(
+                    onPressed: () async {
+                      model.takePhoto();
+                    },
+                    child: const Text('Foto aufnehmen'),
+                  ),
+                  RaisedButton(
+                    onPressed: () async {
+                      model.resetImage();
+                    },
+                    child: const Text('Reset Foto'),
+                  ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
