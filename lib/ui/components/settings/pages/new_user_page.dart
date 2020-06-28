@@ -1,9 +1,9 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:zapfmaster2k20/locator.dart';
 import 'package:zapfmaster2k20/ui/shared/base_widget.dart';
 
 import 'new_user_page_view_model.dart';
-import 'revert_draft_page_view_model.dart';
 
 class NewUserPage extends StatelessWidget {
   NewUserPage();
@@ -22,6 +22,7 @@ class NewUserPage extends StatelessWidget {
 
   Widget buildContent(NewUserPageViewModel model, BuildContext context) {
     final _formKey = GlobalKey<FormState>();
+
     return Scaffold(
         appBar: AppBar(
           title: Text("Neuer Trinker"),
@@ -47,12 +48,21 @@ class NewUserPage extends StatelessWidget {
                   return null;
                 },
               ),
+//              CameraPreview(model.cameraController),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: RaisedButton(
                   onPressed: () async {
-                    // Validate will return true if the form is valid, or false if
-                    // the form is invalid.
+                    model.takePhoto();
+                  },
+                  child: Text('Foto aufnehmen'),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: RaisedButton(
+                  onPressed: () async {
                     if (_formKey.currentState.validate()) {
                      await model.createUser();
                      Navigator.of(context).pop();

@@ -9,7 +9,7 @@ import 'ui/router.dart';
 
 void main() {
   initializeReflectable();
-
+  WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   runApp(Zm2kApp());
 }
