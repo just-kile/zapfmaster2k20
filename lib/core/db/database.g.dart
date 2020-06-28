@@ -33,6 +33,24 @@ class DrawingData extends DataClass implements Insertable<DrawingData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}created_at']),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<int>(userId);
+    }
+    if (!nullToAbsent || amount != null) {
+      map['amount'] = Variable<double>(amount);
+    }
+    if (!nullToAbsent || createdAt != null) {
+      map['created_at'] = Variable<DateTime>(createdAt);
+    }
+    return map;
+  }
+
   factory DrawingData.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -52,20 +70,6 @@ class DrawingData extends DataClass implements Insertable<DrawingData> {
       'amount': serializer.toJson<double>(amount),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
-  }
-
-  @override
-  DrawingCompanion createCompanion(bool nullToAbsent) {
-    return DrawingCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      userId:
-          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
-      amount:
-          amount == null && nullToAbsent ? const Value.absent() : Value(amount),
-      createdAt: createdAt == null && nullToAbsent
-          ? const Value.absent()
-          : Value(createdAt),
-    );
   }
 
   DrawingData copyWith(
@@ -119,6 +123,20 @@ class DrawingCompanion extends UpdateCompanion<DrawingData> {
   })  : userId = Value(userId),
         amount = Value(amount),
         createdAt = Value(createdAt);
+  static Insertable<DrawingData> custom({
+    Expression<int> id,
+    Expression<int> userId,
+    Expression<double> amount,
+    Expression<DateTime> createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (userId != null) 'user_id': userId,
+      if (amount != null) 'amount': amount,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
   DrawingCompanion copyWith(
       {Value<int> id,
       Value<int> userId,
@@ -130,6 +148,24 @@ class DrawingCompanion extends UpdateCompanion<DrawingData> {
       amount: amount ?? this.amount,
       createdAt: createdAt ?? this.createdAt,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<double>(amount.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
   }
 }
 
@@ -191,27 +227,28 @@ class $DrawingTable extends Drawing with TableInfo<$DrawingTable, DrawingData> {
   @override
   final String actualTableName = 'drawing';
   @override
-  VerificationContext validateIntegrity(DrawingCompanion d,
+  VerificationContext validateIntegrity(Insertable<DrawingData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
     }
-    if (d.userId.present) {
-      context.handle(
-          _userIdMeta, userId.isAcceptableValue(d.userId.value, _userIdMeta));
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id'], _userIdMeta));
     } else if (isInserting) {
       context.missing(_userIdMeta);
     }
-    if (d.amount.present) {
-      context.handle(
-          _amountMeta, amount.isAcceptableValue(d.amount.value, _amountMeta));
+    if (data.containsKey('amount')) {
+      context.handle(_amountMeta,
+          amount.isAcceptableOrUnknown(data['amount'], _amountMeta));
     } else if (isInserting) {
       context.missing(_amountMeta);
     }
-    if (d.createdAt.present) {
+    if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
-          createdAt.isAcceptableValue(d.createdAt.value, _createdAtMeta));
+          createdAt.isAcceptableOrUnknown(data['created_at'], _createdAtMeta));
     } else if (isInserting) {
       context.missing(_createdAtMeta);
     }
@@ -224,24 +261,6 @@ class $DrawingTable extends Drawing with TableInfo<$DrawingTable, DrawingData> {
   DrawingData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return DrawingData.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(DrawingCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['id'] = Variable<int, IntType>(d.id.value);
-    }
-    if (d.userId.present) {
-      map['user_id'] = Variable<int, IntType>(d.userId.value);
-    }
-    if (d.amount.present) {
-      map['amount'] = Variable<double, RealType>(d.amount.value);
-    }
-    if (d.createdAt.present) {
-      map['created_at'] = Variable<DateTime, DateTimeType>(d.createdAt.value);
-    }
-    return map;
   }
 
   @override
@@ -274,6 +293,24 @@ class UserData extends DataClass implements Insertable<UserData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}hardware_token']),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || name != null) {
+      map['name'] = Variable<String>(name);
+    }
+    if (!nullToAbsent || imagePath != null) {
+      map['image_path'] = Variable<String>(imagePath);
+    }
+    if (!nullToAbsent || hardwareToken != null) {
+      map['hardware_token'] = Variable<String>(hardwareToken);
+    }
+    return map;
+  }
+
   factory UserData.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -293,20 +330,6 @@ class UserData extends DataClass implements Insertable<UserData> {
       'imagePath': serializer.toJson<String>(imagePath),
       'hardwareToken': serializer.toJson<String>(hardwareToken),
     };
-  }
-
-  @override
-  UserCompanion createCompanion(bool nullToAbsent) {
-    return UserCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
-      imagePath: imagePath == null && nullToAbsent
-          ? const Value.absent()
-          : Value(imagePath),
-      hardwareToken: hardwareToken == null && nullToAbsent
-          ? const Value.absent()
-          : Value(hardwareToken),
-    );
   }
 
   UserData copyWith(
@@ -358,6 +381,20 @@ class UserCompanion extends UpdateCompanion<UserData> {
     this.imagePath = const Value.absent(),
     this.hardwareToken = const Value.absent(),
   }) : name = Value(name);
+  static Insertable<UserData> custom({
+    Expression<int> id,
+    Expression<String> name,
+    Expression<String> imagePath,
+    Expression<String> hardwareToken,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (imagePath != null) 'image_path': imagePath,
+      if (hardwareToken != null) 'hardware_token': hardwareToken,
+    });
+  }
+
   UserCompanion copyWith(
       {Value<int> id,
       Value<String> name,
@@ -369,6 +406,24 @@ class UserCompanion extends UpdateCompanion<UserData> {
       imagePath: imagePath ?? this.imagePath,
       hardwareToken: hardwareToken ?? this.hardwareToken,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (imagePath.present) {
+      map['image_path'] = Variable<String>(imagePath.value);
+    }
+    if (hardwareToken.present) {
+      map['hardware_token'] = Variable<String>(hardwareToken.value);
+    }
+    return map;
   }
 }
 
@@ -432,27 +487,28 @@ class $UserTable extends User with TableInfo<$UserTable, UserData> {
   @override
   final String actualTableName = 'user';
   @override
-  VerificationContext validateIntegrity(UserCompanion d,
+  VerificationContext validateIntegrity(Insertable<UserData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
     }
-    if (d.name.present) {
+    if (data.containsKey('name')) {
       context.handle(
-          _nameMeta, name.isAcceptableValue(d.name.value, _nameMeta));
+          _nameMeta, name.isAcceptableOrUnknown(data['name'], _nameMeta));
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
-    if (d.imagePath.present) {
+    if (data.containsKey('image_path')) {
       context.handle(_imagePathMeta,
-          imagePath.isAcceptableValue(d.imagePath.value, _imagePathMeta));
+          imagePath.isAcceptableOrUnknown(data['image_path'], _imagePathMeta));
     }
-    if (d.hardwareToken.present) {
+    if (data.containsKey('hardware_token')) {
       context.handle(
           _hardwareTokenMeta,
-          hardwareToken.isAcceptableValue(
-              d.hardwareToken.value, _hardwareTokenMeta));
+          hardwareToken.isAcceptableOrUnknown(
+              data['hardware_token'], _hardwareTokenMeta));
     }
     return context;
   }
@@ -463,25 +519,6 @@ class $UserTable extends User with TableInfo<$UserTable, UserData> {
   UserData map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return UserData.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(UserCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['id'] = Variable<int, IntType>(d.id.value);
-    }
-    if (d.name.present) {
-      map['name'] = Variable<String, StringType>(d.name.value);
-    }
-    if (d.imagePath.present) {
-      map['image_path'] = Variable<String, StringType>(d.imagePath.value);
-    }
-    if (d.hardwareToken.present) {
-      map['hardware_token'] =
-          Variable<String, StringType>(d.hardwareToken.value);
-    }
-    return map;
   }
 
   @override
@@ -520,6 +557,28 @@ class New extends DataClass implements Insertable<New> {
           .mapFromDatabaseResponse(data['${effectivePrefix}news_details'])),
     );
   }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<int>(userId);
+    }
+    if (!nullToAbsent || drawingId != null) {
+      map['drawing_id'] = Variable<int>(drawingId);
+    }
+    if (!nullToAbsent || createdAt != null) {
+      map['created_at'] = Variable<DateTime>(createdAt);
+    }
+    if (!nullToAbsent || newsDetails != null) {
+      final converter = $NewsTable.$converter0;
+      map['news_details'] = Variable<String>(converter.mapToSql(newsDetails));
+    }
+    return map;
+  }
+
   factory New.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
@@ -541,24 +600,6 @@ class New extends DataClass implements Insertable<New> {
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'newsDetails': serializer.toJson<NewsDetails>(newsDetails),
     };
-  }
-
-  @override
-  NewsCompanion createCompanion(bool nullToAbsent) {
-    return NewsCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      userId:
-          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
-      drawingId: drawingId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(drawingId),
-      createdAt: createdAt == null && nullToAbsent
-          ? const Value.absent()
-          : Value(createdAt),
-      newsDetails: newsDetails == null && nullToAbsent
-          ? const Value.absent()
-          : Value(newsDetails),
-    );
   }
 
   New copyWith(
@@ -624,6 +665,22 @@ class NewsCompanion extends UpdateCompanion<New> {
     @required DateTime createdAt,
     this.newsDetails = const Value.absent(),
   }) : createdAt = Value(createdAt);
+  static Insertable<New> custom({
+    Expression<int> id,
+    Expression<int> userId,
+    Expression<int> drawingId,
+    Expression<DateTime> createdAt,
+    Expression<String> newsDetails,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (userId != null) 'user_id': userId,
+      if (drawingId != null) 'drawing_id': drawingId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (newsDetails != null) 'news_details': newsDetails,
+    });
+  }
+
   NewsCompanion copyWith(
       {Value<int> id,
       Value<int> userId,
@@ -637,6 +694,29 @@ class NewsCompanion extends UpdateCompanion<New> {
       createdAt: createdAt ?? this.createdAt,
       newsDetails: newsDetails ?? this.newsDetails,
     );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
+    if (drawingId.present) {
+      map['drawing_id'] = Variable<int>(drawingId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (newsDetails.present) {
+      final converter = $NewsTable.$converter0;
+      map['news_details'] =
+          Variable<String>(converter.mapToSql(newsDetails.value));
+    }
+    return map;
   }
 }
 
@@ -713,23 +793,24 @@ class $NewsTable extends News with TableInfo<$NewsTable, New> {
   @override
   final String actualTableName = 'news';
   @override
-  VerificationContext validateIntegrity(NewsCompanion d,
+  VerificationContext validateIntegrity(Insertable<New> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
-    if (d.id.present) {
-      context.handle(_idMeta, id.isAcceptableValue(d.id.value, _idMeta));
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
     }
-    if (d.userId.present) {
-      context.handle(
-          _userIdMeta, userId.isAcceptableValue(d.userId.value, _userIdMeta));
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id'], _userIdMeta));
     }
-    if (d.drawingId.present) {
+    if (data.containsKey('drawing_id')) {
       context.handle(_drawingIdMeta,
-          drawingId.isAcceptableValue(d.drawingId.value, _drawingIdMeta));
+          drawingId.isAcceptableOrUnknown(data['drawing_id'], _drawingIdMeta));
     }
-    if (d.createdAt.present) {
+    if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
-          createdAt.isAcceptableValue(d.createdAt.value, _createdAtMeta));
+          createdAt.isAcceptableOrUnknown(data['created_at'], _createdAtMeta));
     } else if (isInserting) {
       context.missing(_createdAtMeta);
     }
@@ -743,29 +824,6 @@ class $NewsTable extends News with TableInfo<$NewsTable, New> {
   New map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
     return New.fromData(data, _db, prefix: effectivePrefix);
-  }
-
-  @override
-  Map<String, Variable> entityToSql(NewsCompanion d) {
-    final map = <String, Variable>{};
-    if (d.id.present) {
-      map['id'] = Variable<int, IntType>(d.id.value);
-    }
-    if (d.userId.present) {
-      map['user_id'] = Variable<int, IntType>(d.userId.value);
-    }
-    if (d.drawingId.present) {
-      map['drawing_id'] = Variable<int, IntType>(d.drawingId.value);
-    }
-    if (d.createdAt.present) {
-      map['created_at'] = Variable<DateTime, DateTimeType>(d.createdAt.value);
-    }
-    if (d.newsDetails.present) {
-      final converter = $NewsTable.$converter0;
-      map['news_details'] =
-          Variable<String, StringType>(converter.mapToSql(d.newsDetails.value));
-    }
-    return map;
   }
 
   @override

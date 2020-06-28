@@ -7,6 +7,6 @@ part of 'drawing_dao.dart';
 // **************************************************************************
 
 mixin _$DrawingDaoMixin on DatabaseAccessor<Zm2KDb> {
-  $DrawingTable get drawing => db.drawing;
-  $UserTable get user => db.user;
+  $DrawingTable get drawing => attachedDatabase.drawing;
+  $UserTable get user => attachedDatabase.user;
 }

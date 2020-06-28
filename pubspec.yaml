@@ -29,8 +29,8 @@ dependencies:
   rxdart: ^0.22.0
   sqflite: 1.1.8
   path: 1.6.4
-  moor: 2.4.1
-  moor_ffi: 0.4.0
+  moor: 3.0.0
+  moor_ffi: 0.6.0
   path_provider: 1.6.0
   logger: ^0.8.3
   dart_json_mapper: 1.5.2
@@ -39,7 +39,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  moor_generator: 2.4.0
+  moor_generator: 3.0.0
   build_runner: ^1.7.4
 
 # For information on the generic Dart part of this file, see the

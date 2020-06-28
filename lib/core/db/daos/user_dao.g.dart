@@ -7,5 +7,5 @@ part of 'user_dao.dart';
 // **************************************************************************
 
 mixin _$UserDaoMixin on DatabaseAccessor<Zm2KDb> {
-  $UserTable get user => db.user;
+  $UserTable get user => attachedDatabase.user;
 }
