@@ -33,7 +33,7 @@ class Settings extends StatelessWidget {
                   builder: (context) => withBackgroundImage(RevertDraftPage())),
             );
           },
-          child: const Text('Rückgänging', style: TextStyle(fontSize: 20)),
+          child: const Text('Zapfvorgänge bearbeiten', style: TextStyle(fontSize: 20)),
         ),
         RaisedButton(
           onPressed: () {
