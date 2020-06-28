@@ -5,9 +5,10 @@ import 'dart:core';
 import 'package:dart_json_mapper/src/model/annotations.dart' as prefix0;
 import 'package:zapfmaster2k20/core/db/domain/news_item.dart' as prefix1;
 
-// ignore_for_file: unnecessary_const
-// ignore_for_file: prefer_collection_literals
 // ignore_for_file: prefer_adjacent_string_concatenation
+// ignore_for_file: prefer_collection_literals
+// ignore_for_file: unnecessary_const
+// ignore_for_file: implementation_imports
 
 // ignore:unused_import
 import 'package:reflectable/mirrors.dart' as m;

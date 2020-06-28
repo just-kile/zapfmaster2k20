@@ -12,6 +12,7 @@ import 'events.dart';
 import 'tapping_event_bus.dart';
 
 abstract class TapService {
+  final TOLERANCE = 0.05;
   final TappingEventBus _bus = locator<TappingEventBus>();
   final Zm2KDb _db = locator<Zm2KDb>();
 
@@ -42,6 +43,11 @@ abstract class TapService {
     if (this.loggedInUser == null) {
       logger.w(
           "Can not logout User ${event.user?.name} because of not being logged in");
+      return;
+    }
+    if (this.amount < TOLERANCE) {
+      _resetUser();
+      _closeDraftView();
       return;
     }
     var drawingDto = await _persistDrawing();

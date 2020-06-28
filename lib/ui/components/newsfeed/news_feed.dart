@@ -25,7 +25,9 @@ class NewsFeed extends StatelessWidget {
                     return buildCard(model.news[index]);
                   } else {
                     model.loadMoreData();
-                    return Center(child: CircularProgressIndicator());
+                    return model.lastItemLoaded
+                        ? null
+                        : Center(child: CircularProgressIndicator());
                   }
                 },
               )));
@@ -48,8 +50,7 @@ class NewsFeed extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           ListTile(
-            leading: CircleAvatar(
-                backgroundImage: UserImage(newsItem.user)),
+            leading: CircleAvatar(backgroundImage: UserImage(newsItem.user)),
             title: RichText(
               text: TextSpan(
                 children: <TextSpan>[

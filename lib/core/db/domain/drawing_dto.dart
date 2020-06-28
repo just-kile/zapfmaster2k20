@@ -1,4 +1,5 @@
 import '../database.dart';
+import 'user_dto.dart';
 
 class DrawingDto {
   final int id;
@@ -22,4 +23,11 @@ class DrawingDto {
     return DrawingDto(drawingData.id, drawingData.userId,
         drawingData.amount, drawingData.createdAt);
   }
+}
+class DrawingWithUserDto {
+  final DrawingDto drawing;
+  final UserDto user;
+
+  DrawingWithUserDto(this.drawing, this.user);
+
 }
