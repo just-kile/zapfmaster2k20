@@ -25,6 +25,13 @@ class NewUserPageViewModel extends BaseViewModel {
     setBusy(true);
     this._streamSubscription =
         _bus.on<UnknownLoginDeviceRecognized>().listen(onData);
+    final cameras = await availableCameras();
+    cameraController = CameraController(
+      cameras.first,
+      // Define the resolution to use.
+      ResolutionPreset.medium,
+    );
+
     await cameraController.initialize();
     setBusy(false);
   }
@@ -32,17 +39,11 @@ class NewUserPageViewModel extends BaseViewModel {
   Future<int> createUser() async {
     logger.i("Create user ${userNameController.text} with token ${token}");
     return _db.userDao
-        .saveUser(new UserDto(0, userNameController.text, "imagePath", token));
+        .saveUser(new UserDto(0, userNameController.text, imagePath, token));
   }
 
   Future<int> takePhoto() async {
     logger.i("Taking photo");
-    final cameras = await availableCameras();
-    cameraController = CameraController(
-      cameras.first,
-      // Define the resolution to use.
-      ResolutionPreset.medium,
-    );
 
     this.imagePath = join(
       // Store the picture in the temp directory.
@@ -51,7 +52,9 @@ class NewUserPageViewModel extends BaseViewModel {
       '${DateTime.now()}.png',
     );
 
-    cameraController.takePicture(this.imagePath);
+    await cameraController.takePicture(this.imagePath);
+    notifyListeners();
+
   }
 
   @override
@@ -64,5 +67,11 @@ class NewUserPageViewModel extends BaseViewModel {
 
   void onData(UnknownLoginDeviceRecognized event) {
     this.token = event.hardwareToken;
+    notifyListeners();
+  }
+
+  void resetImage() {
+    this.imagePath = null;
+    notifyListeners();
   }
 }
