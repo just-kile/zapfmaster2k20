@@ -7,10 +7,12 @@ import 'package:zapfmaster2k20/core/tapping/events.dart';
 import 'package:zapfmaster2k20/core/tapping/tapping_event_bus.dart';
 
 import '../../locator.dart';
+import '../refresh_event_bus.dart';
 
 class NewsFeedService {
   static final PAGE_SIZE = 10;
   final TappingEventBus _bus = locator<TappingEventBus>();
+  final RefreshEventBus _refreshEventBus = locator<RefreshEventBus>();
   final Zm2KDb _db = locator<Zm2KDb>();
 
   StreamController<List<NewsItem>> _controller = BehaviorSubject();
@@ -20,6 +22,7 @@ class NewsFeedService {
 
   NewsFeedService() {
     _bus.on<TapFinished>().listen(_updateNewsFeed);
+    _refreshEventBus.on<Refresh>().listen((event) => refreshNewsList());
   }
 
   void _updateNewsFeed(TapFinished event) async {

@@ -7,13 +7,14 @@ import 'package:zapfmaster2k20/core/tapping/events.dart';
 import 'package:zapfmaster2k20/core/tapping/tapping_event_bus.dart';
 
 import '../../locator.dart';
+import '../refresh_event_bus.dart';
 import 'best_list_item_dto.dart';
 
 class BestListService {
   final Zm2KDb _db = locator<Zm2KDb>();
 
   final TappingEventBus _bus = locator<TappingEventBus>();
-
+  final RefreshEventBus _refreshEventBus = locator<RefreshEventBus>();
   StreamController<List<BestListItemDto>> _bestListController =
       BehaviorSubject();
 
@@ -21,6 +22,7 @@ class BestListService {
 
   BestListService() {
     _bus.on<TapFinished>().listen(updateBestList);
+    _refreshEventBus.on<Refresh>().listen((event) => refreshBestlist());
   }
 
   void updateBestList(TapFinished event) async {

@@ -6,6 +6,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:zapfmaster2k20/core/db/database.dart';
 import 'package:zapfmaster2k20/core/db/domain/user_dto.dart';
+import 'package:zapfmaster2k20/core/refresh_event_bus.dart';
 import 'package:zapfmaster2k20/core/tapping/events.dart';
 import 'package:zapfmaster2k20/core/tapping/tapping_event_bus.dart';
 import 'package:zapfmaster2k20/locator.dart';
@@ -14,6 +15,7 @@ import '../../../../logger.dart';
 
 class NewUserPageViewModel extends BaseViewModel {
   final TappingEventBus _bus = locator<TappingEventBus>();
+  final RefreshEventBus _refreshEventBus = locator<RefreshEventBus>();
   final Zm2KDb _db = locator<Zm2KDb>();
   StreamSubscription _streamSubscription;
   String token;
@@ -44,15 +46,15 @@ class NewUserPageViewModel extends BaseViewModel {
   }
 
   Future<int> createUser() async {
-
-
     var userDto = new UserDto(
         previousUser != null ? previousUser.id : 0,
         userNameController.text,
         imagePath,
         token);
     logger.i("Saving user ${userDto.id},${userDto.imagePath}, ${userDto.hardwareToken}");
-    return _db.userDao.saveUser(userDto);
+    var userId = await _db.userDao.saveUser(userDto);
+    _refreshEventBus.fire(new Refresh());
+    return userId;
   }
 
   Future<int> takePhoto() async {

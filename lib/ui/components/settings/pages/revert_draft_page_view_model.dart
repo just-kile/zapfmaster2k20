@@ -1,18 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:zapfmaster2k20/core/bestlist/best_list_service.dart';
 import 'package:zapfmaster2k20/core/db/database.dart';
 import 'package:zapfmaster2k20/core/db/domain/drawing_dto.dart';
-import 'package:zapfmaster2k20/core/newsfeed/newsfeed_service.dart';
+import 'package:zapfmaster2k20/core/refresh_event_bus.dart';
 import 'package:zapfmaster2k20/ui/shared/base_view_model.dart';
 
 import '../../../../locator.dart';
 
 class RevertDraftPageViewModel extends BaseViewModel {
   final Zm2KDb _db = locator<Zm2KDb>();
-  BestListService _bestListService = locator<BestListService>();
-  NewsFeedService _newsFeedService = locator<NewsFeedService>();
+  final RefreshEventBus _refreshEventBus = locator<RefreshEventBus>();
   List<DrawingWithUserDto> news = [];
   bool lastItemLoaded = false;
   final editAmountController = new TextEditingController();
@@ -63,8 +61,7 @@ class RevertDraftPageViewModel extends BaseViewModel {
   }
 
   //TODO: Probably better to decouple this by using an event bus
-  void _updateAppState() async {
-    _newsFeedService.refreshNewsList();
-    _bestListService.refreshBestlist();
+  void _updateAppState() {
+    _refreshEventBus.fire(new Refresh());
   }
 }
