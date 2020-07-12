@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zapfmaster2k20/locator.dart';
 import 'package:zapfmaster2k20/ui/components/settings/pages/new_keg_page.dart';
 import 'package:zapfmaster2k20/ui/components/settings/pages/new_user_page.dart';
+import 'package:zapfmaster2k20/ui/components/settings/pages/select_user_page.dart';
 import 'package:zapfmaster2k20/ui/shared/app_scaffold.dart';
 import 'package:zapfmaster2k20/ui/shared/base_widget.dart';
 
@@ -60,7 +61,7 @@ class Settings extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => withBackgroundImage(NewUserPage())),
+                  builder: (context) => withBackgroundImage(SelectUserPage())),
             );
           },
           child: const Text('Trinker editieren', style: TextStyle(fontSize: 20)),

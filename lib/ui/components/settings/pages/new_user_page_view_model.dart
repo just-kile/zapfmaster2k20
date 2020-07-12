@@ -18,11 +18,18 @@ class NewUserPageViewModel extends BaseViewModel {
   StreamSubscription _streamSubscription;
   String token;
   String imagePath;
+  UserDto previousUser;
   final userNameController = TextEditingController();
   CameraController cameraController;
 
-  Future initialise() async {
+  Future initialise(UserDto user) async {
     setBusy(true);
+    previousUser = user;
+    if (user != null) {
+      userNameController.text = previousUser.name;
+      imagePath = previousUser.imagePath;
+      token = previousUser.hardwareToken;
+    }
     this._streamSubscription =
         _bus.on<UnknownLoginDeviceRecognized>().listen(onData);
     final cameras = await availableCameras();
@@ -37,9 +44,15 @@ class NewUserPageViewModel extends BaseViewModel {
   }
 
   Future<int> createUser() async {
-    logger.i("Create user ${userNameController.text} with token ${token}");
-    return _db.userDao
-        .saveUser(new UserDto(0, userNameController.text, imagePath, token));
+
+
+    var userDto = new UserDto(
+        previousUser != null ? previousUser.id : 0,
+        userNameController.text,
+        imagePath,
+        token);
+    logger.i("Saving user ${userDto.id},${userDto.imagePath}, ${userDto.hardwareToken}");
+    return _db.userDao.saveUser(userDto);
   }
 
   Future<int> takePhoto() async {
@@ -54,7 +67,6 @@ class NewUserPageViewModel extends BaseViewModel {
 
     await cameraController.takePicture(this.imagePath);
     notifyListeners();
-
   }
 
   @override

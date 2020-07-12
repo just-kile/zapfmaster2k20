@@ -11,10 +11,13 @@ class UserDao extends DatabaseAccessor<Zm2KDb> with _$UserDaoMixin {
   UserDao(Zm2KDb db) : super(db);
 
   Future<int> saveUser(UserDto userDto) {
-    return into(user).insert(UserCompanion(
-        name: Value(userDto.name),
-        imagePath: Value(userDto.imagePath),
-        hardwareToken: Value(userDto.hardwareToken)));
+    return into(user).insert(
+        UserCompanion(
+            id: userDto.id > 0 ? Value(userDto.id) : null,
+            name: Value(userDto.name),
+            imagePath: Value(userDto.imagePath),
+            hardwareToken: Value(userDto.hardwareToken)),
+        mode: InsertMode.insertOrReplace);
   }
 
   Future<UserDto> getUserByHardwareToken(String hardwareToken) async {
@@ -24,8 +27,8 @@ class UserDao extends DatabaseAccessor<Zm2KDb> with _$UserDaoMixin {
     return UserDto.fromUserData(userData);
   }
 
-
-  Future<List<UserData>> getAllUsers() {
-    return select(user).get();
+  Future<List<UserDto>> getAllUsers() async {
+    List<UserData> list = await select(user).get();
+    return list.map(UserDto.fromUserData).toList();
   }
 }
