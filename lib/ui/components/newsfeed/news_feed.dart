@@ -17,8 +17,9 @@ class NewsFeed extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Expanded(
-                child: ListView.builder(
+            : ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
                 itemCount: model.news.length + 1,
                 itemBuilder: (context, index) {
                   if (index < model.news.length) {
@@ -30,7 +31,7 @@ class NewsFeed extends StatelessWidget {
                         : Center(child: CircularProgressIndicator());
                   }
                 },
-              )));
+              ));
   }
 
   Card buildCard(NewsItem newsItem) {

@@ -26,7 +26,7 @@ class NewUserPage extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Expanded(child: Container(child: buildContent(model, context))));
+            : Container(child: buildContent(model, context)));
   }
 
   Widget buildContent(NewUserPageViewModel model, BuildContext context) {
@@ -36,69 +36,71 @@ class NewUserPage extends StatelessWidget {
         appBar: AppBar(
           title: Text("Neuer Trinker"),
         ),
-        body: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              TextFormField(
-                controller: model.userNameController,
-                decoration: const InputDecoration(
-                  hintText: 'Name',
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Bitte einen Namen eingeben';
-                  }
-                  if (model.token == null) {
-                    return 'Bitte eine unbenutzte Karte scannen';
-                  }
-                  return null;
-                },
-              ),
-              Center(
-                  child: Container(
-                      height: 300,
-                      width: 300,
-                      child: model.imagePath == null
-                          ? CameraPreview(model.cameraController)
-                          : Image.file(File(model.imagePath)))),
-              ButtonBar(
+        body: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  RaisedButton(
-                    onPressed: () async {
-                      model.takePhoto();
+                  TextFormField(
+                    controller: model.userNameController,
+                    decoration: const InputDecoration(
+                      hintText: 'Name',
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Bitte einen Namen eingeben';
+                      }
+                      if (model.token == null) {
+                        return 'Bitte eine unbenutzte Karte scannen';
+                      }
+                      return null;
                     },
-                    child: const Text('Foto aufnehmen'),
                   ),
-                  RaisedButton(
-                    onPressed: () async {
-                      model.resetImage();
-                    },
-                    child: const Text('Reset Foto'),
+                  Center(
+                      child: Container(
+                          height: 300,
+                          width: 300,
+                          child: model.imagePath == null
+                              ? CameraPreview(model.cameraController)
+                              : Image.file(File(model.imagePath)))),
+                  ButtonBar(
+                    children: <Widget>[
+                      RaisedButton(
+                        onPressed: () async {
+                          model.takePhoto();
+                        },
+                        child: const Text('Foto aufnehmen'),
+                      ),
+                      RaisedButton(
+                        onPressed: () async {
+                          model.resetImage();
+                        },
+                        child: const Text('Reset Foto'),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(model.token == null
+                        ? "Karte noch nicht erkannt"
+                        : "Karte erkannt!"),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: RaisedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState.validate()) {
+                          await model.createUser();
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: Text('Submit'),
+                    ),
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Text(model.token == null
-                    ? "Karte noch nicht erkannt"
-                    : "Karte erkannt!"),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: RaisedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState.validate()) {
-                      await model.createUser();
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  child: Text('Submit'),
-                ),
-              ),
-            ],
-          ),
-        ));
+            )));
   }
 }

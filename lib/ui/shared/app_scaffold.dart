@@ -8,10 +8,6 @@ Container withBackgroundImage(Widget child) {
         repeat: ImageRepeat.repeat,
       ),
     ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[child],
-    ),
+    child: Column(children: [child]),
   );
 }
-

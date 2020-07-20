@@ -21,7 +21,7 @@ class Settings extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Expanded(child: buildContent(model, context)));
+            : buildContent(model, context));
   }
 
   Widget buildContent(SettingsViewModel model, BuildContext context) =>
@@ -30,18 +30,17 @@ class Settings extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => withBackgroundImage(RevertDraftPage())),
+              MaterialPageRoute(builder: (context) => RevertDraftPage()),
             );
           },
-          child: const Text('Zapfvorgänge bearbeiten', style: TextStyle(fontSize: 20)),
+          child: const Text('Zapfvorgänge bearbeiten',
+              style: TextStyle(fontSize: 20)),
         ),
         RaisedButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => withBackgroundImage(NewKegPage())),
+              MaterialPageRoute(builder: (context) => NewKegPage()),
             );
           },
           child: const Text('Neues Fass', style: TextStyle(fontSize: 20)),
@@ -50,8 +49,7 @@ class Settings extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => withBackgroundImage(NewUserPage())),
+              MaterialPageRoute(builder: (context) => NewUserPage()),
             );
           },
           child: const Text('Neuer Trinker', style: TextStyle(fontSize: 20)),
@@ -60,11 +58,11 @@ class Settings extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => withBackgroundImage(SelectUserPage())),
+              MaterialPageRoute(builder: (context) => SelectUserPage()),
             );
           },
-          child: const Text('Trinker editieren', style: TextStyle(fontSize: 20)),
+          child:
+              const Text('Trinker editieren', style: TextStyle(fontSize: 20)),
         ),
       ]);
 }

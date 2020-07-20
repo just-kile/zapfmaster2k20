@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:zapfmaster2k20/ui/components/best_list/best_list.dart';
 import 'package:zapfmaster2k20/ui/components/newsfeed/news_feed.dart';
@@ -17,37 +19,92 @@ class _OverviewState extends State<Overview>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          new AppBar(centerTitle: true, title: Image.asset("assets/logo.png", fit: BoxFit.fitHeight, height: 60)),
-      body: SafeArea(
-        top: false,
-        child: IndexedStack(
-          index: _currentIndex,
-          children: [
-            withBackgroundImage(BestList()),
-            withBackgroundImage(NewsFeed()),
-            withBackgroundImage(Settings())
-          ],
+        appBar: new AppBar(
+            centerTitle: true,
+            title: Image.asset("assets/logo.png",
+                fit: BoxFit.fitHeight, height: 60)),
+        body: OrientationBuilder(
+          builder: (context, orientation) {
+            return orientation == Orientation.portrait
+                ? buildVerticalContent()
+                : buildHorizontalContent();
+          },
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(ZmCustomIcons.ic_menu_ranking_1),
-            title: new Text('Ranking'),
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(ZmCustomIcons.ic_menu_news_1), title: Text('News')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), title: Text('Einstellungen'))
+        bottomNavigationBar: OrientationBuilder(
+          builder: (context, orientation) {
+            return orientation == Orientation.portrait
+                ? buildVerticalBottomNavigationBar()
+                : buildHorizontalBottomNavigationBar();
+          },
+        ));
+  }
+
+  BottomNavigationBar buildVerticalBottomNavigationBar() {
+    return BottomNavigationBar(
+      currentIndex: _currentIndex,
+      onTap: (int index) {
+        setState(() {
+          _currentIndex = index;
+        });
+      },
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(ZmCustomIcons.ic_menu_ranking_1),
+          title: new Text('Ranking'),
+        ),
+        BottomNavigationBarItem(
+            icon: Icon(ZmCustomIcons.ic_menu_news_1), title: Text('News')),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.settings), title: Text('Einstellungen'))
+      ],
+    );
+  }
+
+  BottomNavigationBar buildHorizontalBottomNavigationBar() {
+    return BottomNavigationBar(
+      currentIndex: min(_currentIndex, 1),
+      onTap: (int index) {
+        setState(() {
+          _currentIndex = index;
+        });
+      },
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(ZmCustomIcons.ic_menu_ranking_1),
+          title: new Text('Ranking'),
+        ),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.settings), title: Text('Einstellungen'))
+      ],
+    );
+  }
+
+  SafeArea buildVerticalContent() {
+    return SafeArea(
+      top: false,
+      child: IndexedStack(
+        index: _currentIndex,
+        children: [
+          withBackgroundImage(Expanded(child: BestList())),
+          withBackgroundImage(Expanded(child: NewsFeed())),
+          withBackgroundImage(Expanded(child: Settings()))
         ],
       ),
     );
+  }
+
+  SafeArea buildHorizontalContent() {
+    return SafeArea(
+        top: false,
+        child: IndexedStack(index: min(_currentIndex, 1), children: [
+          withBackgroundImage(Expanded(
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Expanded(child:BestList()),
+                    Expanded(child:NewsFeed())]))),
+          withBackgroundImage(Expanded(child: Settings())),
+        ]));
   }
 }

@@ -29,8 +29,7 @@ class BestListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var counter = 0;
-    return Expanded(
-        child: SingleChildScrollView(
+    return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: DataTable(
         columns: <DataColumn>[
@@ -62,6 +61,6 @@ class BestListView extends StatelessWidget {
           ]);
         }).toList(),
       ),
-    ));
+    );
   }
 }

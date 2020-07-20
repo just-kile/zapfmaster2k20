@@ -17,7 +17,7 @@ class NewKegPage extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Expanded(child: buildContent(model)));
+            : buildContent(model));
   }
 
   Widget buildContent(NewKegPageViewModel model) => Scaffold(

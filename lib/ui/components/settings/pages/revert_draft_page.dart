@@ -17,25 +17,24 @@ class RevertDraftPage extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Expanded(
-                child: Scaffold(
-                    appBar: AppBar(
-                      title: Text("News Bearbeiten"),
-                    ),
-                    body: ListView.builder(
-                      itemCount: model.news.length + 1,
-                      itemBuilder: (context, index) {
-                        if (index < model.news.length) {
-                          return buildUserTappedCard(
-                              model.news[index], model, context);
-                        } else {
-                          model.loadMoreData();
-                          return model.lastItemLoaded == false
-                              ? Center(child: CircularProgressIndicator())
-                              : Center();
-                        }
-                      },
-                    ))));
+            : Scaffold(
+                appBar: AppBar(
+                  title: Text("News Bearbeiten"),
+                ),
+                body: ListView.builder(
+                  itemCount: model.news.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index < model.news.length) {
+                      return buildUserTappedCard(
+                          model.news[index], model, context);
+                    } else {
+                      model.loadMoreData();
+                      return model.lastItemLoaded == false
+                          ? Center(child: CircularProgressIndicator())
+                          : Center();
+                    }
+                  },
+                )));
   }
 
   Card buildUserTappedCard(DrawingWithUserDto newsItem,

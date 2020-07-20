@@ -25,7 +25,7 @@ class SelectUserPage extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Expanded(child: Container(child: buildContent(model, context))));
+            :  Container(child: buildContent(model, context)));
   }
 
   Widget buildContent(SelectUserPageViewModel model, BuildContext context) {
