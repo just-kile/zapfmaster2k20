@@ -9,8 +9,10 @@ class News extends Table {
 
   IntColumn get drawingId => integer().nullable()();
 
+  IntColumn get achievementId => integer().nullable()();
+
   // every relation should be defined here as a nullable field
-//  IntColumn get achievementId => integer().nullable()();
+  //  IntColumn get kegId => integer().nullable()();
 
   DateTimeColumn get createdAt => dateTime()();
 

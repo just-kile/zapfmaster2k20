@@ -5,6 +5,7 @@ import 'package:moor/moor.dart';
 import 'package:moor_ffi/moor_ffi.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:zapfmaster2k20/core/db/tables/achievement.dart';
 import 'package:zapfmaster2k20/core/db/tables/drawing.dart';
 import 'package:zapfmaster2k20/core/db/tables/user.dart';
 
@@ -25,7 +26,7 @@ LazyDatabase _openConnection() {
   });
 }
 
-@UseMoor(tables: [Drawing, User, News], daos: [DrawingDao, UserDao, NewsDao])
+@UseMoor(tables: [Drawing, User, News, Achievement], daos: [DrawingDao, UserDao, NewsDao])
 class Zm2KDb extends _$Zm2KDb {
   // we tell the database where to store the data with this constructor
   Zm2KDb() : super(_openConnection());

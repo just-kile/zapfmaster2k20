@@ -5,9 +5,9 @@ import 'package:zapfmaster2k20/core/tapping/login_service.dart';
 
 class LocalLoginService extends LoginService {
   LocalLoginService() {
-    for (var i = 1; i < 5; i++) {
-      new Timer(Duration(seconds: i * 5), () => loginDeviceRecognized("1"));
-      new Timer(Duration(seconds: i * 5 + 3), () => loginDeviceUnattached("1"));
+    for (var i = 1; i < 2; i++) {
+      new Timer(Duration(seconds: i * 5), () => loginDeviceRecognized("2"));
+      new Timer(Duration(seconds: i * 5 + 5), () => loginDeviceUnattached("2"));
     }
 
 //

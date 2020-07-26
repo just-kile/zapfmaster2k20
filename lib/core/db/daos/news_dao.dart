@@ -1,7 +1,9 @@
 import 'package:moor/moor.dart';
+import 'package:zapfmaster2k20/core/db/domain/achievement_dto.dart';
 import 'package:zapfmaster2k20/core/db/domain/drawing_dto.dart';
 import 'package:zapfmaster2k20/core/db/domain/news_item.dart';
 import 'package:zapfmaster2k20/core/db/domain/user_dto.dart';
+import 'package:zapfmaster2k20/core/db/tables/achievement.dart';
 import 'package:zapfmaster2k20/core/db/tables/drawing.dart';
 import 'package:zapfmaster2k20/core/db/tables/news.dart';
 import 'package:zapfmaster2k20/core/db/tables/user.dart';
@@ -10,14 +12,15 @@ import '../database.dart';
 
 part 'news_dao.g.dart';
 
-@UseDao(tables: [News, User, Drawing])
+@UseDao(tables: [News, User, Drawing, Achievement])
 class NewsDao extends DatabaseAccessor<Zm2KDb> with _$NewsDaoMixin {
   NewsDao(Zm2KDb db) : super(db);
 
   Future<List<NewsItem>> getNewsFeed(int offset, int limit) async {
     final query = select(news).join([
       leftOuterJoin(user, news.userId.equalsExp(user.id)),
-      leftOuterJoin(drawing, news.drawingId.equalsExp(drawing.id))
+      leftOuterJoin(drawing, news.drawingId.equalsExp(drawing.id)),
+      leftOuterJoin(achievement, news.achievementId.equalsExp(achievement.id))
     ]);
 
     query
@@ -29,6 +32,7 @@ class NewsDao extends DatabaseAccessor<Zm2KDb> with _$NewsDaoMixin {
         .map((row) => NewsItem(
             UserDto.fromUserData(row.readTable(user)),
             DrawingDto.fromDrawingData(row.readTable(drawing)),
+            AchievementDto.fromAchievementData(row.readTable(achievement)),
             row.readTable(news).newsDetails))
         .toList();
   }

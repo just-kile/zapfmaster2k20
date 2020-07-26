@@ -50,6 +50,7 @@ abstract class TapService {
       _closeDraftView();
       return;
     }
+
     var drawingDto = await _persistDrawing();
     _emitFinishedEvent(drawingDto);
     _closeDraftView();
@@ -57,7 +58,6 @@ abstract class TapService {
   }
 
   void _emitFinishedEvent(DrawingDto drawingDto) {
-    logger.i("User ${this.loggedInUser.name} finished tapping");
     _bus.fire(new TapFinished(this.loggedInUser, drawingDto, DateTime.now()));
   }
 
@@ -74,6 +74,8 @@ abstract class TapService {
   }
 
   Future<DrawingDto> _persistDrawing() {
+    logger.i("Persist drawing, ${this.loggedInUser.name}, ${this.loggedInUser.id}");
+
     return _db.drawingDao.saveDrawing(
         DrawingDto(null, this.loggedInUser.id, this.amount, DateTime.now()));
   }

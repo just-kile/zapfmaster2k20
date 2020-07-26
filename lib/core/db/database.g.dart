@@ -531,12 +531,14 @@ class New extends DataClass implements Insertable<New> {
   final int id;
   final int userId;
   final int drawingId;
+  final int achievementId;
   final DateTime createdAt;
   final NewsDetails newsDetails;
   New(
       {@required this.id,
       this.userId,
       this.drawingId,
+      this.achievementId,
       @required this.createdAt,
       this.newsDetails});
   factory New.fromData(Map<String, dynamic> data, GeneratedDatabase db,
@@ -551,6 +553,8 @@ class New extends DataClass implements Insertable<New> {
           intType.mapFromDatabaseResponse(data['${effectivePrefix}user_id']),
       drawingId:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}drawing_id']),
+      achievementId: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}achievement_id']),
       createdAt: dateTimeType
           .mapFromDatabaseResponse(data['${effectivePrefix}created_at']),
       newsDetails: $NewsTable.$converter0.mapToDart(stringType
@@ -569,6 +573,9 @@ class New extends DataClass implements Insertable<New> {
     if (!nullToAbsent || drawingId != null) {
       map['drawing_id'] = Variable<int>(drawingId);
     }
+    if (!nullToAbsent || achievementId != null) {
+      map['achievement_id'] = Variable<int>(achievementId);
+    }
     if (!nullToAbsent || createdAt != null) {
       map['created_at'] = Variable<DateTime>(createdAt);
     }
@@ -586,6 +593,7 @@ class New extends DataClass implements Insertable<New> {
       id: serializer.fromJson<int>(json['id']),
       userId: serializer.fromJson<int>(json['userId']),
       drawingId: serializer.fromJson<int>(json['drawingId']),
+      achievementId: serializer.fromJson<int>(json['achievementId']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       newsDetails: serializer.fromJson<NewsDetails>(json['newsDetails']),
     );
@@ -597,6 +605,7 @@ class New extends DataClass implements Insertable<New> {
       'id': serializer.toJson<int>(id),
       'userId': serializer.toJson<int>(userId),
       'drawingId': serializer.toJson<int>(drawingId),
+      'achievementId': serializer.toJson<int>(achievementId),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'newsDetails': serializer.toJson<NewsDetails>(newsDetails),
     };
@@ -606,12 +615,14 @@ class New extends DataClass implements Insertable<New> {
           {int id,
           int userId,
           int drawingId,
+          int achievementId,
           DateTime createdAt,
           NewsDetails newsDetails}) =>
       New(
         id: id ?? this.id,
         userId: userId ?? this.userId,
         drawingId: drawingId ?? this.drawingId,
+        achievementId: achievementId ?? this.achievementId,
         createdAt: createdAt ?? this.createdAt,
         newsDetails: newsDetails ?? this.newsDetails,
       );
@@ -621,6 +632,7 @@ class New extends DataClass implements Insertable<New> {
           ..write('id: $id, ')
           ..write('userId: $userId, ')
           ..write('drawingId: $drawingId, ')
+          ..write('achievementId: $achievementId, ')
           ..write('createdAt: $createdAt, ')
           ..write('newsDetails: $newsDetails')
           ..write(')'))
@@ -632,8 +644,10 @@ class New extends DataClass implements Insertable<New> {
       id.hashCode,
       $mrjc(
           userId.hashCode,
-          $mrjc(drawingId.hashCode,
-              $mrjc(createdAt.hashCode, newsDetails.hashCode)))));
+          $mrjc(
+              drawingId.hashCode,
+              $mrjc(achievementId.hashCode,
+                  $mrjc(createdAt.hashCode, newsDetails.hashCode))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -641,6 +655,7 @@ class New extends DataClass implements Insertable<New> {
           other.id == this.id &&
           other.userId == this.userId &&
           other.drawingId == this.drawingId &&
+          other.achievementId == this.achievementId &&
           other.createdAt == this.createdAt &&
           other.newsDetails == this.newsDetails);
 }
@@ -649,12 +664,14 @@ class NewsCompanion extends UpdateCompanion<New> {
   final Value<int> id;
   final Value<int> userId;
   final Value<int> drawingId;
+  final Value<int> achievementId;
   final Value<DateTime> createdAt;
   final Value<NewsDetails> newsDetails;
   const NewsCompanion({
     this.id = const Value.absent(),
     this.userId = const Value.absent(),
     this.drawingId = const Value.absent(),
+    this.achievementId = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.newsDetails = const Value.absent(),
   });
@@ -662,6 +679,7 @@ class NewsCompanion extends UpdateCompanion<New> {
     this.id = const Value.absent(),
     this.userId = const Value.absent(),
     this.drawingId = const Value.absent(),
+    this.achievementId = const Value.absent(),
     @required DateTime createdAt,
     this.newsDetails = const Value.absent(),
   }) : createdAt = Value(createdAt);
@@ -669,6 +687,7 @@ class NewsCompanion extends UpdateCompanion<New> {
     Expression<int> id,
     Expression<int> userId,
     Expression<int> drawingId,
+    Expression<int> achievementId,
     Expression<DateTime> createdAt,
     Expression<String> newsDetails,
   }) {
@@ -676,6 +695,7 @@ class NewsCompanion extends UpdateCompanion<New> {
       if (id != null) 'id': id,
       if (userId != null) 'user_id': userId,
       if (drawingId != null) 'drawing_id': drawingId,
+      if (achievementId != null) 'achievement_id': achievementId,
       if (createdAt != null) 'created_at': createdAt,
       if (newsDetails != null) 'news_details': newsDetails,
     });
@@ -685,12 +705,14 @@ class NewsCompanion extends UpdateCompanion<New> {
       {Value<int> id,
       Value<int> userId,
       Value<int> drawingId,
+      Value<int> achievementId,
       Value<DateTime> createdAt,
       Value<NewsDetails> newsDetails}) {
     return NewsCompanion(
       id: id ?? this.id,
       userId: userId ?? this.userId,
       drawingId: drawingId ?? this.drawingId,
+      achievementId: achievementId ?? this.achievementId,
       createdAt: createdAt ?? this.createdAt,
       newsDetails: newsDetails ?? this.newsDetails,
     );
@@ -707,6 +729,9 @@ class NewsCompanion extends UpdateCompanion<New> {
     }
     if (drawingId.present) {
       map['drawing_id'] = Variable<int>(drawingId.value);
+    }
+    if (achievementId.present) {
+      map['achievement_id'] = Variable<int>(achievementId.value);
     }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
@@ -757,6 +782,20 @@ class $NewsTable extends News with TableInfo<$NewsTable, New> {
     );
   }
 
+  final VerificationMeta _achievementIdMeta =
+      const VerificationMeta('achievementId');
+  GeneratedIntColumn _achievementId;
+  @override
+  GeneratedIntColumn get achievementId =>
+      _achievementId ??= _constructAchievementId();
+  GeneratedIntColumn _constructAchievementId() {
+    return GeneratedIntColumn(
+      'achievement_id',
+      $tableName,
+      true,
+    );
+  }
+
   final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
   GeneratedDateTimeColumn _createdAt;
   @override
@@ -785,7 +824,7 @@ class $NewsTable extends News with TableInfo<$NewsTable, New> {
 
   @override
   List<GeneratedColumn> get $columns =>
-      [id, userId, drawingId, createdAt, newsDetails];
+      [id, userId, drawingId, achievementId, createdAt, newsDetails];
   @override
   $NewsTable get asDslTable => this;
   @override
@@ -807,6 +846,12 @@ class $NewsTable extends News with TableInfo<$NewsTable, New> {
     if (data.containsKey('drawing_id')) {
       context.handle(_drawingIdMeta,
           drawingId.isAcceptableOrUnknown(data['drawing_id'], _drawingIdMeta));
+    }
+    if (data.containsKey('achievement_id')) {
+      context.handle(
+          _achievementIdMeta,
+          achievementId.isAcceptableOrUnknown(
+              data['achievement_id'], _achievementIdMeta));
     }
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
@@ -835,6 +880,315 @@ class $NewsTable extends News with TableInfo<$NewsTable, New> {
       const NewsDetailsConverter();
 }
 
+class AchievementData extends DataClass implements Insertable<AchievementData> {
+  final int id;
+  final String title;
+  final String description;
+  final String imagePath;
+  final DateTime createdAt;
+  AchievementData(
+      {@required this.id,
+      this.title,
+      this.description,
+      this.imagePath,
+      @required this.createdAt});
+  factory AchievementData.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
+    return AchievementData(
+      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      title:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}title']),
+      description: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}description']),
+      imagePath: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}image_path']),
+      createdAt: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}created_at']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
+    if (!nullToAbsent || title != null) {
+      map['title'] = Variable<String>(title);
+    }
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || imagePath != null) {
+      map['image_path'] = Variable<String>(imagePath);
+    }
+    if (!nullToAbsent || createdAt != null) {
+      map['created_at'] = Variable<DateTime>(createdAt);
+    }
+    return map;
+  }
+
+  factory AchievementData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return AchievementData(
+      id: serializer.fromJson<int>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      description: serializer.fromJson<String>(json['description']),
+      imagePath: serializer.fromJson<String>(json['imagePath']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'title': serializer.toJson<String>(title),
+      'description': serializer.toJson<String>(description),
+      'imagePath': serializer.toJson<String>(imagePath),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  AchievementData copyWith(
+          {int id,
+          String title,
+          String description,
+          String imagePath,
+          DateTime createdAt}) =>
+      AchievementData(
+        id: id ?? this.id,
+        title: title ?? this.title,
+        description: description ?? this.description,
+        imagePath: imagePath ?? this.imagePath,
+        createdAt: createdAt ?? this.createdAt,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('AchievementData(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('description: $description, ')
+          ..write('imagePath: $imagePath, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(
+          title.hashCode,
+          $mrjc(description.hashCode,
+              $mrjc(imagePath.hashCode, createdAt.hashCode)))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is AchievementData &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.description == this.description &&
+          other.imagePath == this.imagePath &&
+          other.createdAt == this.createdAt);
+}
+
+class AchievementCompanion extends UpdateCompanion<AchievementData> {
+  final Value<int> id;
+  final Value<String> title;
+  final Value<String> description;
+  final Value<String> imagePath;
+  final Value<DateTime> createdAt;
+  const AchievementCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.description = const Value.absent(),
+    this.imagePath = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  AchievementCompanion.insert({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.description = const Value.absent(),
+    this.imagePath = const Value.absent(),
+    @required DateTime createdAt,
+  }) : createdAt = Value(createdAt);
+  static Insertable<AchievementData> custom({
+    Expression<int> id,
+    Expression<String> title,
+    Expression<String> description,
+    Expression<String> imagePath,
+    Expression<DateTime> createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (description != null) 'description': description,
+      if (imagePath != null) 'image_path': imagePath,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  AchievementCompanion copyWith(
+      {Value<int> id,
+      Value<String> title,
+      Value<String> description,
+      Value<String> imagePath,
+      Value<DateTime> createdAt}) {
+    return AchievementCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      imagePath: imagePath ?? this.imagePath,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (imagePath.present) {
+      map['image_path'] = Variable<String>(imagePath.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+}
+
+class $AchievementTable extends Achievement
+    with TableInfo<$AchievementTable, AchievementData> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $AchievementTable(this._db, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  GeneratedIntColumn _id;
+  @override
+  GeneratedIntColumn get id => _id ??= _constructId();
+  GeneratedIntColumn _constructId() {
+    return GeneratedIntColumn('id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
+  }
+
+  final VerificationMeta _titleMeta = const VerificationMeta('title');
+  GeneratedTextColumn _title;
+  @override
+  GeneratedTextColumn get title => _title ??= _constructTitle();
+  GeneratedTextColumn _constructTitle() {
+    return GeneratedTextColumn(
+      'title',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  GeneratedTextColumn _description;
+  @override
+  GeneratedTextColumn get description =>
+      _description ??= _constructDescription();
+  GeneratedTextColumn _constructDescription() {
+    return GeneratedTextColumn(
+      'description',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _imagePathMeta = const VerificationMeta('imagePath');
+  GeneratedTextColumn _imagePath;
+  @override
+  GeneratedTextColumn get imagePath => _imagePath ??= _constructImagePath();
+  GeneratedTextColumn _constructImagePath() {
+    return GeneratedTextColumn(
+      'image_path',
+      $tableName,
+      true,
+    );
+  }
+
+  final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
+  GeneratedDateTimeColumn _createdAt;
+  @override
+  GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
+  GeneratedDateTimeColumn _constructCreatedAt() {
+    return GeneratedDateTimeColumn(
+      'created_at',
+      $tableName,
+      false,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, title, description, imagePath, createdAt];
+  @override
+  $AchievementTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'achievement';
+  @override
+  final String actualTableName = 'achievement';
+  @override
+  VerificationContext validateIntegrity(Insertable<AchievementData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+          _titleMeta, title.isAcceptableOrUnknown(data['title'], _titleMeta));
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description'], _descriptionMeta));
+    }
+    if (data.containsKey('image_path')) {
+      context.handle(_imagePathMeta,
+          imagePath.isAcceptableOrUnknown(data['image_path'], _imagePathMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at'], _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AchievementData map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return AchievementData.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $AchievementTable createAlias(String alias) {
+    return $AchievementTable(_db, alias);
+  }
+}
+
 abstract class _$Zm2KDb extends GeneratedDatabase {
   _$Zm2KDb(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $DrawingTable _drawing;
@@ -843,6 +1197,8 @@ abstract class _$Zm2KDb extends GeneratedDatabase {
   $UserTable get user => _user ??= $UserTable(this);
   $NewsTable _news;
   $NewsTable get news => _news ??= $NewsTable(this);
+  $AchievementTable _achievement;
+  $AchievementTable get achievement => _achievement ??= $AchievementTable(this);
   DrawingDao _drawingDao;
   DrawingDao get drawingDao => _drawingDao ??= DrawingDao(this as Zm2KDb);
   UserDao _userDao;
@@ -852,5 +1208,6 @@ abstract class _$Zm2KDb extends GeneratedDatabase {
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [drawing, user, news];
+  List<DatabaseSchemaEntity> get allSchemaEntities =>
+      [drawing, user, news, achievement];
 }

@@ -43,7 +43,7 @@ class SelectUserPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          withBackgroundImage(NewUserPage.withUser(user))),
+                          NewUserPage.withUser(user)),
                 );
               },
               child: Text(user.name),
