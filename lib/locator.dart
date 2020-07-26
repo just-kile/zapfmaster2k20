@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:zapfmaster2k20/core/achievements/achievement_service.dart';
 import 'package:zapfmaster2k20/ui/components/settings/pages/new_keg_page_view_model.dart';
 import 'package:zapfmaster2k20/ui/components/settings/pages/new_user_page_view_model.dart';
 import 'package:zapfmaster2k20/ui/components/settings/pages/revert_draft_page_view_model.dart';
@@ -34,6 +35,7 @@ void setupLocator() {
   //Swap here with your prefered login service
   locator.registerSingleton(LocalLoginService());
   locator.registerSingleton(LocalTapService());
+  locator.registerSingleton(AchievementService());
 
   locator.registerLazySingleton(() => BestListService());
   locator.registerLazySingleton(() => NewsFeedService());

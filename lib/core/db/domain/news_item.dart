@@ -28,4 +28,5 @@ abstract class NewsDetails {}
 @jsonSerializable
 class UserTappedNewsDetails extends NewsDetails {}
 
+@jsonSerializable
 class NewAchievementReachedNewsDetails extends NewsDetails {}

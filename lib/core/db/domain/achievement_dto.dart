@@ -1,3 +1,5 @@
+import 'package:zapfmaster2k20/core/achievements/achievement_definitions.dart';
+
 import '../database.dart';
 
 class AchievementDto {
@@ -25,5 +27,15 @@ class AchievementDto {
     }
     return AchievementDto(achievementData.id, achievementData.title,
         achievementData.description, achievementData.imagePath);
+  }
+
+  static AchievementDto fromAchievementDefinition(
+      AchievementDefinition definition) {
+    if (definition == null) {
+      return null;
+    }
+
+    return AchievementDto(definition.id, definition.title,
+        definition.description, definition.imagePath);
   }
 }

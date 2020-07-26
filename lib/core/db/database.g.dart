@@ -885,20 +885,14 @@ class AchievementData extends DataClass implements Insertable<AchievementData> {
   final String title;
   final String description;
   final String imagePath;
-  final DateTime createdAt;
   AchievementData(
-      {@required this.id,
-      this.title,
-      this.description,
-      this.imagePath,
-      @required this.createdAt});
+      {@required this.id, this.title, this.description, this.imagePath});
   factory AchievementData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
-    final dateTimeType = db.typeSystem.forDartType<DateTime>();
     return AchievementData(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       title:
@@ -907,8 +901,6 @@ class AchievementData extends DataClass implements Insertable<AchievementData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}description']),
       imagePath: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}image_path']),
-      createdAt: dateTimeType
-          .mapFromDatabaseResponse(data['${effectivePrefix}created_at']),
     );
   }
   @override
@@ -926,9 +918,6 @@ class AchievementData extends DataClass implements Insertable<AchievementData> {
     if (!nullToAbsent || imagePath != null) {
       map['image_path'] = Variable<String>(imagePath);
     }
-    if (!nullToAbsent || createdAt != null) {
-      map['created_at'] = Variable<DateTime>(createdAt);
-    }
     return map;
   }
 
@@ -940,7 +929,6 @@ class AchievementData extends DataClass implements Insertable<AchievementData> {
       title: serializer.fromJson<String>(json['title']),
       description: serializer.fromJson<String>(json['description']),
       imagePath: serializer.fromJson<String>(json['imagePath']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
   @override
@@ -951,22 +939,16 @@ class AchievementData extends DataClass implements Insertable<AchievementData> {
       'title': serializer.toJson<String>(title),
       'description': serializer.toJson<String>(description),
       'imagePath': serializer.toJson<String>(imagePath),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
 
   AchievementData copyWith(
-          {int id,
-          String title,
-          String description,
-          String imagePath,
-          DateTime createdAt}) =>
+          {int id, String title, String description, String imagePath}) =>
       AchievementData(
         id: id ?? this.id,
         title: title ?? this.title,
         description: description ?? this.description,
         imagePath: imagePath ?? this.imagePath,
-        createdAt: createdAt ?? this.createdAt,
       );
   @override
   String toString() {
@@ -974,19 +956,14 @@ class AchievementData extends DataClass implements Insertable<AchievementData> {
           ..write('id: $id, ')
           ..write('title: $title, ')
           ..write('description: $description, ')
-          ..write('imagePath: $imagePath, ')
-          ..write('createdAt: $createdAt')
+          ..write('imagePath: $imagePath')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          title.hashCode,
-          $mrjc(description.hashCode,
-              $mrjc(imagePath.hashCode, createdAt.hashCode)))));
+  int get hashCode => $mrjf($mrjc(id.hashCode,
+      $mrjc(title.hashCode, $mrjc(description.hashCode, imagePath.hashCode))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -994,8 +971,7 @@ class AchievementData extends DataClass implements Insertable<AchievementData> {
           other.id == this.id &&
           other.title == this.title &&
           other.description == this.description &&
-          other.imagePath == this.imagePath &&
-          other.createdAt == this.createdAt);
+          other.imagePath == this.imagePath);
 }
 
 class AchievementCompanion extends UpdateCompanion<AchievementData> {
@@ -1003,34 +979,29 @@ class AchievementCompanion extends UpdateCompanion<AchievementData> {
   final Value<String> title;
   final Value<String> description;
   final Value<String> imagePath;
-  final Value<DateTime> createdAt;
   const AchievementCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.description = const Value.absent(),
     this.imagePath = const Value.absent(),
-    this.createdAt = const Value.absent(),
   });
   AchievementCompanion.insert({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.description = const Value.absent(),
     this.imagePath = const Value.absent(),
-    @required DateTime createdAt,
-  }) : createdAt = Value(createdAt);
+  });
   static Insertable<AchievementData> custom({
     Expression<int> id,
     Expression<String> title,
     Expression<String> description,
     Expression<String> imagePath,
-    Expression<DateTime> createdAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (title != null) 'title': title,
       if (description != null) 'description': description,
       if (imagePath != null) 'image_path': imagePath,
-      if (createdAt != null) 'created_at': createdAt,
     });
   }
 
@@ -1038,14 +1009,12 @@ class AchievementCompanion extends UpdateCompanion<AchievementData> {
       {Value<int> id,
       Value<String> title,
       Value<String> description,
-      Value<String> imagePath,
-      Value<DateTime> createdAt}) {
+      Value<String> imagePath}) {
     return AchievementCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
       imagePath: imagePath ?? this.imagePath,
-      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -1063,9 +1032,6 @@ class AchievementCompanion extends UpdateCompanion<AchievementData> {
     }
     if (imagePath.present) {
       map['image_path'] = Variable<String>(imagePath.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
     }
     return map;
   }
@@ -1123,21 +1089,8 @@ class $AchievementTable extends Achievement
     );
   }
 
-  final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
-  GeneratedDateTimeColumn _createdAt;
   @override
-  GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
-  GeneratedDateTimeColumn _constructCreatedAt() {
-    return GeneratedDateTimeColumn(
-      'created_at',
-      $tableName,
-      false,
-    );
-  }
-
-  @override
-  List<GeneratedColumn> get $columns =>
-      [id, title, description, imagePath, createdAt];
+  List<GeneratedColumn> get $columns => [id, title, description, imagePath];
   @override
   $AchievementTable get asDslTable => this;
   @override
@@ -1165,12 +1118,6 @@ class $AchievementTable extends Achievement
     if (data.containsKey('image_path')) {
       context.handle(_imagePathMeta,
           imagePath.isAcceptableOrUnknown(data['image_path'], _imagePathMeta));
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(_createdAtMeta,
-          createdAt.isAcceptableOrUnknown(data['created_at'], _createdAtMeta));
-    } else if (isInserting) {
-      context.missing(_createdAtMeta);
     }
     return context;
   }

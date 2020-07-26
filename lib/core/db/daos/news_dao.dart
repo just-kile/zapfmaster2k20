@@ -41,7 +41,15 @@ class NewsDao extends DatabaseAccessor<Zm2KDb> with _$NewsDaoMixin {
     return into(news).insert(NewsCompanion(
         userId: Value(newsItem.user?.id),
         drawingId: Value(newsItem.drawing?.id),
+        achievementId: Value(newsItem.achievement?.id),
         newsDetails: Value(newsItem.details),
         createdAt: Value(DateTime.now())));
+  }
+
+  Future<List<int>> getAchievementListForUser(int userId) async {
+    final query = select(news)
+      ..where((d) => d.userId.equals(userId) & isNotNull(d.achievementId));
+    var list = await query.get();
+    return list.map((newsItem) => newsItem.achievementId).toList();
   }
 }

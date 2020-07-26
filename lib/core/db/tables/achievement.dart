@@ -9,8 +9,6 @@ class Achievement extends Table {
 
   TextColumn get imagePath => text().nullable()();
 
-  DateTimeColumn get createdAt => dateTime()();
-
   @override
   Set<Column> get primaryKey => {id};
 }

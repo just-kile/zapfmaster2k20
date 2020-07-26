@@ -5,6 +5,7 @@ import 'package:zapfmaster2k20/core/db/database.dart';
 import 'package:zapfmaster2k20/core/db/domain/news_item.dart';
 import 'package:zapfmaster2k20/core/tapping/events.dart';
 import 'package:zapfmaster2k20/core/tapping/tapping_event_bus.dart';
+import 'package:zapfmaster2k20/logger.dart';
 
 import '../../locator.dart';
 import '../refresh_event_bus.dart';
@@ -22,6 +23,7 @@ class NewsFeedService {
 
   NewsFeedService() {
     _bus.on<TapFinished>().listen(_updateNewsFeed);
+    _bus.on<AchievementReached>().listen(_updateNewsFeedWithAchievement);
     _refreshEventBus.on<Refresh>().listen((event) => refreshNewsList());
   }
 
@@ -29,6 +31,15 @@ class NewsFeedService {
     //save event to derived db table
     await _db.newsDao.saveNews(
         NewsItem(event.user, event.drawingDto, null, UserTappedNewsDetails()));
+    //maybe fire BestListUpdated event
+    await refreshNewsList();
+  }
+  void _updateNewsFeedWithAchievement(AchievementReached event) async {
+    //save event to derived db table
+    var newsItem = NewsItem(event.user, null, event.achievement, NewAchievementReachedNewsDetails());
+    logger.i("Saving achievement event ${newsItem.achievement?.id}");
+    await _db.newsDao.saveNews(
+        newsItem);
     //maybe fire BestListUpdated event
     await refreshNewsList();
   }

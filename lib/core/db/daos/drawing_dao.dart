@@ -47,6 +47,19 @@ class DrawingDao extends DatabaseAccessor<Zm2KDb> with _$DrawingDaoMixin {
             UserDto.fromUserData(row.readTable(user))))
         .toList();
   }
+
+  Future<List<DrawingDto>> getDrawingsForUser(int userId) async {
+    final query = select(drawing)
+      ..where((d) => d.userId.equals(userId))
+      ..orderBy([
+        (drawing) =>
+            OrderingTerm(expression: drawing.createdAt, mode: OrderingMode.desc)
+      ]);
+
+    List<DrawingData> result = await query.get();
+    return result.map((row) => DrawingDto.fromDrawingData(row)).toList();
+  }
+
   Future<void> deleteDrawing(DrawingDto drawingDto) async {
     return transaction(() async {
       await customUpdate(
@@ -63,6 +76,7 @@ class DrawingDao extends DatabaseAccessor<Zm2KDb> with _$DrawingDaoMixin {
       );
     });
   }
+
   Future<void> updateDrawing(int drawingId, double amount) async {
     return transaction(() async {
       await customUpdate(
@@ -70,9 +84,9 @@ class DrawingDao extends DatabaseAccessor<Zm2KDb> with _$DrawingDaoMixin {
         updates: {drawing},
         variables: [Variable.withReal(amount), Variable.withInt(drawingId)],
       );
-
     });
   }
+
   Future<DrawingDto> saveDrawing(DrawingDto drawingData) async {
     var drawingCompanion = DrawingCompanion(
         userId: Value(drawingData.userId),

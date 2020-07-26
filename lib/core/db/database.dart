@@ -5,6 +5,7 @@ import 'package:moor/moor.dart';
 import 'package:moor_ffi/moor_ffi.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:zapfmaster2k20/core/achievements/achievement_definitions.dart';
 import 'package:zapfmaster2k20/core/db/tables/achievement.dart';
 import 'package:zapfmaster2k20/core/db/tables/drawing.dart';
 import 'package:zapfmaster2k20/core/db/tables/user.dart';
@@ -26,7 +27,8 @@ LazyDatabase _openConnection() {
   });
 }
 
-@UseMoor(tables: [Drawing, User, News, Achievement], daos: [DrawingDao, UserDao, NewsDao])
+@UseMoor(tables: [Drawing, User, News, Achievement],
+    daos: [DrawingDao, UserDao, NewsDao])
 class Zm2KDb extends _$Zm2KDb {
   // we tell the database where to store the data with this constructor
   Zm2KDb() : super(_openConnection());
@@ -49,6 +51,17 @@ class Zm2KDb extends _$Zm2KDb {
           ].forEach((userCompanion) async {
             await into(user).insert(userCompanion);
             logger.i("User ${userCompanion.name.value} created");
+          });
+          AchievementDefinitions.achievements
+              .forEach((definition) async {
+            var achievementCompanion = AchievementCompanion(
+                id: Value(definition.id),
+                title: Value(definition.title),
+                description: Value(definition.description),
+                imagePath: Value(definition.imagePath)
+            );
+            await into(achievement).insert(achievementCompanion);
+            logger.i("Achievement ${definition.title} added");
           });
         }
       },

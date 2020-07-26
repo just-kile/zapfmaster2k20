@@ -38,7 +38,10 @@ class NewsFeed extends StatelessWidget {
     if (newsItem.details is UserTappedNewsDetails) {
       return buildUserTappedCard(newsItem);
     }
-    return Card();
+    if (newsItem.details is NewAchievementReachedNewsDetails) {
+      return Card(child: Text("${newsItem.achievement?.title} ${newsItem.user.name}"));
+    }
+    return Card(child: Text(newsItem.toString()));
   }
 
   Card buildUserTappedCard(NewsItem newsItem) {

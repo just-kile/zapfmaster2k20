@@ -10,7 +10,7 @@ class LocalTapService extends TapService {
       new Timer(
           Duration(seconds: i * 5 + 1), () => tapAmount(random.nextDouble()));
       new Timer(
-          Duration(seconds: i * 5 + 2), () => tapAmount(random.nextDouble()));
+          Duration(seconds: i * 5 + 2), () => tapAmount(0.6));
     }
   }
 }
