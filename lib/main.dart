@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:zapfmaster2k20/ui/themes/style.dart';
 
 import 'core/constants/app_contstants.dart';
@@ -8,7 +7,7 @@ import 'locator.dart';
 import 'main.reflectable.dart';
 import 'ui/router.dart';
 
-void main()  {
+void main() {
   initializeReflectable();
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
