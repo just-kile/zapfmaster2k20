@@ -16,12 +16,12 @@ class AchievementDefinition {
 
 class AchievementDefinitions {
   static List<AchievementDefinition> achievements = [
-    new AchievementDefinition(1, "Moe", "Ein Bier getrunken", "",
+    new AchievementDefinition(1, "Moe", "Ein Bier getrunken", "assets/achievements/moe.png",
         (currentDrawing, List<DrawingDto> recentDrawings) {
       return recentDrawings.fold(0, (acc, drawing) => acc + drawing.amount) >=
           0.5;
     }),
-    new AchievementDefinition(2, "Carl", "3 Bier getrunken", "",
+    new AchievementDefinition(2, "Carl", "3 Bier getrunken", "assets/achievements/carl.png",
         (currentDrawing, List<DrawingDto> recentDrawings) {
       return recentDrawings.fold(0, (acc, drawing) => acc + drawing.amount) >=
           1.5;

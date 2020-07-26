@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zapfmaster2k20/core/db/domain/news_item.dart';
+import 'package:zapfmaster2k20/core/db/domain/user_dto.dart';
 import 'package:zapfmaster2k20/locator.dart';
 import 'package:zapfmaster2k20/ui/components/newsfeed/news_feed_view_model.dart';
 import 'package:zapfmaster2k20/ui/shared/base_widget.dart';
@@ -13,25 +14,26 @@ class NewsFeed extends StatelessWidget {
     return BaseWidget<NewsFeedViewModel>(
         onModelReady: (model) => model.initialise(),
         model: locator<NewsFeedViewModel>(),
-        builder: (context, model, child) => model.busy
+        builder: (context, model, child) =>
+        model.busy
             ? Center(
-                child: CircularProgressIndicator(),
-              )
+          child: CircularProgressIndicator(),
+        )
             : ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: model.news.length + 1,
-                itemBuilder: (context, index) {
-                  if (index < model.news.length) {
-                    return buildCard(model.news[index]);
-                  } else {
-                    model.loadMoreData();
-                    return model.lastItemLoaded
-                        ? null
-                        : Center(child: CircularProgressIndicator());
-                  }
-                },
-              ));
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: model.news.length + 1,
+          itemBuilder: (context, index) {
+            if (index < model.news.length) {
+              return buildCard(model.news[index]);
+            } else {
+              model.loadMoreData();
+              return model.lastItemLoaded
+                  ? null
+                  : Center(child: CircularProgressIndicator());
+            }
+          },
+        ));
   }
 
   Card buildCard(NewsItem newsItem) {
@@ -39,41 +41,70 @@ class NewsFeed extends StatelessWidget {
       return buildUserTappedCard(newsItem);
     }
     if (newsItem.details is NewAchievementReachedNewsDetails) {
-      return Card(child: Text("${newsItem.achievement?.title} ${newsItem.user.name}"));
+      return buildAchievementCard(newsItem);
     }
     return Card(child: Text(newsItem.toString()));
   }
 
-  Card buildUserTappedCard(NewsItem newsItem) {
+  Card buildAchievementCard(NewsItem newsItem) =>
+      buildBaseCard(
+          Colors.blue,
+          newsItem.user,
+          newsItem.createdAt,
+          RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                    text: "${newsItem.user?.name}",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                TextSpan(text: ' hat das Achievement '),
+                TextSpan(
+                    text: '${newsItem.achievement?.title} ',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                TextSpan(text: ' erreicht!'),
+                TextSpan(text: "\n(${newsItem.achievement.description})", style: TextStyle(fontSize: 12))
+              ],
+            ),
+          ),AssetImage(newsItem.achievement.imagePath));
+
+  Card buildUserTappedCard(NewsItem newsItem) =>
+      buildBaseCard(
+          Colors.orange,
+          newsItem.user,
+          newsItem.createdAt,
+          RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                    text: "${newsItem.user?.name}",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                TextSpan(text: ' hat erfolgreich '),
+                TextSpan(
+                    text: '${newsItem.drawing?.amount?.toStringAsFixed(2)} L',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                TextSpan(text: ' gezapft!'),
+              ],
+            ),
+          ), UserImage(newsItem.user));
+
+  Card buildBaseCard(MaterialColor borderColor, UserDto user,
+      DateTime createdAt, RichText title, ImageProvider image) {
     return Card(
       color: Colors.transparent,
       shape: new RoundedRectangleBorder(
-          side: new BorderSide(color: Colors.orange, width: 2.0),
+          side: new BorderSide(color: borderColor, width: 2.0),
           borderRadius: BorderRadius.circular(4.0)),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           ListTile(
-            leading: CircleAvatar(backgroundImage: UserImage(newsItem.user)),
-            title: RichText(
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                      text: "${newsItem.user?.name}",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  TextSpan(text: ' hat erfolgreich '),
-                  TextSpan(
-                      text: '${newsItem.drawing?.amount?.toStringAsFixed(2)} L',
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  TextSpan(text: ' gezapft!'),
-                ],
-              ),
-            ),
-            subtitle: Text('am ${newsItem.drawing?.createdAt}'),
-            trailing: Text("L"),
+            leading: CircleAvatar(backgroundImage: image),
+            title: title,
+            subtitle: Text('am $createdAt'),
           ),
         ],
       ),
     );
   }
+
 }

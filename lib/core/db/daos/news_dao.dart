@@ -28,13 +28,15 @@ class NewsDao extends DatabaseAccessor<Zm2KDb> with _$NewsDaoMixin {
           [OrderingTerm(expression: news.createdAt, mode: OrderingMode.desc)])
       ..limit(limit, offset: offset);
     final List<TypedResult> result = await query.get();
-    return result
-        .map((row) => NewsItem(
-            UserDto.fromUserData(row.readTable(user)),
-            DrawingDto.fromDrawingData(row.readTable(drawing)),
-            AchievementDto.fromAchievementData(row.readTable(achievement)),
-            row.readTable(news).newsDetails))
-        .toList();
+    return result.map((row) {
+      var newsItem = row.readTable(news);
+      return NewsItem(
+          UserDto.fromUserData(row.readTable(user)),
+          DrawingDto.fromDrawingData(row.readTable(drawing)),
+          AchievementDto.fromAchievementData(row.readTable(achievement)),
+          newsItem.newsDetails,
+          newsItem.createdAt);
+    }).toList();
   }
 
   Future<int> saveNews(NewsItem newsItem) async {

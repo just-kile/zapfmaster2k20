@@ -9,10 +9,11 @@ class NewsItem {
   final UserDto user;
   final DrawingDto drawing;
   final AchievementDto achievement;
-
   final NewsDetails details;
 
-  NewsItem(this.user, this.drawing, this.achievement, this.details);
+  final DateTime createdAt;
+
+  NewsItem(this.user, this.drawing, this.achievement, this.details, this.createdAt);
 }
 
 void initNewsDetailsJsonMapper() {

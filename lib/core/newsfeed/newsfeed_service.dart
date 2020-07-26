@@ -29,17 +29,18 @@ class NewsFeedService {
 
   void _updateNewsFeed(TapFinished event) async {
     //save event to derived db table
-    await _db.newsDao.saveNews(
-        NewsItem(event.user, event.drawingDto, null, UserTappedNewsDetails()));
+    await _db.newsDao.saveNews(NewsItem(event.user, event.drawingDto, null,
+        UserTappedNewsDetails(), DateTime.now()));
     //maybe fire BestListUpdated event
     await refreshNewsList();
   }
+
   void _updateNewsFeedWithAchievement(AchievementReached event) async {
     //save event to derived db table
-    var newsItem = NewsItem(event.user, null, event.achievement, NewAchievementReachedNewsDetails());
+    var newsItem = NewsItem(event.user, null, event.achievement,
+        NewAchievementReachedNewsDetails(), DateTime.now());
     logger.i("Saving achievement event ${newsItem.achievement?.id}");
-    await _db.newsDao.saveNews(
-        newsItem);
+    await _db.newsDao.saveNews(newsItem);
     //maybe fire BestListUpdated event
     await refreshNewsList();
   }
