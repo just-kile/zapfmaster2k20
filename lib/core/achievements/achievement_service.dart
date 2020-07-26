@@ -21,7 +21,9 @@ class AchievementService {
     var drawings = await _db.drawingDao.getDrawingsForUser(event.user.id);
     var alreadyReachedAchievements = await _db.newsDao.getAchievementListForUser(event.user.id);
     Iterable<AchievementDefinition> reachedAchievements = AchievementDefinitions
-        .achievements.where(
+        .achievements
+        .where((definition)=> !alreadyReachedAchievements.contains(definition.id))
+        .where(
             (definition) => definition.predicate(event.drawingDto, drawings));
 
 
