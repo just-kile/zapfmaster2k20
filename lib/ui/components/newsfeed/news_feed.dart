@@ -49,7 +49,7 @@ class NewsFeed extends StatelessWidget {
   }
 
   Card buildAchievementCard(NewsItem newsItem) => buildBaseCard(
-      Colors.blue,
+      Colors.green,
       newsItem.user,
       newsItem.createdAt,
       RichText(
