@@ -32,7 +32,7 @@ class Tapping extends StatelessWidget {
           children: <Widget>[
             Image.asset('assets/app_icon.png', fit: BoxFit.cover),
             Container(
-                child: Text("${model.state?.amount} L",
+                child: Text("${model.state?.amount?.toStringAsFixed(2)} L",
                     textAlign: TextAlign.center,
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 40))),
