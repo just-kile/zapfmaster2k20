@@ -85,7 +85,11 @@ class _OverviewState extends State<Overview>
       child: IndexedStack(
         index: _currentIndex,
         children: [
-          withBackgroundImage(Expanded(child: BestList())),
+          withBackgroundImage(Expanded(
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[Expanded(child: BestList())]))),
           withBackgroundImage(Expanded(child: NewsFeed())),
           withBackgroundImage(Expanded(child: Settings()))
         ],
@@ -102,8 +106,13 @@ class _OverviewState extends State<Overview>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Expanded(child:BestList()),
-                    Expanded(child:NewsFeed())]))),
+                Expanded(
+                    child: Padding(
+                        padding: EdgeInsets.all(16.0), child: BestList())),
+                Expanded(
+                    child: Padding(
+                        padding: EdgeInsets.all(16.0), child: NewsFeed()))
+              ]))),
           withBackgroundImage(Expanded(child: Settings())),
         ]));
   }
